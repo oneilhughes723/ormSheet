@@ -1,7 +1,7 @@
-//javascript file that will be imported to html
+ //javascript file that will be imported to html
 
 /////////////////////////////////////////
-//global variables
+ //global variables
 /////////////////////////////////////////
 
 var csList = [];
@@ -14,11 +14,6 @@ var to;
 var sortie;
 var plan;
 
-//adds
-var storage = {};
-//adds
-
-
 //row ids that correspond to score object properties
 var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'mp', 'wx', 'temp', 'winds', 'rwy', 'rd', 'ts', 'ents', 'ice', 'hs',
@@ -28,6 +23,11 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 
 //object that will record score values for each row
 var score ={
+ cs: '',
+ ac: '',
+ to: '',
+ sortie: '',
+ plan: '',
  form: {},
  ll: {},
  check: {},
@@ -61,7 +61,11 @@ var score ={
  acsig: "",
  supsig: "",
  sqsig: "",
- ogsig: ""
+ ogsig: "",
+ supapp: '',
+ logged: '',
+ night: 0,
+ cp: 0,
 };
 
 var date = new Date();
@@ -107,7 +111,8 @@ function csPrompt() {
  }
  displayCS = "CALLSIGN:" + "  " + cs;
  document.getElementById('cs').innerHTML = displayCS;
- document.getElementById('cs').value = cs;
+ document.getElementById('cs').value = cs
+ var csval = document.getElementById('cs').value;
 };
 
 function toPrompt(){
@@ -132,7 +137,8 @@ function toPrompt(){
  }
  displayTO = "TAKEOFF TIME/DATE:" + "  " + to;
  document.getElementById('to').innerHTML = displayTO + " " + month + " " + day + " " + year;
- document.getElementById('to').value = to;
+ document.getElementById('to').value = to
+ var toval = document.getElementById('to').value;
 };
 
 
@@ -144,8 +150,8 @@ function sortiePrompt(){
  }
  displaySortie = "SORTIE:" + "  " + sortie;
  document.getElementById('sortie').innerHTML = displaySortie;
- document.getElementById('sortie').value = sortie;
- var sortieVal = document.getElementById('sortie').value;
+ document.getElementById('sortie').value = sortie
+ var sortieval = document.getElementById('sortie').value;
 };
 
 function planPrompt(){
@@ -156,7 +162,8 @@ function planPrompt(){
  }
  displayPlan = "ITINERARY:" + " " + plan;
  document.getElementById('plan').innerHTML = displayPlan;
- document.getElementById('plan').value = plan;
+ document.getElementById('plan').value = plan
+ var planval = document.getElementById('plan').value;
 };
 
 //put the prompt variables into score object
@@ -175,18 +182,18 @@ var today = new Date();
 today.setHours(0,0,0,0);
 
 //grab ALl keys from local storage
-for (var i = 0; i < storage.length; i++) {
-   csList.push(storage.key(i));
+for (var i = 0; i < localStorage.length; i++) {
+   csList.push(localStorage.key(i));
 };
 
 //grab all objects from local storage
 for (cs of csList) {
- var testNull = storage[cs].includes('form');
+ var testNull = localStorage.getItem(cs).includes('form');
 
  if (testNull == false){
    console.log('there was an unidentified null key, so it was not added to archiveList');
  } else {
-   var scoreObject = JSON.parse(storage[cs]);
+   var scoreObject = JSON.parse(localStorage.getItem(cs));
    archiveList.push(scoreObject);
  }
 
@@ -360,20 +367,24 @@ console.log(score);
 
 //When the user hits the submit button
 function Submit() {
+
+ //only old entries will have a date value, so on resubmission, only an old entry will be deleted.
  if (score.date != null){
    console.log('did it go here?')
    var oldDate = new Date(score.date);
    var oldstrDate = oldDate.toString().substr(0,24);
    var oldKey = score.cs + oldstrDate;
    console.log(oldKey);
-   delete storage[oldKey];
+   localStorage.removeItem(oldKey);
+   console.log(localStorage.removeItem(oldKey));
  };
 
+//here is where the date value is added! ... my most creative solution if anyone ever reads this.
  score.date = new Date()
  var strDate = score.date.toString().substr(0,24);
  console.log("Following object has been added to the archive");
  console.log(score);
- storage[score.cs + strDate] = JSON.stringify(score);
+ localStorage.setItem(score.cs + strDate, JSON.stringify(score));
  alert("Your submission has been recorded");
 }
 
@@ -386,21 +397,25 @@ function signCard(el) {
      var acsig = sig;
      document.getElementById(id).innerHTML = acsig;
      score.acsig = acsig;
+     document.getElementById(id).value = acsig;
    }
    else if (id == 'supsig'){
      var supsig = sig;
      document.getElementById(id).innerHTML = supsig;
      score.supsig = supsig;
+     document.getElementById(id).value = supsig;
    }
    else if (id == 'sqsig'){
      var sqsig = sig;
      document.getElementById(id).innerHTML = sqsig;
      score.sqsig = sqsig;
+     document.getElementById(id).value = sqsig;
    }
    else if(id == 'ogsig'){
      var ogsig = sig;
      document.getElementById(id).innerHTML = ogsig;
      score.ogsig = ogsig;
+     document.getElementById(id).value = score.ogsig;
    }
    else if(id == 'supApproval'){
      var supapp = sig;
@@ -410,11 +425,13 @@ function signCard(el) {
      }
      document.getElementById(id).innerHTML = supapp;
      score.supapp = supapp;
+     document.getElementById(id).value = score.supapp;
    }
    else if(id == 'logged'){
      var logged = sig;
      document.getElementById(id).innerHTML = logged;
      score.logged = logged;
+     document.getElementById(id).value = score.loogged;
    }
      document.getElementById(id).style.fontFamily = 'cursive';
      document.getElementById(id).style.fontFamily = 'Brush Script MT, sans-serif';
@@ -459,9 +476,9 @@ function refill(){
    var val = Object.values(todayScore[arrInd][prop]);
    for (eachVal of val) {
      if (eachVal > 0){
-       var elid = prop + eachVal
+       var elid = prop + eachVal;
        document.getElementById(elid).checked = true;
-       highlightCell(elid)
+       highlightCell(elid);
      }
    }
 
@@ -481,21 +498,29 @@ function refill(){
  document.getElementById('to').innerHTML = "TO TIME/DATE:   " + todayScore[arrInd].to + " " + dateOutput
  document.getElementById('plan').innerHTML = "ITINERARY:    " + todayScore[arrInd].plan
  document.getElementById('sortie').innerHTML = "SORTIE:    " + todayScore[arrInd].sortie
- document.getElementById('acsig').innerHTML = todayScore[arrInd].acsig + "<button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Change Signature</button>"
+ document.getElementById('acsig').innerHTML = todayScore[arrInd].acsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
  document.getElementById('acsig').style.fontFamily = 'cursive';
  document.getElementById('acsig').style.fontFamily = 'Brush Script MT, sans-serif';
  document.getElementById('acsig').style.fontSize = '32px';
- document.getElementById('supsig').innerHTML = todayScore[arrInd].supsig + "<button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Change Signature</button>"
+ document.getElementById('supsig').innerHTML = todayScore[arrInd].supsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
  document.getElementById('supsig').style.fontFamily = 'cursive';
  document.getElementById('supsig').style.fontFamily = 'Brush Script MT, sans-serif';
  document.getElementById('supsig').style.fontSize = '32px';
- document.getElementById('sqsig').innerHTML = todayScore[arrInd].sqsig + "<button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Change Signature</button>"
+ document.getElementById('sqsig').innerHTML = todayScore[arrInd].sqsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
  document.getElementById('sqsig').style.fontFamily = 'cursive';
  document.getElementById('sqsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('ogsig').innerHTML = todayScore[arrInd].ogsig + "<button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Change Signature</button>"
+ document.getElementById('sqsig').style.fontSize = '32px';
+ document.getElementById('ogsig').innerHTML = todayScore[arrInd].ogsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
  document.getElementById('ogsig').style.fontFamily = 'cursive';
  document.getElementById('ogsig').style.fontFamily = 'Brush Script MT, sans-serif';
+ document.getElementById('ogsig').style.fontSize = '32px';
 
+ if(todayScore[arrInd].night == 1){
+   document.getElementById('night').checked = true;
+ }
+ if(todayScore[arrInd].cp != 0){
+   document.getElementById('cp').value = todayScore[arrInd].cp;
+ }
 }
 
 
@@ -506,7 +531,7 @@ function deleteInfo(){
  for (i = todayScore.length -1; i >= 0; i--){
    if (todayScore[i].cs + ", TO: " + todayScore[i].to === callsign){
      let storageKey = todayScore[i].cs + new Date(todayScore[i].date).toString().substr(0,24);
-     delete storage[storageKey];
+     localStorage.removeItem(storageKey);
      alert("The entry " + todayScore[i].cs + ", TO: " + todayScore[i].to + " has been deleted")
 
 
@@ -515,4 +540,22 @@ function deleteInfo(){
  };
 
 
+}
+
+function nightcpLog(el){
+ var elid = el.id;
+ if (elid == 'night'){
+   if (document.getElementById(elid).checked == true){
+     score.night = 1;
+   }
+   else{
+     score.night = 0;
+   }
+   document.getElementById(elid).value = score.night;
+ }
+ else if(elid == 'cp'){
+   var cpval = document.getElementById(elid);
+   score.cp = cpval.options[cpval.selectedIndex].value;
+   document.getElementById(elid).value = score.cp;
+ }
 }
