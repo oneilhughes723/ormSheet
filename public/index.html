@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <base target="_top">
+    <title>86thORM</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href="orm_sheet.css">
+  </head>
+
+  <body>
+
+
+
+    <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
+
+    <div align='center'>
+      <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop">
+      </select>
+    </div>
+
+        <button  align='center' class="btn btn-primary col-sm-3" onclick="refill()" style = "position: relative; left: 37.5%">RELOAD ORM</button>
+        <div><pre>
+        </pre></div>
+          <button class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
+          <a class="btn btn-primary dropdown-toggle" href="#" role="button" style='position:relative; right:-30%' id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            CHANGE INFO
+          </a>
+          <div  style='left:10%%' class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">CLEAR PAGE</a>
+            <a class="dropdown-item" onclick="deleteInfo">DELETE ENTRY</a>
+            <a class="dropdown-item" onclick="signCard('supApproval')">APPROVE (SUP)</a>
+            <a class="dropdown-item" onclick="acPrompt()">CHANGE AC</a>
+            <a class="dropdown-item" onclick='csPrompt()'>CHANGE CALLSIGN</a>
+            <a class="dropdown-item" onclick='toPrompt()'>CHANGE T/O TIME</a>
+            <a class="dropdown-item" onclick='planPrompt()'>CHANGE ITINERARY</a>
+            <a class="dropdown-item" onclick='sortiePrompt()'>CHANGE SORTIE</a>
+          </div>
+        <button class="btn btn-primary" style = "position: absolute; right: 5% " onclick="deleteInfo()">Delete Entry</button>
+        <form method = "POST" action = "/create">
+        <table style = 'border: 2px solid black' align = 'center'>
+            <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
+            <tr>
+                <td name='ac' id='ac' value= ''>AIRCRAFT COMMANDER:</td>
+                <td name='cs' id='cs' value= ''>CALLSIGN:</td>
+                <td name='to' id='to' value= ''>TAKEOFF TIME/DATE:</td>
+            <tr height='25px'>
+                <td  name='sortie' id='sortie' value= ''>SORTIE:</td>
+                <td id ='commPlan' value= ''>
+                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
+                    <option value="0">Comm Plan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                    <option value="7">Seven</option>
+                    <option value="8">Eight</option>
+                  </select>
+                </td>
+                 <td name = 'plan' id='plan' value= ''>Sortie Itinerary: </td>
+            </tr>
+                <td name = 'supapp' id='supApproval' value= ''>SUP APPROVAL <button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
+                <td>
+                   <label class='container'>Night Brief Complete?
+                     <input  name='night' id='night' onclick='nightcpLog(this)' type = "checkbox" value = "">
+                     <span class='checkmark'></span>
+                   </label>
+                </td>
+                <td name='logged' id='logged'>LOGGED? <button class="btn btn-primary"  style='float:right;' onclick='signCard(this)'>LOG</button></td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+
+
+    <table style = 'border: 2px solid black' align = 'center'>
+      <th colspan = "4" class = "tableSec" >TYPE</th>
+      <tr id = "form">
+        <td>Formation</td>
+        <td>
+          <label class='container'>Basic
+            <input name='form' id='form1' class = 'checkmark' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Air Refueling
+            <input name='form' id='form2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Airdrop
+            <input  name='form' id='form3'  type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = "ll">
+        <td>Low Level</td>
+        <td><label class='container'>Routine or Known Route
+            <input  name='ll' id='ll1' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td><label class='container'>Non-Routine or Unfamiliar Route
+            <input  name='ll' id='ll2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='ll3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <tr id = 'check'>
+        <td>Checkride</td>
+        <td>
+          <label class='container'>IP
+            <input  name='check' id='check1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>SP or IP No-Notice
+            <input  name='check' id='check2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+            </label>
+        </td>
+        <td>
+          <label class='container'>PC/EC
+            <input  name='check' id='check3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'mission'>
+        <td>Mission Purpose</td>
+        <td>
+          <label class='container'>IEP/MEP/Orientation/Pax Flt
+            <input  name='mission' id='mission1' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>FCF/OCF
+            <input  name='mission' id='mission2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='mission3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <th colspan = "4" class = "tableSec" >TIMELINE</th>
+      <tr id = 'cdd'>
+        <td>Crew Duty Day</td>
+        <td>
+          <label class='container'>Anticipated Mx/Ops Delay
+            <input  name='cdd' id='cdd1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Flying Past 10 Hours
+            <input  name='cdd' id='cdd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Showtime &lt;0530
+            <input  name='cdd' id='cdd3' type = "checkbox" value = 3 onclick = "highlight(this)" id  = "showtime">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'cfd'>
+        <td>Consecutive Flying Days (IP/SP)</td>
+        <td>
+          <label class='container'>4 Days
+            <input  name='cfd' id='cfd1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>5 Days
+            <input  name='cfd' id='cfd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&gt;5 Days
+            <input  name='cfd' id='cfd3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'mp'>
+        <td>Mission Planning</td>
+        <td>
+          <label class='container'>Short Notice Replan/Replan After Brief Time
+            <input  name='mp' id='mp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>X/C Planning
+            <input  name='mp' id='mp2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>3 Event O&amp;B
+            <input name='mp' id='mp3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+
+      <th colspan = "4" class = "tableSec" >ENVIRONMENT</th>
+      <tr id = 'wx'>
+        <td>Weather(Dep/Arr)</td>
+        <td>
+          <label class='container'>&le; 1500/3
+            <input  name='wx' id='wx1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&le; 1000/2
+            <input  name='wx' id='wx2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&le; 500/1
+            <input  name='wx' id='wx3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'temp'>
+        <td>Temperature - Dew Point Spread</td>
+        <td>
+          <label class='container'>&le; 2
+            <input  name='temp' id='temp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='temp2' style="background-color: black">
+        </td>
+        <td id='temp3' style="background-color: black">
+        </td>
+      </tr>
+
+      <tr id = 'winds'>
+        <td>Winds</td>
+        <td>
+          <label class='container'>Gusty Winds
+            <input  name='winds' id='winds1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>X-winds &gt; 15 knots
+            <input  name='winds' id='winds2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Tailwind/Windshear
+            <input  name='winds' id='winds3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'rwy'>
+        <td>Runway Condition</td>
+        <td>
+          <label class='container'>Excessive Rubber Buildup
+            <input  name='rwy' id='rwy1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Wet Runway
+            <input  name='rwy' id='rwy2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Icy Runway
+            <input  name='rwy' id='rwy3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id ='rd'>
+        <td>Runway Distance &lt; 7000'</td>
+        <td  name='rd' id='rd1' style="background-color: black">
+        </td>
+        <td>
+          <label class='container'>Landing
+            <input  name='rd' id='rd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Touch & Go
+            <input  name='rd' id='rd3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id= "ts">
+        <td>Thuderstorms (Dep/Arr)</td>
+        <td>
+          <label class='container'>Tempo
+            <input  name='ts' id='ts1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Prevailing
+            <input  name='ts' id='ts2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Observed
+            <input  name='ts' id='ts3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = "ents">
+        <td>Thunderstorms (Enroute)</td>
+        <td>
+          <label class='container'>Isolated
+            <input  name='ents' id='ents1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Few
+            <input  name='ents' id='ents2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Scattered/Numerous
+            <input  name='ents' id='ents3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'ice'>
+        <td>Icing (Forecast/Actual)</td>
+        <td>
+          <label class='container'>Light
+            <input  name='ice' id='ice1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Moderate
+            <input  name='ice' id='ice2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Severe
+            <input  name='ice' id='ice3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'turbs'>
+        <td>Turbulence</td>
+        <td>
+          <label class='container'>Light
+            <input  name='turbs' id='turbs1'type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Moderate
+            <input  name='turbs' id='turbs2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Severe/Extreme
+            <input  name='turbs' id='turbs3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'birds'>
+        <td>Bird Condition</td>
+        <td>
+          <label class='container'>AHAS MOD or BAM MOD/SEV
+            <input  name='birds' id='birds1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Reported MOD or AHAS Severe
+            <input  name='birds' id='birds2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Reported Severe
+            <input  name='birds' id='birds3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'mountains'>
+        <td>Mountinous Terrain &gt; 5000' AGL</td>
+        <td>
+          <label class='container'>Terminal Area Only
+            <input  name='mountains' id='mountains1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>IR/VR/SR or VFR Leg
+            <input  name='mountains' id='mountains2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td  name='mountains' id='mountains3' style="background-color: black">
+        </td>
+      </tr>
+      <tr id = 'thermal'>
+        <td>Index of Thermal Stress</td>
+        <td>
+          <label class='container'>Cautin/Wind Chill &lt; 32F
+            <input  name='thermal' id='thermal1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Danger
+            <input  name='thermal' id='thermal2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='thermal3' style="background-color: black">
+        </td>
+      </tr>
+      <tr id = 'airspace'>
+        <td>Airspace/Airfield</td>
+        <td>
+          <label class='container'>Unfamiliar Airfield
+            <input  name='airspace' id='airspace1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>NTA or Complex Airspace/Airfield
+            <input  name='airspace' id='airspace2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='airspace3' style="background-color: black">
+        </td>
+      </tr>
+      <tr id = 'climb'>
+        <td>Climb Gradient</td>
+        <td>
+          <label class='container'>Home Station 48' Option Req
+            <input  name='climb' id='climb1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Outbase 48' Option Req
+            <input  name='climb' id='climb2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Unable IFR Climb Req VFR or VMC Dep
+            <input  name='climb' id='climb3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'flight_cond'>
+        <td>Flight Condition</td>
+        <td>
+          <label class='container'>Overwater & Outside Glide Distance from Land
+            <input  name='flight_cond' id='flight_cond1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'> Any Portion of Flight Conducted at Night
+            <input  name='flight_cond' id='flight_cond2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='flight_cond3' style="background-color: black">
+        </td>
+      </tr>
+      <th colspan = "4" class = "tableSec" >CREW</th>
+      <tr id = 'jump'>
+        <td>Jump Seat</td>
+        <td>
+          <label class='container'>Not Occupied
+            <input  name='jump' id='jump1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='jump2' style = "background-color:black">
+        </td>
+        <td id='jump3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <tr id = 'exp'>
+        <td>Experience Level</td>
+        <td>
+          <label class='container'>FP/XP
+            <input  name='exp' id='exp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>AC is Inexperienced IP (CAT II)
+            <input  name='exp' id='exp2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='exp3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <tr id = 'ip_currency'>
+        <td>IP Currency</td>
+        <td>
+          <label class='container'>Out of Jet &gt; 7 Days / &lt; 12 hrs in 30 Days
+            <input  name='ip_currency' id='ip_currency1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Out of Jet &gt; 14 Days
+            <input  name='ip_currency' id='ip_currency2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='ip_currency3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <tr id = 'currency'>
+        <td>SP Currency</td>
+        <td>
+          <label class='container'>Out of Jet &gt; 7 Days / &gt; 5 Fly Events in 5 Days
+            <input  name='currency' id='currency1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Out of Jet &gt; 14 Days
+            <input  name='currency' id ='currency2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='currency3' style = "background-color:black">
+        </td>
+      </tr>
+
+       <tr id = 'issues'>
+        <td>SP Issues</td>
+        <td>
+          <label class='container'>Non-Flying CAP
+            <input  name='issues' id='issues1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Flying CAP/UNSAT
+            <input  name='issues' id='issues2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='issues3' style = "background-color:black">
+        </td>
+      </tr>
+
+       <tr id = 'cat'>
+        <td>SP First Ride in Category</td>
+        <td>
+          <label class='container'>Co-pilot Ride
+            <input  name='cat' id='cat1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>All other including first AR and AD
+            <input  name='cat' id='cat2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='cat3' style = "background-color:black">
+        </td>
+      </tr>
+
+      <th colspan = "4" class = "tableSec" >HUMAN FACTORS</th>
+      <tr id = 'hs'>
+        <td>Health and Stress</td>
+        <td id='hs1' style = "background-color:black">
+        </td>
+        <td>
+          <label class='container'>MODERATE
+            <input  name='hs' id='hs2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>HIGH
+            <input  name='hs' id='hs3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'fatigue'>
+        <td>Fatigue</td>
+        <td>
+          <label class='container'>LOW
+            <input  name='fatigue' id='fatigue1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>MODERATE
+            <input  name='fatigue' id='fatigue2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>HIGH
+            <input  name='fatigue' id='fatigue3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <th colspan = "4" style = "background-color: black" ></th>
+      <tr>
+        <td style='font-size: 24px'>TOTAL <button class='btn btn-primary' style='float:right' onclick = "Aggregate(score)">Calculate</button></td>
+        <td style='text-align: center; font-size: 24px' id = "total">
+        </td>
+        <td style = "background-color:black">
+        </td>
+        <td><button class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button></td>
+      </tr>
+      <tr>
+        <th class="tableSec" >Approval AUTHORITY</th>
+        <th class="tableSec">RISK LEVEL (Total Score)</th>
+        <th class="tableSec" colspan=2>SIGNATURE</th>
+      </tr>
+      <tr>
+        <td>Aircraft Commander</td>
+        <td name='low' id = 'low'>
+          <label>LOW (0-13)</label>
+        </td>
+        <td name='acsig' colspan=2 id='acsig'><button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Sign Card</button>
+        </td>
+      </tr>
+      <tr>
+        <td>SQ/Supervisor</td>
+        <td name='mod' id = 'mod'>
+          <label>MODERATE (14-23)</label>
+        </td>
+        <td name='supsig'colspan=2 id='supsig'><button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Sign Card</button>
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td>SQ/CC or Equivalent</td>
+        <td name='high' id = 'high'>
+          <label>HIGH (24-32)</label>
+        </td>
+        <td name='sqsig' colspan=2 id='sqsig'><button class='btn btn-primary'  style='float:right' onclick='signCard(this)'>Sign Card</button>
+        </td>
+      </tr>
+      <tr>
+        <td>OG/CC</td>
+        <td name='severe' id = 'severe'>
+          <label>SEVERE (&gt; 32)</label>
+        </td>
+        <td name='ogsig' colspan=2 id='ogsig'><button class='btn btn-primary'  style='float:right' onclick='signCard(this)'>Sign Card</button>
+        </td>
+      </tr>
+
+
+      
+    </table>
+    <input type= 'submit' value= 'submit'>
+    </form>
+    <pre>
+
+
+    </pre>
+
+
+
+  <script type= "text/javascript" src = 'orm_sheet.js'></script>
+  </body>
+</html>
