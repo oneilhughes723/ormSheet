@@ -1,4 +1,4 @@
- //javascript file that will be imported to html
+  //javascript file that will be imported to html
 
 /////////////////////////////////////////
  //global variables
@@ -58,10 +58,10 @@ var score ={
  climb: {},
  flight_cond: {},
  jump: {},
- acsig: "",
- supsig: "",
- sqsig: "",
- ogsig: "",
+ acsig: '',
+ supsig: '',
+ sqsig: '',
+ ogsig: '',
  supapp: '',
  logged: '',
  night: 0,
