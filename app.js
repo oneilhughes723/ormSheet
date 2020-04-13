@@ -16,6 +16,7 @@ var Score = require('./score.js');
 app.use('/create', (req, res) => {
 	var newScore = new Score ({
 		cs: req.body.cs,
+		date: Date(),
 		ac: req.body.ac,
 		to: req.body.to,
 		sortie: req.body.sortie,
@@ -72,6 +73,11 @@ app.use('/create', (req, res) => {
 	    } );
 
     });
+
+//////////////////////////////////////////////////////////////////
+//////////////////////This is the mongo query ////////////////////
+/////////////////////////////////////////////////////////////////
+Score.find((err, allScores) => console.log(allScores));
 
 
 
