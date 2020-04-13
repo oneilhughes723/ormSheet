@@ -15,10 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var Score = require('./score.js');
 
 
-
-
 app.use('/create', (req, res) => {
 	var newScore = new Score ({
+		id: req.body.cs + req.body.to,
 		cs: req.body.cs,
 		date: Date(),
 		ac: req.body.ac,
@@ -66,18 +65,14 @@ app.use('/create', (req, res) => {
 
 	    });
 
-		fs.appendFileSync("data.json", newScore);
 
-	newScore.save( (err) => {
+	newScore.save((err) => {
 		if (err) {
 		    res.type('html').status(500);
 		    res.send('Error: ' + err);
 		}
 		else {
-		    //res.redirect('/public/index.html');
-				res.render('created', {
-					score: newScore
-				})
+		    res.redirect('/86orm');
 		}
 	    } );
 
@@ -90,42 +85,52 @@ app.use('/create', (req, res) => {
 var archiveScores;
 var today = new Date();
 today.setHours(0,0,0,0);
-var csList_today = [];
-var todayScore = [];
+
+
 var csfill;
 
 
 
 //Score.find((err, allScores) => console.log(allScores));
-app.use('/test', (req, res) => {
+app.use('/86orm', (req, res) => {
+
 	Score.find((err, allScores) => {
+		var todayScore = [];
+		var csList_today = [];
 
 		//copied java Script
 		////////////////////////
 		for (archiveScore of allScores) {
+
 		 archiveScore.date = Date.parse(archiveScore.date);
+
 
 		 if (archiveScore.date >= Date.parse(today)) {
 			 todayScore.push(archiveScore);
 		 }
 		};
+
+		var stringScore = JSON.stringify(todayScore, null, "");
+
 		for (obj of todayScore) {
 		 csList_today.push(obj.cs + obj.to);
 		};
 
 		if (csList_today.length == 0){
-		 csfill = "<option>Callsign</option>";
+		 csfill = "<option value = stringScore id = stringScore>Callsign</option>";
 		}
 		else {
 			 var csOptions = "";
 			 for (obj of todayScore) {
-				 csOptions += "<option>" + obj.cs + ", TO: "+ obj.to + "</option>";
+				 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
 			 };
-			 csfill = "<option>Callsign</option>" + csOptions;
+			 csfill = "<option value =" +  stringScore + " id = stringScore >Callsign</option>" + csOptions;
 		};
 
+
 		res.render('testdropdown', {
-			csList_today: csList_today,
+			stringScore: stringScore,
+			todayScore: todayScore,
 			csfill: csfill
 
 	})
@@ -133,28 +138,11 @@ app.use('/test', (req, res) => {
 });
 
 
-app.use('/archivetest', (req, res) => {
-	Score.find((err, allScores) => {
-
-		//copied java Script
-		////////////////////////
-
-		res.render('testdropdown', {
-			allScores: allScores
-
-	})
-});
-});
-
-
-
-
-
 app.use('/public', express.static('public'));
 
 app.use('/', (req, res) => { res.redirect('/public/index.html'); } );
 
-
+//pp.use('/', (req, res) => { res.redirect('/public/index.html'); } );
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');

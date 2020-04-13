@@ -396,7 +396,7 @@ function signCard(el) {
    id = el.parentElement.id;
    if (id == 'acsig'){
      var acsig = sig;
-     document.getElementById(id).innerHTML = acsig;
+     document.getElementByIds(id).innerHTML = acsig;
      score.acsig = acsig;
      document.getElementById(id).value = acsig;
    }
@@ -470,6 +470,7 @@ function refill(){
 
    if (todayScore[i].cs + ", TO: " + todayScore[i].to === callsign){
      arrInd = i;
+     console.log(arrInd);
      }
    }
  console.log(todayScore[arrInd]);

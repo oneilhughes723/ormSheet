@@ -15,7 +15,7 @@
     <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
 
     <div align='center'>
-      <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop">
+      <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop" onchange = 'refill()'>
         <%- csfill%>
       </select>
     </div>
@@ -23,7 +23,7 @@
         <button  align='center' class="btn btn-primary col-sm-3" onclick="refill()" style = "position: relative; left: 37.5%">RELOAD ORM</button>
         <div><pre>
         </pre></div>
-          <button class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
+          <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
           <a class="btn btn-primary dropdown-toggle" href="#" role="button" style='position:relative; right:-30%' id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             CHANGE INFO
           </a>
@@ -664,7 +664,7 @@
       </tr>
       <th colspan = "4" style = "background-color: black" ></th>
       <tr>
-        <td style='font-size: 24px'>TOTAL <button class='btn btn-primary' style='float:right' onclick = "Aggregate(score)">Calculate</button></td>
+        <td style='font-size: 24px'>TOTAL <button class='btn btn-primary' style='float:right' type = 'button' onclick = "Aggregate(score)">Calculate</button></td>
         <td style='text-align: center; font-size: 24px' id = "total">
         </td>
         <td style = "background-color:black">
