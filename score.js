@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
 
 
 var scoreSchema = new Schema( {
-  cs: {type: String, required: true, unique: true},
+  cs: String,
   date: Date,
   ac: String,
   to: Number,

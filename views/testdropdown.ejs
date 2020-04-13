@@ -12,11 +12,11 @@
   </head>
 
   <body>
-
     <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
 
     <div align='center'>
       <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop">
+        <%- csfill%>
       </select>
     </div>
       <form method = "POST" action = "/create">
@@ -42,9 +42,9 @@
         <table style = 'border: 2px solid black' align = 'center'>
             <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
             <tr>
-                <td><label>A/C: </label><input name = 'ac' id = 'ac' type = 'text' value = <%=score.ac%>></td>
-                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text' value = <%=score.cs.toString()%>></td>
-                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text' value = <%=score.to%>></td>
+                <td><label>A/C: </label><input name = 'ac' id = 'ac' type = 'text'></td>
+                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text'></td>
+                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text'></td>
             <tr height='25px'>
                 <td><li style='list-style-type: none' name='sortie' id='sortie' value= ''>SORTIE:</li></td>
                 <td id ='commPlan' value= ''>
@@ -722,6 +722,6 @@
 
 
 
-  <script type= "text/javascript" src = '../public/ormSheet.js'></script>
+  <script type= "text/javascript" src = '../public/ormSheetdrop.js'></script>
   </body>
 </html>
