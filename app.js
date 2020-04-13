@@ -3,6 +3,10 @@ var app = express();
 
 app.set('view engine', 'ejs');
 
+const fs = require('fs');
+
+
+
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,13 +66,18 @@ app.use('/create', (req, res) => {
 
 	    });
 
+		fs.appendFileSync("data.json", newScore);
+
 	newScore.save( (err) => {
 		if (err) {
 		    res.type('html').status(500);
 		    res.send('Error: ' + err);
 		}
 		else {
-		    res.render('created', {score : newScore});
+		    //res.redirect('/public/index.html');
+				res.render('created', {
+					score: newScore
+				})
 		}
 	    } );
 
@@ -77,7 +86,65 @@ app.use('/create', (req, res) => {
 //////////////////////////////////////////////////////////////////
 //////////////////////This is the mongo query ////////////////////
 /////////////////////////////////////////////////////////////////
-Score.find((err, allScores) => console.log(allScores));
+
+var archiveScores;
+var today = new Date();
+today.setHours(0,0,0,0);
+var csList_today = [];
+var todayScore = [];
+var csfill;
+
+
+
+//Score.find((err, allScores) => console.log(allScores));
+app.use('/test', (req, res) => {
+	Score.find((err, allScores) => {
+
+		//copied java Script
+		////////////////////////
+		for (archiveScore of allScores) {
+		 archiveScore.date = Date.parse(archiveScore.date);
+
+		 if (archiveScore.date >= Date.parse(today)) {
+			 todayScore.push(archiveScore);
+		 }
+		};
+		for (obj of todayScore) {
+		 csList_today.push(obj.cs + obj.to);
+		};
+
+		if (csList_today.length == 0){
+		 csfill = "<option>Callsign</option>";
+		}
+		else {
+			 var csOptions = "";
+			 for (obj of todayScore) {
+				 csOptions += "<option>" + obj.cs + ", TO: "+ obj.to + "</option>";
+			 };
+			 csfill = "<option>Callsign</option>" + csOptions;
+		};
+
+		res.render('testdropdown', {
+			csList_today: csList_today,
+			csfill: csfill
+
+	})
+});
+});
+
+
+app.use('/archivetest', (req, res) => {
+	Score.find((err, allScores) => {
+
+		//copied java Script
+		////////////////////////
+
+		res.render('testdropdown', {
+			allScores: allScores
+
+	})
+});
+});
 
 
 
