@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel='stylesheet' href="orm_sheet.css">
+    <link rel='stylesheet' href="ormCSSsheet.css">
   </head>
 
   <body>
@@ -21,7 +21,7 @@
       <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop">
       </select>
     </div>
-
+      <form method = "POST" action = "/create">
         <button  align='center' class="btn btn-primary col-sm-3" onclick="refill()" style = "position: relative; left: 37.5%">RELOAD ORM</button>
         <div><pre>
         </pre></div>
@@ -40,15 +40,15 @@
             <a class="dropdown-item" onclick='sortiePrompt()'>CHANGE SORTIE</a>
           </div>
         <button class="btn btn-primary" style = "position: absolute; right: 5% " onclick="deleteInfo()">Delete Entry</button>
-        <form method = "POST" action = "/create">
+
         <table style = 'border: 2px solid black' align = 'center'>
             <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
             <tr>
-                <td name='ac' id='ac' value= ''>AIRCRAFT COMMANDER:</td>
-                <td name='cs' id='cs' value= ''>CALLSIGN:</td>
-                <td name='to' id='to' value= ''>TAKEOFF TIME/DATE:</td>
+                <td><label>A/C: </label><input name = 'ac' id = 'ac' type = 'text'></td>
+                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text'></td>
+                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text'></td>
             <tr height='25px'>
-                <td  name='sortie' id='sortie' value= ''>SORTIE:</td>
+                <td><li style='list-style-type: none' name='sortie' id='sortie' value= ''>SORTIE:</li></td>
                 <td id ='commPlan' value= ''>
                   <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
                     <option value="0">Comm Plan</option>
@@ -62,9 +62,9 @@
                     <option value="8">Eight</option>
                   </select>
                 </td>
-                 <td name = 'plan' id='plan' value= ''>Sortie Itinerary: </td>
+                 <td><label>Sortie Itinerary: </label><input name = 'plan' id='plan' value= ''></td>
             </tr>
-                <td name = 'supapp' id='supApproval' value= ''>SUP APPROVAL <button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
+                <td><li style='list-style-type: none' name = 'supapp' id='supApproval' value= ''>SUP APPROVAL </li><button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
                 <td>
                    <label class='container'>Night Brief Complete?
                      <input  name='night' id='night' onclick='nightcpLog(this)' type = "checkbox" value = "">
@@ -713,7 +713,7 @@
       </tr>
 
 
-      
+
     </table>
     <input type= 'submit' value= 'submit'>
     </form>
@@ -724,6 +724,6 @@
 
 
 
-  <script type= "text/javascript" src = 'orm_sheet.js'></script>
+  <script type= "text/javascript" src = 'ormSheet.js'></script>
   </body>
 </html>

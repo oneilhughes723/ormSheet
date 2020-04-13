@@ -152,6 +152,7 @@ function sortiePrompt(){
  document.getElementById('sortie').innerHTML = displaySortie;
  document.getElementById('sortie').value = sortie
  var sortieval = document.getElementById('sortie').value;
+ console.log(sortieval);
 };
 
 function planPrompt(){
