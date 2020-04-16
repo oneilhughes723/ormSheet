@@ -83,68 +83,75 @@ app.use('/create', (req, res) => {
 /////////////////////////////////////////////////////////////////
 
 var archiveScores;
-var csfill;
 var today = new Date();
 today.setHours(0,0,0,0);
 
 
-var csfill;
-
-
-
 //Score.find((err, allScores) => console.log(allScores));
 app.use('/86orm', (req, res) => {
+		//variable declaration
+		//////////////////
 
-	var myPromise = () => {
-		return new Promise((resolve, reject) => {
+
+		////////////////////////////
 
 		//mongo query
-			Score.find((err, allScores) => {
-				var todayScore = [];
-				var csList_today = [];
-				console.log('this should be first')
-				//copied java Script
-				////////////////////////
-				for (archiveScore of allScores) {
-				 archiveScore.date = Date.parse(archiveScore.date);
-				 if (archiveScore.date >= Date.parse(today)) {
-					 todayScore.push(archiveScore);
+		function getDrop() {
+			var scoreFinder = Score.find().exec();
+			return scoreFinder;
+		};
+
+		getDrop().then(function(allScores){
+			var csfill;
+			///////work with scores
+			var todayScore = [];
+			var csList_today = [];
+
+			///////////////////////////
+			//Determine CSFill/////////////
+			////////////////////////
+			for (archiveScore of allScores) {
+			 archiveScore.date = Date.parse(archiveScore.date);
+			 if (archiveScore.date >= Date.parse(today)) {
+				 todayScore.push(archiveScore);
+			 };
+			};
+			var stringScore = JSON.stringify(todayScore, null, "");
+			for (obj of todayScore) {
+			 csList_today.push(obj.cs + obj.to);
+			};
+			if (csList_today.length == 0){
+			 csfill = "<option>Callsign</option>";
+			}
+			else {
+				 var csOptions = "";
+				 for (obj of todayScore) {
+					 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
 				 };
-				};
-				var stringScore = JSON.stringify(todayScore, null, "");
-				for (obj of todayScore) {
-				 csList_today.push(obj.cs + obj.to);
-				};
-				if (csList_today.length == 0){
-				 csfill = "<option>Callsign</option>";
-				}
-				else {
-					 var csOptions = "";
-					 for (obj of todayScore) {
-						 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
-					 };
-					 csfill = "<option>Callsign</option>" + csOptions;
-				};
+				 csfill = "<option>Callsign</option>" + csOptions;
+			};
+				res.render('testdropdown', {
+					csfill: csfill
+				})
+			})
+			/////////////////////////////////////////
+			//////this is where the fill in function should be
+			///////////////////////////////////////
 
-			});
-			console.log('this should be second')
-			console.log(csfill);
-			resolve(csfill);
-			reject(Error("not working"));
+
+
+
+
+
+
+
+
+
+			///////////////////////////////////////
 		});
-	};
-
-	myPromise().then(function(result) {
-		console.log('this should be third')
-		console.log(result);
-		res.render('testdropdown', {
-			csfill: csfill
-		});
-	});
 
 
 
-	});
 
 app.use('/public', express.static('public'));
 
