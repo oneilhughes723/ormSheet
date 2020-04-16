@@ -1,4 +1,23 @@
   //javascript file that will be imported to html
+//////////////////////////////////////////
+//////////////AJAX setup//////////////////
+//////////////////////////////////////////
+function getScore(id) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      console.log(this.status);
+      console.log('in the function')
+      fillScores(this);
+    };
+  };
+  xhttp.open("GET", "mongodb://localhost:27017/ormInputs", true);
+  xhttp.send();
+};
+
+function fillScores(xhttp) {
+  console.log('made it to fill');
+};
 
 /////////////////////////////////////////
  //global variables
@@ -7,6 +26,7 @@
 var csList = [];
 var todayScore = [];
 var archiveList = [];
+var stringScore;
 //var csList_today = [];
 var cs;
 var ac;
@@ -461,7 +481,7 @@ function refill(){
  //this segment will clear all background colors
  console.log('refill initiated');
  clearCells();
-  var stringScore = JSON.parse(document.getElementById('stringScore').value);
+ stringScore = JSON.parse(document.getElementById('stringScore').value);
   var callsign = document.getElementById('csdrop').value;
   console.log(callsign);
   var arrInd;

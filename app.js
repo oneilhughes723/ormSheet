@@ -17,7 +17,7 @@ var Score = require('./score.js');
 
 app.use('/create', (req, res) => {
 	var newScore = new Score ({
-		id: req.body.cs + req.body.to,
+		_id: req.body.cs + req.body.to,
 		cs: req.body.cs,
 		date: Date(),
 		ac: req.body.ac,
@@ -83,6 +83,7 @@ app.use('/create', (req, res) => {
 /////////////////////////////////////////////////////////////////
 
 var archiveScores;
+var csfill;
 var today = new Date();
 today.setHours(0,0,0,0);
 
@@ -94,49 +95,56 @@ var csfill;
 //Score.find((err, allScores) => console.log(allScores));
 app.use('/86orm', (req, res) => {
 
-	Score.find((err, allScores) => {
-		var todayScore = [];
-		var csList_today = [];
+	var myPromise = () => {
+		return new Promise((resolve, reject) => {
 
-		//copied java Script
-		////////////////////////
-		for (archiveScore of allScores) {
+		//mongo query
+			Score.find((err, allScores) => {
+				var todayScore = [];
+				var csList_today = [];
+				console.log('this should be first')
+				//copied java Script
+				////////////////////////
+				for (archiveScore of allScores) {
+				 archiveScore.date = Date.parse(archiveScore.date);
+				 if (archiveScore.date >= Date.parse(today)) {
+					 todayScore.push(archiveScore);
+				 };
+				};
+				var stringScore = JSON.stringify(todayScore, null, "");
+				for (obj of todayScore) {
+				 csList_today.push(obj.cs + obj.to);
+				};
+				if (csList_today.length == 0){
+				 csfill = "<option>Callsign</option>";
+				}
+				else {
+					 var csOptions = "";
+					 for (obj of todayScore) {
+						 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
+					 };
+					 csfill = "<option>Callsign</option>" + csOptions;
+				};
 
-		 archiveScore.date = Date.parse(archiveScore.date);
+			});
+			console.log('this should be second')
+			console.log(csfill);
+			resolve(csfill);
+			reject(Error("not working"));
+		});
+	};
 
-
-		 if (archiveScore.date >= Date.parse(today)) {
-			 todayScore.push(archiveScore);
-		 }
-		};
-
-		var stringScore = JSON.stringify(todayScore, null, "");
-
-		for (obj of todayScore) {
-		 csList_today.push(obj.cs + obj.to);
-		};
-
-		if (csList_today.length == 0){
-		 csfill = "<option value = stringScore id = stringScore>Callsign</option>";
-		}
-		else {
-			 var csOptions = "";
-			 for (obj of todayScore) {
-				 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
-			 };
-			 csfill = "<option value =" +  stringScore + " id = stringScore >Callsign</option>" + csOptions;
-		};
-
-
+	myPromise().then(function(result) {
+		console.log('this should be third')
+		console.log(result);
 		res.render('testdropdown', {
-			stringScore: stringScore,
-			todayScore: todayScore,
 			csfill: csfill
+		});
+	});
 
-	})
-});
-});
 
+
+	});
 
 app.use('/public', express.static('public'));
 
