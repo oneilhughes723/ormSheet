@@ -16,6 +16,7 @@ var Score = require('./score.js');
 
 
 app.use('/create', (req, res) => {
+
 	var newScore = new Score ({
 		_id: req.body.cs + req.body.to,
 		cs: req.body.cs,
@@ -87,11 +88,13 @@ var today = new Date();
 today.setHours(0,0,0,0);
 
 
+
+
 //Score.find((err, allScores) => console.log(allScores));
 app.use('/86orm', (req, res) => {
 		//variable declaration
-		//////////////////
 
+	//////////////////
 
 		////////////////////////////
 
@@ -100,6 +103,10 @@ app.use('/86orm', (req, res) => {
 			var scoreFinder = Score.find().exec();
 			return scoreFinder;
 		};
+
+		//mongo query
+
+
 
 		getDrop().then(function(allScores){
 			var csfill;
@@ -137,6 +144,9 @@ app.use('/86orm', (req, res) => {
 			/////////////////////////////////////////
 			//////this is where the fill in function should be
 			///////////////////////////////////////
+			.then(console.log(Score.findOne(
+				{ cs: { $eq: 'sadfasdf' } }
+			)))
 
 
 

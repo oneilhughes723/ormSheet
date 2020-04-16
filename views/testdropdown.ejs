@@ -15,9 +15,11 @@
     <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
 
     <div align='center'>
-      <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop" onchange = 'refill()'>
-        <%- csfill%>
-      </select>
+      <form method = "POST" action = "/86orm">
+        <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
+          <%- csfill%>
+        </select>
+      </form>
     </div>
       <form method = "POST" action = "/create">
         <button  align='center' class="btn btn-primary col-sm-3" onclick="refill()" style = "position: relative; left: 37.5%">RELOAD ORM</button>
