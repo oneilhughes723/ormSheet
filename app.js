@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
 
 app.set('view engine', 'ejs');
 
@@ -93,7 +95,6 @@ today.setHours(0,0,0,0);
 //Score.find((err, allScores) => console.log(allScores));
 app.use('/86orm', (req, res) => {
 		//variable declaration
-
 	//////////////////
 
 		////////////////////////////
@@ -144,9 +145,18 @@ app.use('/86orm', (req, res) => {
 			/////////////////////////////////////////
 			//////this is where the fill in function should be
 			///////////////////////////////////////
-			.then(console.log(Score.findOne(
-				{ cs: { $eq: 'sadfasdf' } }
-			)))
+
+			.then(MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var currentID = req.body.csdrop;
+  var dbo = db.db("ormInputs");
+  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+}));
+
 
 
 
