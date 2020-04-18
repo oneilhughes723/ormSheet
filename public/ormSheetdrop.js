@@ -1,32 +1,10 @@
   //javascript file that will be imported to html
-//////////////////////////////////////////
-//////////////AJAX setup//////////////////
-//////////////////////////////////////////
-function getScore(id) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4) {
-      console.log(this.status);
-      console.log('in the function')
-      fillScores(this);
-    };
-  };
-  xhttp.open("GET", "mongodb://localhost:27017/ormInputs", true);
-  xhttp.send();
-};
 
-function fillScores(xhttp) {
-  console.log('made it to fill');
-};
 
 /////////////////////////////////////////
  //global variables
 /////////////////////////////////////////
 
-var csList = [];
-var todayScore = [];
-var archiveList = [];
-var stringScore;
 //var csList_today = [];
 var cs;
 var ac;
@@ -95,6 +73,7 @@ var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "
 var month = months[date.getMonth()];
 var year = date.getFullYear().toString().slice(-2);
 var dateOutput = day + " " + month + " " + year
+
 
 
 
@@ -230,25 +209,8 @@ for (archiveScore of archiveList) {
  }
 };
 
-/*
 
-for (obj of todayScore) {
- csList_today.push(obj.cs + obj.to);
-};
 
-if (csList_today.length == 0){
- document.getElementById("csdrop").innerHTML = "<option>Callsign</option>";
-}
-else {
-   var csOptions = "";
-   for (obj of todayScore) {
-     csOptions += "<option>" + obj.cs + ", TO: "+ obj.to + "</option>";
-   };
-   document.getElementById("csdrop").innerHTML = "<option>Callsign</option>" + csOptions;
-};
-*/
-//inspect todays score
-console.log(todayScore);
 
 var innerScore = {
  one: 0,
@@ -321,6 +283,7 @@ function highlightCell (elID) {
  var cell = document.getElementById(elID).parentElement;
  var parentCell = cell.parentElement;
  var strLength = elID.length
+ console.log(strLength);
  var checkVal = elID.substr(strLength -1, 1);
 
  if (checkVal == 1) {
@@ -462,7 +425,10 @@ function signCard(el) {
 
 //function to refill data based on the callsign selected from the dropdown menu. Executed when user hits refill/reload
 
+
+
 function clearCells(){
+  console.log('clear the page')
    for (prop of props_toScore) {
      var propList = [prop + "1", prop + "2", prop + "3"];
 
@@ -583,3 +549,11 @@ function nightcpLog(el){
    document.getElementById(elid).value = score.cp;
  }
 }
+
+
+
+////////////////////////////////////////////
+//// run when opening the PAGE/////////////
+//fumctions that will on initializing the page
+
+clearCells();

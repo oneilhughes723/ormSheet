@@ -87,13 +87,13 @@
         <td>Formation</td>
         <td>
           <label class='container'>Basic
-            <input name='form' id='form1' class = 'checkmark' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <input name='form' id='form1' type = "checkbox"  value = 1 onclick = "highlight(this)">
             <span class='checkmark'></span>
           </label>
         </td>
         <td>
           <label class='container'>Air Refueling
-            <input name='form' id='form2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <input name='form' id='form2' type = "checkbox"  value = 2 onclick = "highlight(this)">
             <span class='checkmark'></span>
           </label>
         </td>
@@ -717,6 +717,7 @@
     </table>
     <input type= 'submit' value= 'submit'>
     </form>
+
     <pre>
 
 
@@ -725,5 +726,166 @@
 
 
   <script type= "text/javascript" src = '../public/ormSheetdrop.js'></script>
+  <script>
+  //object that will record score values for each row
+  var score ={
+   cs: '',
+   ac: '',
+   to: '',
+   sortie: '',
+   plan: '',
+   form: {},
+   ll: {},
+   check: {},
+   mission: {},
+   cdd: {},
+   cfd: {},
+   mp: {},
+   wx: {},
+   temp: {},
+   winds: {},
+   rwy: {},
+   rd: {},
+   ts: {},
+   ents: {},
+   ice: {},
+   hs: {},
+   fatigue: {},
+   mountains: {},
+   birds: {},
+   turbs: {},
+   thermal: {},
+   cat: {},
+   issues: {},
+   ip_currency: {},
+   currency: {},
+   exp: {},
+   airspace: {},
+   climb: {},
+   flight_cond: {},
+   jump: {},
+   acsig: '',
+   supsig: '',
+   sqsig: '',
+   ogsig: '',
+   supapp: '',
+   logged: '',
+   night: 0,
+   cp: 0,
+  };
+
+    var selectObject = <%-JSON.stringify(selectObject)%>;
+
+    ///////////////////////ghetto script /////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+    function highlightCell (elID) {
+     var cell = document.getElementById(elID).parentElement;
+     var parentCell = cell.parentElement;
+     var strLength = elID.length
+     console.log(strLength);
+     var checkVal = elID.substr(strLength -1, 1);
+
+     if (checkVal == 1) {
+       cell.style.background = "#90ee90";
+       parentCell.style.background = "#90ee90";
+     };
+
+     if (checkVal == 2) {
+       cell.style.background = "#FFFF33";
+       parentCell.style.background = "#FFFF33";
+      };
+
+     if (checkVal == 3) {
+       cell.style.background = "#ffcccb";
+       parentCell.style.background = "#ffcccb";
+       }
+    };
+
+    ////////////////////////////////////////
+
+    //For use when the user hits calculate
+    function Aggregate(score) {
+
+    var runningSum = 0;
+    console.log("begin aggregation");
+    console.log(score);
+
+
+     for (prop of props_toScore) {
+       if (Object.values(score[prop]).length != 0) {
+         var maxVal = Math.max(...Object.values(score[prop]));
+         runningSum += maxVal
+       }
+
+
+     };
+
+     document.getElementById("total").innerHTML = runningSum;
+     if (runningSum <= 13) {
+       document.getElementById("total").style.background = "#90ee90";
+       document.getElementById("low").style.background = "#90ee90";
+       document.getElementById("mod").style.background = "";
+       document.getElementById("high").style.background = "";
+       document.getElementById("severe").style.background = "";
+     } else if (runningSum <= 23){
+       document.getElementById("total").style.background = "#FFFF33";
+       document.getElementById("low").style.background = "#90ee90";
+       document.getElementById("mod").style.background = "#FFFF33";
+       document.getElementById("high").style.background = "";
+       document.getElementById("severe").style.background = "";
+     } else if (runningSum <= 32) {
+       document.getElementById("total").style.background = "#fed8b1";
+       document.getElementById("low").style.background = "#90ee90";
+       document.getElementById("mod").style.background = "#FFFF33";
+       document.getElementById("high").style.background = "#fed8b1";
+       document.getElementById("severe").style.background = "";
+     } else {
+       document.getElementById("total").style.background = "#ffcccb";
+       document.getElementById("low").style.background = "#90ee90";
+       document.getElementById("mod").style.background = "#FFFF33";
+       document.getElementById("high").style.background = "#fed8b1";
+       document.getElementById("severe").style.background = "#ffcccb";
+     };
+
+    };
+
+    ///////////////////////////////////////////////
+
+    function refill(){
+
+     //this segment will clear all background colors
+     console.log('refill initiated');
+     var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
+     'mp', 'wx', 'temp', 'winds', 'rwy', 'rd', 'ts', 'ents', 'ice', 'hs',
+     'fatigue', 'mountains', 'birds', 'turbs', 'thermal', 'cat', 'issues',
+     'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
+     'jump'];
+
+     for (var prop of props_toScore){
+       //reassign to score
+       score[prop] = selectObject[prop];
+       var val = Object.values(selectObject[prop]);
+       for (eachVal of val) {
+         if (eachVal > 0){
+           var elid = prop + eachVal;
+           document.getElementById(elid).checked = true;
+           highlightCell(elid);
+         }
+       }
+
+     };
+
+       Aggregate(selectObject);
+     }
+
+    //also aggregate
+    ////////main//////////
+     refill();
+
+
+
+  </script>
   </body>
 </html>

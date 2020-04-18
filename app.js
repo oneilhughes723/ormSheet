@@ -7,7 +7,7 @@ app.set('view engine', 'ejs');
 
 const fs = require('fs');
 
-
+var csfill;
 
 
 var bodyParser = require('body-parser');
@@ -96,24 +96,29 @@ today.setHours(0,0,0,0);
 app.use('/86orm', (req, res) => {
 		//variable declaration
 	//////////////////
+	var csfill;
+	var selectObject;
+	var todayScore = [];
+	var csList_today = [];
 
 		////////////////////////////
 
 		//mongo query
 		function getDrop() {
+			///////work with scores
+
 			var scoreFinder = Score.find().exec();
 			return scoreFinder;
 		};
+
 
 		//mongo query
 
 
 
-		getDrop().then(function(allScores){
-			var csfill;
-			///////work with scores
-			var todayScore = [];
-			var csList_today = [];
+		var csfill = getDrop().then(function(allScores){
+
+
 
 			///////////////////////////
 			//Determine CSFill/////////////
@@ -138,28 +143,33 @@ app.use('/86orm', (req, res) => {
 				 };
 				 csfill = "<option>Callsign</option>" + csOptions;
 			};
-				res.render('testdropdown', {
-					csfill: csfill
-				})
+			return csfill;
 			})
+
 			/////////////////////////////////////////
 			//////this is where the fill in function should be
 			///////////////////////////////////////
 
-			.then(MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  var currentID = req.body.csdrop;
-  var dbo = db.db("ormInputs");
-  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    db.close();
-  });
-}));
+			.then(function(csfill) {
+				MongoClient.connect(url, function(err, db) {
+			  if (err) throw err;
+			  var currentID = req.body.csdrop;
+			  var dbo = db.db("ormInputs");
+			  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
+			    if (err) throw err;
+					selectObject = result;
+			    db.close();
+					res.render('testdropdown', {
+						csfill: csfill,
+						selectObject: selectObject
+					})
+			  });
 
 
+			});
 
 
+		});
 
 
 
