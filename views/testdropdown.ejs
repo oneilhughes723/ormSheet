@@ -59,8 +59,7 @@
                 <td><label>SUP APPROVAL</label><input class='form-control w-50' type='text' name='supapp' id='supapp' value='<%=supapp%>'></td>
                 <td>
                    <label class='container'>Night Brief Complete?
-                     <input  name='night' id='fakenight' onclick='nightcpLog("night")' type = "checkbox" value = "<%=night%>">
-                     <input id='night' type='hidden' value=0>
+                     <input  name='night' id='night' onclick='nightcpLog("night")' type = "checkbox" value = 1>
                      <span class='checkmark'></span>
                    </label>
                 </td>
@@ -740,13 +739,35 @@
 
      //this segment will clear all background colors
      console.log('refill initiated');
-
+      ///just for the complan refill
      if (selectObject == null){
        var cpfill = 0
       } else {
-        var cpfill = selectObject.cp};
+        var cpfill = selectObject.cp;
+        if(selectObject.night == 1){
+          console.log('night')
+          document.getElementById('night').checked = true;
+      }
+      
+      };
 
      document.getElementById('cp').value = cpfill;
+
+
+     /////////////////////////////////////
+     /////refill other values//////////
+     for (var prop of props_toScore){
+
+      var val = Object.values(selectObject[prop]);
+      for (eachVal of val) {
+        if (eachVal > 0){
+          var elid = prop + eachVal;
+          document.getElementById(elid).checked = true;
+          highlightCell(elid);
+  }
+}
+
+}
 
      
 
@@ -754,8 +775,26 @@
      for (var prop of props_toScore){
        //reassign to score
        if (selectObject != null) {
+
+         innerScore = {};
          if (selectObject[prop].length > 0) {
-          
+
+          if (selectObject[prop].includes("1")) {
+            innerScore.one = 1;
+          };
+          if (selectObject[prop].includes("2")) {
+            innerScore.two = 2;
+          };
+          if (selectObject[prop].includes("3")) {
+            innerScore.three = 3;
+          }
+
+
+          score[prop] = innerScore;
+
+         } else {
+           
+           score[prop] = selectObject[prop];
          }
        }
      };

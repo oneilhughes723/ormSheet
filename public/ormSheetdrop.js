@@ -17,7 +17,7 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'mp', 'wx', 'temp', 'winds', 'rwy', 'rd', 'ts', 'ents', 'ice', 'hs',
 'fatigue', 'mountains', 'birds', 'turbs', 'thermal', 'cat', 'issues',
 'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
-'jump', 'night'];
+'jump'];
 
 
 //object that will record score values for each row
@@ -152,7 +152,6 @@ function sortiePrompt(){
  document.getElementById('sortie').innerHTML = displaySortie;
  document.getElementById('sortie').value = sortie
  var sortieval = document.getElementById('sortie').value;
- console.log(sortieval);
 };
 
 function planPrompt(){
@@ -414,95 +413,10 @@ function clearCells(){
  };
 };
 
-function refill(){
-
- //this segment will clear all background colors
- console.log('refill initiated');
- clearCells();
- stringScore = JSON.parse(document.getElementById('stringScore').value);
-  var callsign = document.getElementById('csdrop').value;
-  console.log(callsign);
-  var arrInd;
-  console.log(stringScore);
-
- for (var i = stringScore.length -1; i >= 0; i--){
-
-   if (stringScore[i].cs + stringScore[i].to === callsign){
-     arrInd = i;
-     }
-   };
-
-
- for (var prop of props_toScore){
-
-   var val = Object.values(stringScore[arrInd][prop]);
-   for (eachVal of val) {
-     if (eachVal > 0){
-       var elid = prop + eachVal;
-       document.getElementById(elid).checked = true;
-       highlightCell(elid);
-     }
-   }
-
-   }
-
-//also aggregate
- Aggregate(stringScore[arrInd]);
-
-//reassign values to global variable score
- for (prop in stringScore[arrInd]) {
-   score[prop] = stringScore[arrInd][prop]
- }
-
-
- document.getElementById('ac').innerHTML = "AIRCRAFT COMMANDER:   " + stringScore[arrInd].ac
- document.getElementById('cs').innerHTML = "CALLSIGN:   " + stringScore[arrInd].cs
- document.getElementById('to').innerHTML = "TO TIME/DATE:   " + stringScore[arrInd].to + " " + dateOutput
- document.getElementById('plan').innerHTML = "ITINERARY:    " + stringScore[arrInd].plan
- document.getElementById('sortie').innerHTML = "SORTIE:    " + stringScore[arrInd].sortie
- document.getElementById('acsig').innerHTML = stringScore[arrInd].acsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
- document.getElementById('acsig').style.fontFamily = 'cursive';
- document.getElementById('acsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('acsig').style.fontSize = '32px';
- document.getElementById('supsig').innerHTML = stringScore[arrInd].supsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
- document.getElementById('supsig').style.fontFamily = 'cursive';
- document.getElementById('supsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('supsig').style.fontSize = '32px';
- document.getElementById('sqsig').innerHTML = stringScore[arrInd].sqsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
- document.getElementById('sqsig').style.fontFamily = 'cursive';
- document.getElementById('sqsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('sqsig').style.fontSize = '32px';
- document.getElementById('ogsig').innerHTML = stringScore[arrInd].ogsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
- document.getElementById('ogsig').style.fontFamily = 'cursive';
- document.getElementById('ogsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('ogsig').style.fontSize = '32px';
-
- if(stringScore[arrInd].night == 1){
-   document.getElementById('night').checked = true;
- }
- if(stringScore[arrInd].cp != 0){
-   document.getElementById('cp').value = stringScore[arrInd].cp;
- }
-}
-
-
-//function to delete entry from storage
-function deleteInfo(){
- var callsign = document.getElementById('csdrop').value;
- console.log(callsign);
- for (i = todayScore.length -1; i >= 0; i--){
-   if (todayScore[i].cs + ", TO: " + todayScore[i].to === callsign){
-     let storageKey = todayScore[i].cs + new Date(todayScore[i].date).toString().substr(0,24);
-     localStorage.removeItem(storageKey);
-     alert("The entry " + todayScore[i].cs + ", TO: " + todayScore[i].to + " has been deleted")
 
 
 
-   };
- };
 
-
-}
 
 function nightcpLog(el){
  var elid = el.id;
