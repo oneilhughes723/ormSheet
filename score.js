@@ -51,7 +51,7 @@ var scoreSchema = new Schema( {
   supsig: String,
   sqsig: String,
   ogsig: String,
-  supApp: String,
+  supapp: String,
   logged: String
 });
 

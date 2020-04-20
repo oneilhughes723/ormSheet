@@ -77,7 +77,7 @@ app.use('/create', (req, res) => {
 		supsig: req.body.supsig,
 		sqsig: req.body.sqsig,
 		ogsig: req.body.ogsig,
-		supApp: req.body.supApp,
+		supapp: req.body.supapp,
 		logged: req.body.logged
 
 		});
@@ -130,7 +130,7 @@ app.use('/delete', (req, res) => {
 });
 
 
-	
+
 //////////////////////////////////////////////////////////////////
 //////////////////////This is the mongo query ////////////////////
 /////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ app.use('/86orm', (req, res) => {
 	//////////////////
 	var csfill;
 	var selectObject;
-	
+
 	var currentID = req.body.csdrop;
 	if (currentID == undefined) {
 		currentID = 'Callsign';
@@ -206,12 +206,12 @@ app.use('/86orm', (req, res) => {
 						csOptions += "<option value=\"" + obj._id+ "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
 					};
 				};
-				if (currentID != "Callsign"){ 
+				if (currentID != "Callsign"){
 					csfill = csOptions + "<option>Callsign</option>";
 				} else {
 					csfill = "<option>Callsign</option>" + csOptions;
 				};
-				 
+
 			};
 			return csfill;
 			})
@@ -223,7 +223,7 @@ app.use('/86orm', (req, res) => {
 			.then(function(csfill) {
 				MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
 			  if (err) throw err;
-			  
+
 
 
 			  var dbo = db.db("ormInputs");
@@ -288,7 +288,7 @@ app.use('/86orm', (req, res) => {
 				});
 
 			})
-			
+
 
 
 

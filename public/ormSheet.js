@@ -418,7 +418,7 @@ function signCard(el) {
      score.ogsig = ogsig;
      document.getElementById(id).value = score.ogsig;
    }
-   else if(id == 'supApproval'){
+   else if(id == 'supapp'){
      var supapp = sig;
      var pw = prompt('Please enter the Sup Password', '***')
      if (pw != "1qaz2wsx!QAZ@WSX"){

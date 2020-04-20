@@ -24,14 +24,14 @@
           <%- csfill%>
         </select>
       </form>
-  
 
-    
+
+
       <form method = "POST" action = "/create">
 
           <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
           <button class="btn btn-primary" style = "position: absolute; right: 5% " type = 'submit' formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
-        
+
 
         <table style = 'border: 2px solid black' align = 'center'>
             <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
@@ -56,7 +56,7 @@
                 </td>
                  <td><label>PROFILE: </label><input class='form-control w-50' value = "<%=plan%>" name = 'plan' id='plan'></td>
             </tr>
-                <td><label>SUP APPROVAL</label><input class='form-control w-50' type='text' name='supapp' id='supapp' value='<%=supapp%>'></td>
+                <td><label>SUP APPROVAL</label><input class='form-control w-50' name='supapp' id='supapp' value='<%=supapp%>'></td>
                 <td>
                    <label class='container'>Night Brief Complete?
                      <input  name='night' id='night' onclick='nightcpLog("night")' type = "checkbox" value = 1>
@@ -676,7 +676,7 @@
         <td name='low' id = 'low'>
           <label>LOW (0-13)</label>
         </td>
-        <td name='acsig' colspan=2 id='acsig'><input class='form-control w-50' type='text' value="<%=acsig%>" width='200px'>
+        <td  colspan=2 id='acsig'><input class='form-control w-50' name='acsig' type='text' value="<%=acsig%>" width='200px'>
         </td>
       </tr>
       <tr>
@@ -684,7 +684,7 @@
         <td name='mod' id = 'mod'>
           <label>MODERATE (14-23)</label>
         </td>
-        <td name='supsig'colspan=2 id='supsig'><input class='form-control w-50' type='text' value="<%=supsig%>" width='200px'>
+        <td name='supsig'colspan=2 id='supsig'><input class='form-control w-50' name='supsig' type='text' value="<%=supsig%>" width='200px'>
         </td>
       </tr>
       </tr>
@@ -693,7 +693,7 @@
         <td name='high' id = 'high'>
           <label>HIGH (24-32)</label>
         </td>
-        <td name='sqsig' colspan=2 id='sqsig'><input class='form-control w-50' type='text' value="<%=sqsig%>" width='200px'>
+        <td name='sqsig' colspan=2 id='sqsig'><input class='form-control w-50' name='sqsig' type='text' value="<%=sqsig%>" width='200px'>
         </td>
       </tr>
       <tr>
@@ -701,7 +701,7 @@
         <td name='severe' id = 'severe'>
           <label>SEVERE (&gt; 32)</label>
         </td>
-        <td name='ogsig' colspan=2 id='ogsig'><input class='form-control w-50' type='text' value="<%=ogsig%>" width='200px'>
+        <td name='ogsig' colspan=2 id='ogsig'><input class='form-control w-50' name='ogsig' type='text' value="<%=ogsig%>" width='200px'>
         </td>
       </tr>
 
@@ -711,7 +711,7 @@
 
     </form>
 
-    
+
 
     <pre>
 
@@ -750,7 +750,7 @@
         }
         document.getElementById('cp').value = cpfill;
 
-            
+
         /////////////////////////////////////
         /////refill other values//////////
         for (var prop of props_toScore){
@@ -765,14 +765,14 @@
     }
     }
 
-      
+
       };
 
-     
 
 
 
-     
+
+
 
 
      for (var prop of props_toScore){
@@ -796,7 +796,7 @@
           score[prop] = innerScore;
 
          } else {
-           
+
            score[prop] = selectObject[prop];
          }
        }
@@ -804,7 +804,7 @@
         if (selectObject != null) {
           Aggregate(selectObject);
         };
-       
+
      }
 
 

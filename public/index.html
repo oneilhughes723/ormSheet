@@ -32,7 +32,7 @@
           <div  style='left:10%%' class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="#">CLEAR PAGE</a>
             <a class="dropdown-item" onclick="deleteInfo">DELETE ENTRY</a>
-            <a class="dropdown-item" onclick="signCard('supApproval')">APPROVE (SUP)</a>
+            <a class="dropdown-item" onclick="signCard('supapp')">APPROVE (SUP)</a>
             <a class="dropdown-item" onclick="acPrompt()">CHANGE AC</a>
             <a class="dropdown-item" onclick='csPrompt()'>CHANGE CALLSIGN</a>
             <a class="dropdown-item" onclick='toPrompt()'>CHANGE T/O TIME</a>
@@ -64,7 +64,7 @@
                 </td>
                  <td><label>Sortie Itinerary: </label><input name = 'plan' id='plan' value= ''></td>
             </tr>
-                <td><li style='list-style-type: none' name = 'supapp' id='supApproval' value= ''>SUP APPROVAL </li><button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
+                <td><li style='list-style-type: none' name = 'supapp' id='supapp' value= ''>SUP APPROVAL </li><button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
                 <td>
                    <label class='container'>Night Brief Complete?
                      <input  name='night' id='night' onclick='nightcpLog(this)' type = "checkbox" value = "">
