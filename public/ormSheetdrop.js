@@ -17,7 +17,7 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'mp', 'wx', 'temp', 'winds', 'rwy', 'rd', 'ts', 'ents', 'ice', 'hs',
 'fatigue', 'mountains', 'birds', 'turbs', 'thermal', 'cat', 'issues',
 'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
-'jump'];
+'jump', 'night'];
 
 
 //object that will record score values for each row

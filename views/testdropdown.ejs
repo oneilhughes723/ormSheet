@@ -15,44 +15,34 @@
   <body>
     <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
 
-    <div align='center'>
+
+
+
+
       <form method = "POST" action = "/86orm">
-        <select class='custom-select w-25' style = "position: relative; left: 5%; width: 100px" id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
+        <select class='custom-select w-25' style = "position: absolute; left: 50%; transform:translateX(-50%)"  id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
           <%- csfill%>
         </select>
       </form>
-    </div>
+  
+
+    
       <form method = "POST" action = "/create">
-        <button  align='center' class="btn btn-primary col-sm-3" onclick="refill()" style = "position: relative; left: 37.5%">RELOAD ORM</button>
-        <div><pre>
-        </pre></div>
+
           <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
-          <a class="btn btn-primary dropdown-toggle" href="#" role="button" style='position:relative; right:-30%' id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            CHANGE INFO
-          </a>
-          <div  style='left:10%' class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">CLEAR PAGE</a>
-            <a class="dropdown-item" onclick="deleteInfo">DELETE ENTRY</a>
-            <a class="dropdown-item" onclick="signCard('supApproval')">APPROVE (SUP)</a>
-            <a class="dropdown-item" onclick="acPrompt()">CHANGE AC</a>
-            <a class="dropdown-item" onclick='csPrompt()'>CHANGE CALLSIGN</a>
-            <a class="dropdown-item" onclick='toPrompt()'>CHANGE T/O TIME</a>
-            <a class="dropdown-item" onclick='planPrompt()'>CHANGE ITINERARY</a>
-            <a class="dropdown-item" onclick='sortiePrompt()'>CHANGE SORTIE</a>
-          </div>
           <button class="btn btn-primary" style = "position: absolute; right: 5% " type = 'submit' formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
         
 
         <table style = 'border: 2px solid black' align = 'center'>
             <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
             <tr>
-                <td><label>A/C:</label><input name = 'ac' id = 'ac' type = 'text' ></td>
-                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text' ></td>
-                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text' ></td>
+                <td ><label>A/C:</label><input class='form-control w-50' value = "<%=acfill%>" name = 'ac' id = 'ac' type = 'text' ></td>
+                <td><label>CALLSIGN: </label><input class='form-control w-50' value = "<%=csIn%>" name = 'cs' id = 'cs' type = 'text' ></td>
+                <td><label>TAKEOFF TIME/DATE:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
             <tr height='25px'>
-                <td><li style='list-style-type: none' name='sortie' id='sortie' value= ''>SORTIE:</li></td>
-                <td id ='commPlan' value= ''>
-                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' " margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
+                <td><label>SORTIE: </label><input class='form-control w-50' type = "text" name = "sortie" id = "sortie" value = "<%=sortie%>"></td>
+                <td id ='commPlan'>
+                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
                     <option value="0">Comm Plan</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -64,16 +54,18 @@
                     <option value="8">Eight</option>
                   </select>
                 </td>
-                 <td><label>Sortie Itinerary: </label><input name = 'plan' id='plan'></td>
+                 <td><label>PROFILE: </label><input class='form-control w-50' value = "<%=plan%>" name = 'plan' id='plan'></td>
             </tr>
-                <td><li style='list-style-type: none' name = 'supapp' id='supApproval' value= ''>SUP APPROVAL </li><button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
+                <td><label>SUP APPROVAL</label><input class='form-control w-50' type='text' name='supapp' id='supapp' value='<%=supapp%>'></td>
                 <td>
                    <label class='container'>Night Brief Complete?
-                     <input  name='night' id='night' onclick='nightcpLog(this)' type = "checkbox" value = "">
+                     <input  name='night' id='fakenight' onclick='nightcpLog("night")' type = "checkbox" value = "<%=night%>">
+                     <input id='night' type='hidden' value=0>
                      <span class='checkmark'></span>
                    </label>
                 </td>
-                <td name='logged' id='logged'>LOGGED? <button class="btn btn-primary"  style='float:right;' onclick='signCard(this)'>LOG</button></td>
+                <td></td>
+
             </tr>
         </table>
 
@@ -685,7 +677,7 @@
         <td name='low' id = 'low'>
           <label>LOW (0-13)</label>
         </td>
-        <td name='acsig' colspan=2 id='acsig'><button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Sign Card</button>
+        <td name='acsig' colspan=2 id='acsig'><input class='form-control w-50' type='text' value="<%=acsig%>" width='200px'>
         </td>
       </tr>
       <tr>
@@ -693,7 +685,7 @@
         <td name='mod' id = 'mod'>
           <label>MODERATE (14-23)</label>
         </td>
-        <td name='supsig'colspan=2 id='supsig'><button class='btn btn-primary' style='float:right' onclick='signCard(this)'>Sign Card</button>
+        <td name='supsig'colspan=2 id='supsig'><input class='form-control w-50' type='text' value="<%=supsig%>" width='200px'>
         </td>
       </tr>
       </tr>
@@ -702,7 +694,7 @@
         <td name='high' id = 'high'>
           <label>HIGH (24-32)</label>
         </td>
-        <td name='sqsig' colspan=2 id='sqsig'><button class='btn btn-primary'  style='float:right' onclick='signCard(this)'>Sign Card</button>
+        <td name='sqsig' colspan=2 id='sqsig'><input class='form-control w-50' type='text' value="<%=sqsig%>" width='200px'>
         </td>
       </tr>
       <tr>
@@ -710,15 +702,17 @@
         <td name='severe' id = 'severe'>
           <label>SEVERE (&gt; 32)</label>
         </td>
-        <td name='ogsig' colspan=2 id='ogsig'><button class='btn btn-primary'  style='float:right' onclick='signCard(this)'>Sign Card</button>
+        <td name='ogsig' colspan=2 id='ogsig'><input class='form-control w-50' type='text' value="<%=ogsig%>" width='200px'>
         </td>
       </tr>
 
 
 
     </table>
-    <input type= 'submit' value= 'submit'>
+
     </form>
+
+    
 
     <pre>
 
@@ -747,19 +741,22 @@
      //this segment will clear all background colors
      console.log('refill initiated');
 
+     if (selectObject == null){
+       var cpfill = 0
+      } else {
+        var cpfill = selectObject.cp};
+
+     document.getElementById('cp').value = cpfill;
+
+     
+
 
      for (var prop of props_toScore){
        //reassign to score
        if (selectObject != null) {
-          score[prop] = selectObject[prop];
-       var val = Object.values(selectObject[prop]);
-       for (eachVal of val) {
-         if (eachVal > 0){
-           var elid = prop + eachVal;
-           document.getElementById(elid).checked = true;
-           highlightCell(elid);
+         if (selectObject[prop].length > 0) {
+          
          }
-       }
        }
      };
         if (selectObject != null) {

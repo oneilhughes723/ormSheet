@@ -87,10 +87,9 @@ app.use('/create', (req, res) => {
 			var dbo = db.db("ormInputs");
 			if (global.selectObject != null){
 				console.log(global.selectObject.cs + global.selectObject.to, "this is not global-SO");
-				var newID = req.body.cs + req.body.to;
+				var newID = req.body.cs + req.body.to + day + month + year;
 				console.log(newID);
-				if (global.selectObject.cs + global.selectObject.to == newID){
-				console.log("entered for removal")
+				if (global.selectObject.cs + global.selectObject.to + day + month + year == newID){
 				dbo.collection("ormscores").deleteOne({ _id: global.selectObject._id }, function(err, result) {
 				if (err) throw err;
 					db.close();
@@ -155,57 +154,6 @@ app.use('/86orm', (req, res) => {
 		currentID = 'Callsign';
 	}
 	console.log(currentID);
-
-	
-	/*
-	= {
-		_id: "",
-		cs: "",
-		date: "",
-		ac: "",
-		to: "",
-		sortie: "",
-		plan: "",
-		form: [],
-		ll: [],
-		check: [],
-		mission: [],
-		cdd: [],
-		cfd: [],
-		mp: [],
-		wx: [],
-		temp: [],
-		winds: [],
-		rwy: [],
-		rd: [],
-		ts: [],
-		ents: [],
-		ice: [],
-		hs: [],
-		fatigue: [],
-		mountains: [],
-		birds: [],
-		turbs: [],
-		thermal: [],
-		cat: [],
-		issues: [],
-		ip_currency: [],
-		currency: [],
-		exp: [],
-		airspace: [],
-		climb: [],
-		flight_cond: [],
-		jump: [],
-		night: "",
-		cp: "",
-		acsig: "",
-		supsig: "",
-		sqsig: "",
-		ogsig: "",
-		supApp: "",
-		logged: ""
-	  };
-	*/
 
 	var todayScores = [];
 	var csList_today = [];
@@ -283,11 +231,56 @@ app.use('/86orm', (req, res) => {
 				if (err) throw err;
 					selectObject = result;
 					global.selectObject = result;
+
+				if (selectObject == null) {
+					var ac = "";
+					var cs = "";
+					var to = "";
+					var sortie = "";
+					var cp = "0";
+					var supapp = '';
+					var acsig = "";
+					var supsig = "";
+					var sqsig = "";
+					var ogsig = "";
+					var night = 0;
+					var plan = "";
+
+				} else {
+					var ac = selectObject.ac;
+					var csIn = selectObject.cs;
+					var to = selectObject.to;
+					var sortie = selectObject.sortie;
+					var cp = selectObject.cp;
+					var supapp = selectObject.supapp;
+					var acsig = selectObject.acsig;
+					var supsig = selectObject.supsig;
+					var sqsig = selectObject.sqsig;
+					var ogsig = selectObject.ogsig;
+					var night = selectObject.night;
+					var plan = selectObject.plan;
+
+				};
 				db.close();
 					res.render('testdropdown', {
 						csfill: csfill,
 						currentID: currentID,
-						selectObject: selectObject
+						selectObject: selectObject,
+						acfill: ac,
+						csIn: csIn,
+						to: to,
+						sortie: sortie,
+						cp: cp,
+						supapp: supapp,
+						acsig: acsig,
+						supsig: supsig,
+						sqsig: sqsig,
+						ogsig: ogsig,
+						night: night,
+						plan: plan
+
+
+
 					})
 			  	});
 
