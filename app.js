@@ -8,21 +8,35 @@ app.set('view engine', 'ejs');
 const fs = require('fs');
 
 var csfill;
+global.selectObject = {};
 
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var date = new Date();
+var day = date.getDate();
+day = ("000" + day).slice(-2);
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var month = months[date.getMonth()];
+var year = date.getFullYear().toString().slice(-2);
+
+
+
+var selectObject = {};
+var newScore = {};
+var currentID;
 
 var Score = require('./score.js');
 
-
 app.use('/create', (req, res) => {
 
+
 	var newScore = new Score ({
-		_id: req.body.cs + req.body.to,
+		_id: req.body.cs + req.body.to + Date(),
 		cs: req.body.cs,
-		date: Date(),
+		date: day + "/" + month + "/" + year,
+		dateTime: new Date(),
 		ac: req.body.ac,
 		to: req.body.to,
 		sortie: req.body.sortie,
@@ -66,21 +80,58 @@ app.use('/create', (req, res) => {
 		supApp: req.body.supApp,
 		logged: req.body.logged
 
-	    });
+		});
+
+		MongoClient.connect(url, function(err, db) {
+			if (err) throw err;
+			var dbo = db.db("ormInputs");
+			if (global.selectObject != null){
+				console.log(global.selectObject.cs + global.selectObject.to, "this is not global-SO");
+				var newID = req.body.cs + req.body.to;
+				console.log(newID);
+				if (global.selectObject.cs + global.selectObject.to == newID){
+				console.log("entered for removal")
+				dbo.collection("ormscores").deleteOne({ _id: global.selectObject._id }, function(err, result) {
+				if (err) throw err;
+					db.close();
+					})
+				}
+			}
+				newScore.save((err) => {
+					if (err) {
+						res.type('html').status(500);
+						res.send('Error: ' + err);
+					}
+					else {
+						res.redirect('/86orm');
+					}
+				} );
+		} );
+} );
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////Delete Function/////////////////////////
+//////////////////////////////////////////////////////////////////
 
 
-	newScore.save((err) => {
-		if (err) {
-		    res.type('html').status(500);
-		    res.send('Error: ' + err);
-		}
-		else {
-		    res.redirect('/86orm');
-		}
-	    } );
+app.use('/delete', (req, res) => {
+	console.log('Delete the document associated with this ID')
+	var deleteID = req.body.deleteEntry;
+	console.log(deleteID);
 
-    });
+	MongoClient.connect(url, function(err, db) {
+	if (err) throw err;
+		var dbo = db.db("ormInputs");
+		dbo.collection("ormscores").deleteOne({ _id: deleteID }, function(err, result) {
+			if (err) throw err;
+			db.close();
+		})
+	});
+	res.redirect('/86orm');
+});
 
+
+	
 //////////////////////////////////////////////////////////////////
 //////////////////////This is the mongo query ////////////////////
 /////////////////////////////////////////////////////////////////
@@ -98,7 +149,65 @@ app.use('/86orm', (req, res) => {
 	//////////////////
 	var csfill;
 	var selectObject;
-	var todayScore = [];
+	
+	var currentID = req.body.csdrop;
+	if (currentID == undefined) {
+		currentID = 'Callsign';
+	}
+	console.log(currentID);
+
+	
+	/*
+	= {
+		_id: "",
+		cs: "",
+		date: "",
+		ac: "",
+		to: "",
+		sortie: "",
+		plan: "",
+		form: [],
+		ll: [],
+		check: [],
+		mission: [],
+		cdd: [],
+		cfd: [],
+		mp: [],
+		wx: [],
+		temp: [],
+		winds: [],
+		rwy: [],
+		rd: [],
+		ts: [],
+		ents: [],
+		ice: [],
+		hs: [],
+		fatigue: [],
+		mountains: [],
+		birds: [],
+		turbs: [],
+		thermal: [],
+		cat: [],
+		issues: [],
+		ip_currency: [],
+		currency: [],
+		exp: [],
+		airspace: [],
+		climb: [],
+		flight_cond: [],
+		jump: [],
+		night: "",
+		cp: "",
+		acsig: "",
+		supsig: "",
+		sqsig: "",
+		ogsig: "",
+		supApp: "",
+		logged: ""
+	  };
+	*/
+
+	var todayScores = [];
 	var csList_today = [];
 
 		////////////////////////////
@@ -126,22 +235,35 @@ app.use('/86orm', (req, res) => {
 			for (archiveScore of allScores) {
 			 archiveScore.date = Date.parse(archiveScore.date);
 			 if (archiveScore.date >= Date.parse(today)) {
-				 todayScore.push(archiveScore);
+				 todayScores.push(archiveScore);
 			 };
 			};
-			var stringScore = JSON.stringify(todayScore, null, "");
-			for (obj of todayScore) {
+			for (obj of todayScores) {
 			 csList_today.push(obj.cs + obj.to);
 			};
 			if (csList_today.length == 0){
 			 csfill = "<option>Callsign</option>";
 			}
 			else {
-				 var csOptions = "";
-				 for (obj of todayScore) {
-					 csOptions += "<option value=\"" + obj.cs + obj.to + "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
-				 };
-				 csfill = "<option>Callsign</option>" + csOptions;
+				var csOptions = "";
+				for (obj of todayScores) {
+					if (obj._id == currentID) {
+						csOptions += "<option value=\"" + obj._id+ "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
+					}
+				};
+
+				//get the currentID at top
+				for (obj of todayScores) {
+					if (obj.id != currentID) {
+						csOptions += "<option value=\"" + obj._id+ "\">" + obj.cs + ", TO: "+ obj.to + "</option>";
+					};
+				};
+				if (currentID != "Callsign"){ 
+					csfill = csOptions + "<option>Callsign</option>";
+				} else {
+					csfill = "<option>Callsign</option>" + csOptions;
+				};
+				 
 			};
 			return csfill;
 			})
@@ -151,26 +273,28 @@ app.use('/86orm', (req, res) => {
 			///////////////////////////////////////
 
 			.then(function(csfill) {
-				MongoClient.connect(url, function(err, db) {
+				MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
 			  if (err) throw err;
-			  var currentID = req.body.csdrop;
+			  
+
+
 			  var dbo = db.db("ormInputs");
 			  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
-			    if (err) throw err;
+				if (err) throw err;
 					selectObject = result;
-			    db.close();
+					global.selectObject = result;
+				db.close();
 					res.render('testdropdown', {
 						csfill: csfill,
+						currentID: currentID,
 						selectObject: selectObject
 					})
-			  });
+			  	});
 
+				});
 
-			});
-
-
-		});
-
+			})
+			
 
 
 
@@ -179,6 +303,7 @@ app.use('/86orm', (req, res) => {
 
 			///////////////////////////////////////
 		});
+
 
 
 

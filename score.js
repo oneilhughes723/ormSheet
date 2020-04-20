@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 //change this connection to whatever it needs to be later.
-mongoose.connect('mongodb://localhost:27017/ormInputs');
+mongoose.connect('mongodb://localhost:27017/ormInputs', {useNewUrlParser: true, useUnifiedTopology: true});
 //mongoose.connect('arn:aws:dynamodb:us-east-2:635892192309:table/ORMinputs')
 
 var Schema = mongoose.Schema;

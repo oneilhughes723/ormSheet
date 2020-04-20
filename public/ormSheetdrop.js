@@ -19,6 +19,7 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
 'jump'];
 
+
 //object that will record score values for each row
 var score ={
  cs: '',
@@ -181,34 +182,6 @@ function planPrompt(){
 var today = new Date();
 today.setHours(0,0,0,0);
 
-//grab ALl keys from local storage
-for (var i = 0; i < localStorage.length; i++) {
-   csList.push(localStorage.key(i));
-};
-
-//grab all objects from local storage
-for (cs of csList) {
- var testNull = localStorage.getItem(cs).includes('form');
-
- if (testNull == false){
-   console.log('there was an unidentified null key, so it was not added to archiveList');
- } else {
-   var scoreObject = JSON.parse(localStorage.getItem(cs));
-   archiveList.push(scoreObject);
- }
-
-};
-
-//sort through those objects to only return those with dates that are current
-//this is pushed to the todayScore variable
-for (archiveScore of archiveList) {
- archiveScore.date = Date.parse(archiveScore.date);
-
- if (archiveScore.date >= Date.parse(today)) {
-   todayScore.push(archiveScore);
- }
-};
-
 
 
 
@@ -283,7 +256,6 @@ function highlightCell (elID) {
  var cell = document.getElementById(elID).parentElement;
  var parentCell = cell.parentElement;
  var strLength = elID.length
- console.log(strLength);
  var checkVal = elID.substr(strLength -1, 1);
 
  if (checkVal == 1) {

@@ -5,6 +5,7 @@
     <base target="_top">
     <title>86thORM</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -16,7 +17,7 @@
 
     <div align='center'>
       <form method = "POST" action = "/86orm">
-        <select class='custom-select w-25' style = "position: relative; left: 5% width: 100px" id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
+        <select class='custom-select w-25' style = "position: relative; left: 5%; width: 100px" id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
           <%- csfill%>
         </select>
       </form>
@@ -29,7 +30,7 @@
           <a class="btn btn-primary dropdown-toggle" href="#" role="button" style='position:relative; right:-30%' id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             CHANGE INFO
           </a>
-          <div  style='left:10%%' class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <div  style='left:10%' class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="#">CLEAR PAGE</a>
             <a class="dropdown-item" onclick="deleteInfo">DELETE ENTRY</a>
             <a class="dropdown-item" onclick="signCard('supApproval')">APPROVE (SUP)</a>
@@ -39,18 +40,19 @@
             <a class="dropdown-item" onclick='planPrompt()'>CHANGE ITINERARY</a>
             <a class="dropdown-item" onclick='sortiePrompt()'>CHANGE SORTIE</a>
           </div>
-        <button class="btn btn-primary" style = "position: absolute; right: 5% " onclick="deleteInfo()">Delete Entry</button>
+          <button class="btn btn-primary" style = "position: absolute; right: 5% " type = 'submit' formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
+        
 
         <table style = 'border: 2px solid black' align = 'center'>
             <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
             <tr>
-                <td><label>A/C: </label><input name = 'ac' id = 'ac' type = 'text'></td>
-                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text'></td>
-                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text'></td>
+                <td><label>A/C:</label><input name = 'ac' id = 'ac' type = 'text' ></td>
+                <td><label>CALLSIGN: </label><input name = 'cs' id = 'cs' type = 'text' ></td>
+                <td><label>TAKEOFF TIME/DATE:</label><input name = 'to' id = 'to' type = 'text' ></td>
             <tr height='25px'>
                 <td><li style='list-style-type: none' name='sortie' id='sortie' value= ''>SORTIE:</li></td>
                 <td id ='commPlan' value= ''>
-                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
+                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' " margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
                     <option value="0">Comm Plan</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -62,7 +64,7 @@
                     <option value="8">Eight</option>
                   </select>
                 </td>
-                 <td><label>Sortie Itinerary: </label><input name = 'plan' id='plan' value= ''></td>
+                 <td><label>Sortie Itinerary: </label><input name = 'plan' id='plan'></td>
             </tr>
                 <td><li style='list-style-type: none' name = 'supapp' id='supApproval' value= ''>SUP APPROVAL </li><button class="btn btn-primary"style='float:right;' onclick='signCard(this)'>APPROVE</button></td>
                 <td>
@@ -671,7 +673,7 @@
         </td>
         <td style = "background-color:black">
         </td>
-        <td><button class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button></td>
+        <td><button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button></td>
       </tr>
       <tr>
         <th class="tableSec" >Approval AUTHORITY</th>
@@ -728,144 +730,28 @@
   <script type= "text/javascript" src = '../public/ormSheetdrop.js'></script>
   <script>
   //object that will record score values for each row
-  var score ={
-   cs: '',
-   ac: '',
-   to: '',
-   sortie: '',
-   plan: '',
-   form: {},
-   ll: {},
-   check: {},
-   mission: {},
-   cdd: {},
-   cfd: {},
-   mp: {},
-   wx: {},
-   temp: {},
-   winds: {},
-   rwy: {},
-   rd: {},
-   ts: {},
-   ents: {},
-   ice: {},
-   hs: {},
-   fatigue: {},
-   mountains: {},
-   birds: {},
-   turbs: {},
-   thermal: {},
-   cat: {},
-   issues: {},
-   ip_currency: {},
-   currency: {},
-   exp: {},
-   airspace: {},
-   climb: {},
-   flight_cond: {},
-   jump: {},
-   acsig: '',
-   supsig: '',
-   sqsig: '',
-   ogsig: '',
-   supapp: '',
-   logged: '',
-   night: 0,
-   cp: 0,
-  };
+
 
     var selectObject = <%-JSON.stringify(selectObject)%>;
+    console.log('value of selected Object from node file');
+    console.log(selectObject)
+
+
 
     ///////////////////////ghetto script /////////////////////
     //////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////
 
-    function highlightCell (elID) {
-     var cell = document.getElementById(elID).parentElement;
-     var parentCell = cell.parentElement;
-     var strLength = elID.length
-     console.log(strLength);
-     var checkVal = elID.substr(strLength -1, 1);
-
-     if (checkVal == 1) {
-       cell.style.background = "#90ee90";
-       parentCell.style.background = "#90ee90";
-     };
-
-     if (checkVal == 2) {
-       cell.style.background = "#FFFF33";
-       parentCell.style.background = "#FFFF33";
-      };
-
-     if (checkVal == 3) {
-       cell.style.background = "#ffcccb";
-       parentCell.style.background = "#ffcccb";
-       }
-    };
-
-    ////////////////////////////////////////
-
-    //For use when the user hits calculate
-    function Aggregate(score) {
-
-    var runningSum = 0;
-    console.log("begin aggregation");
-    console.log(score);
-
-
-     for (prop of props_toScore) {
-       if (Object.values(score[prop]).length != 0) {
-         var maxVal = Math.max(...Object.values(score[prop]));
-         runningSum += maxVal
-       }
-
-
-     };
-
-     document.getElementById("total").innerHTML = runningSum;
-     if (runningSum <= 13) {
-       document.getElementById("total").style.background = "#90ee90";
-       document.getElementById("low").style.background = "#90ee90";
-       document.getElementById("mod").style.background = "";
-       document.getElementById("high").style.background = "";
-       document.getElementById("severe").style.background = "";
-     } else if (runningSum <= 23){
-       document.getElementById("total").style.background = "#FFFF33";
-       document.getElementById("low").style.background = "#90ee90";
-       document.getElementById("mod").style.background = "#FFFF33";
-       document.getElementById("high").style.background = "";
-       document.getElementById("severe").style.background = "";
-     } else if (runningSum <= 32) {
-       document.getElementById("total").style.background = "#fed8b1";
-       document.getElementById("low").style.background = "#90ee90";
-       document.getElementById("mod").style.background = "#FFFF33";
-       document.getElementById("high").style.background = "#fed8b1";
-       document.getElementById("severe").style.background = "";
-     } else {
-       document.getElementById("total").style.background = "#ffcccb";
-       document.getElementById("low").style.background = "#90ee90";
-       document.getElementById("mod").style.background = "#FFFF33";
-       document.getElementById("high").style.background = "#fed8b1";
-       document.getElementById("severe").style.background = "#ffcccb";
-     };
-
-    };
-
-    ///////////////////////////////////////////////
-
     function refill(){
 
      //this segment will clear all background colors
      console.log('refill initiated');
-     var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
-     'mp', 'wx', 'temp', 'winds', 'rwy', 'rd', 'ts', 'ents', 'ice', 'hs',
-     'fatigue', 'mountains', 'birds', 'turbs', 'thermal', 'cat', 'issues',
-     'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
-     'jump'];
+
 
      for (var prop of props_toScore){
        //reassign to score
-       score[prop] = selectObject[prop];
+       if (selectObject != null) {
+          score[prop] = selectObject[prop];
        var val = Object.values(selectObject[prop]);
        for (eachVal of val) {
          if (eachVal > 0){
@@ -874,16 +760,21 @@
            highlightCell(elid);
          }
        }
-
+       }
      };
-
-       Aggregate(selectObject);
+        if (selectObject != null) {
+          Aggregate(selectObject);
+        };
+       
      }
+
+
+
 
     //also aggregate
     ////////main//////////
      refill();
-
+     console.log(score);
 
 
   </script>
