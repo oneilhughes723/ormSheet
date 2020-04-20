@@ -747,27 +747,30 @@
         if(selectObject.night == 1){
           console.log('night')
           document.getElementById('night').checked = true;
+        }
+        document.getElementById('cp').value = cpfill;
+
+            
+        /////////////////////////////////////
+        /////refill other values//////////
+        for (var prop of props_toScore){
+
+    var val = Object.values(selectObject[prop]);
+    for (eachVal of val) {
+      if (eachVal > 0){
+        var elid = prop + eachVal;
+        document.getElementById(elid).checked = true;
+        highlightCell(elid);
       }
+    }
+    }
+
       
       };
 
-     document.getElementById('cp').value = cpfill;
+     
 
 
-     /////////////////////////////////////
-     /////refill other values//////////
-     for (var prop of props_toScore){
-
-      var val = Object.values(selectObject[prop]);
-      for (eachVal of val) {
-        if (eachVal > 0){
-          var elid = prop + eachVal;
-          document.getElementById(elid).checked = true;
-          highlightCell(elid);
-  }
-}
-
-}
 
      
 
