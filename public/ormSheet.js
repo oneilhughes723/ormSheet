@@ -1,5 +1,13 @@
   //javascript file that will be imported to html
 
+
+
+  $("body").keydown(function(){
+    if(event.keyCode == 13) {
+        document.activeElement.blur();
+        return false;
+    }
+});
 /////////////////////////////////////////
  //global variables
 /////////////////////////////////////////

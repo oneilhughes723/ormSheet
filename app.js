@@ -306,7 +306,9 @@ app.use('/public', express.static('public'));
 
 app.use('/', (req, res) => { res.redirect('/public/index.html'); } );
 
-//pp.use('/', (req, res) => { res.redirect('/public/index.html'); } );
+
+
+
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');
