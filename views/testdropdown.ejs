@@ -15,11 +15,6 @@
   <body>
     <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
 
-    <form method="post" onsubmit="return false;">
-      ... //Other fields here
-  
-      <input style = "position: absolute; top:-50%" type="button" value="Send" onclick="form.submit();" />
-  </form>
 
 
 
@@ -34,7 +29,7 @@
       <form method = "POST" action = "/create">
 
           <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
-          <button class="btn btn-primary" style = "position: absolute; right: 5% " type = 'submit' formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
+          <button class="btn btn-primary" style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
 
 
         <table style = 'border: 2px solid black' align = 'center'>
