@@ -29,7 +29,7 @@
       <form method = "POST" action = "/create">
 
           <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
-          <button class="btn btn-primary" style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>" onclick="deleteInfo()">Delete Entry</button>
+          <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>">Delete Entry</button>
 
 
         <table style = 'border: 2px solid black' align = 'center'>

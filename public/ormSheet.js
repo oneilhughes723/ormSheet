@@ -528,23 +528,6 @@ function refill(){
 }
 
 
-//function to delete entry from storage
-function deleteInfo(){
- var callsign = document.getElementById('csdrop').value;
- console.log(callsign);
- for (i = todayScore.length -1; i >= 0; i--){
-   if (todayScore[i].cs + ", TO: " + todayScore[i].to === callsign){
-     let storageKey = todayScore[i].cs + new Date(todayScore[i].date).toString().substr(0,24);
-     localStorage.removeItem(storageKey);
-     alert("The entry " + todayScore[i].cs + ", TO: " + todayScore[i].to + " has been deleted")
-
-
-
-   };
- };
-
-
-}
 
 function nightcpLog(el){
  var elid = el.id;
@@ -563,3 +546,12 @@ function nightcpLog(el){
    document.getElementById(elid).value = score.cp;
  }
 }
+
+
+$('delete').bind("keypress", function(e){
+  // 'Go' key code is 13
+  if (e.which === 13) {
+     console.log("user pressed Go");
+     // submit your form with explicit JS.
+  } 
+});
