@@ -437,6 +437,62 @@ function nightcpLog(el){
 }
 
 
+//Press Enter in INPUT moves cursor to next INPUT
+//ac, cs, to, sortie, plan, supapp
+////////////////////////////////////////////
+//////////////////////////////////////////////
+////////////////////////////////////////////
+
+//move from ac to cs
+document.getElementById('ac').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('cs').focus();
+    return false; 
+  }
+});
+
+//move from cs to to
+document.getElementById('cs').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('to').focus();
+    return false; 
+  }
+});
+
+//move from to to sortie
+
+document.getElementById('to').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('sortie').focus();
+    return false; 
+  }
+});
+
+//move from sortie to plan
+document.getElementById('sortie').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('plan').focus();
+    return false; 
+  }
+});
+
+//move from plan to sup app
+
+document.getElementById('plan').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('supapp').focus();
+    return false; 
+  }
+});
+
+
+////////////////////////////////////////////
+//////////////////////////////////////////////
+////////////////////////////////////////////
+
+
+
+
 
 ////////////////////////////////////////////
 //// run when opening the PAGE/////////////
