@@ -24,11 +24,12 @@
         </select>
       </form>
 
-      <button type = 'button' class="btn btn-primary" style = "position: relative; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
+      <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
       <form method = "POST" action = "/delete">
         <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>">Delete Entry</button>
       </form>
 
+    </br></br>
 
       <form method = "POST" action = "/create">
 
@@ -38,7 +39,7 @@
             <tr>
                 <td ><label>A/C:</label><input class='form-control w-50' value = "<%=acfill%>" name = 'ac' id = 'ac' type = 'text' ></td>
                 <td><label>CALLSIGN: </label><input class='form-control w-50' value = "<%=csIn%>" name = 'cs' id = 'cs' type = 'text' ></td>
-                <td><label>TAKEOFF TIME/DATE:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
+                <td><label>TAKEOFF TIME:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
             <tr height='25px'>
                 <td><label>SORTIE: </label><input class='form-control w-50' type = "text" name = "sortie" id = "sortie" value = "<%=sortie%>"></td>
                 <td id ='commPlan'>
@@ -726,9 +727,6 @@
 
 
     var selectObject = <%-JSON.stringify(selectObject)%>;
-    console.log('value of selected Object from node file');
-    console.log(selectObject)
-
 
 
     ///////////////////////ghetto script /////////////////////
@@ -820,7 +818,6 @@
     //also aggregate
     ////////main//////////
      refill();
-     console.log(score);
 
 
   </script>

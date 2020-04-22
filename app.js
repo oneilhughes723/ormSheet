@@ -230,7 +230,6 @@ app.use('/86orm', (req, res) => {
 			  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
 				if (err) throw err;
 					selectObject = result;
-					console.log(selectObject);
 					global.selectObject = result;
 
 				if (selectObject == null) {

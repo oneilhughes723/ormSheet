@@ -333,24 +333,6 @@ console.log(score);
 
 //When the user hits the submit button
 function Submit() {
-
- //only old entries will have a date value, so on resubmission, only an old entry will be deleted.
- if (score.date != null){
-   console.log('did it go here?')
-   var oldDate = new Date(score.date);
-   var oldstrDate = oldDate.toString().substr(0,24);
-   var oldKey = score.cs + oldstrDate;
-   console.log(oldKey);
-   localStorage.removeItem(oldKey);
-   console.log(localStorage.removeItem(oldKey));
- };
-
-//here is where the date value is added! ... my most creative solution if anyone ever reads this.
- score.date = new Date()
- var strDate = score.date.toString().substr(0,24);
- console.log("Following object has been added to the archive");
- console.log(score);
- localStorage.setItem(score.cs + strDate, JSON.stringify(score));
  alert("Your submission has been recorded");
 }
 
@@ -475,14 +457,17 @@ document.getElementById('cs').onkeypress = (function(e) {
 //move from to to sortie
 
 document.getElementById('to').onkeypress = (function(e) {
-  if (isNaN(e.key)) {
-    alert("Takeoff time must be a number");
-  }
-
   if (e.which == 13) {
     document.getElementById('sortie').focus();
     return false; 
   }
+
+  if (isNaN(e.key)) {
+
+    alert("Takeoff time must be a number");
+  }
+
+
 });
 
 //move from sortie to plan
