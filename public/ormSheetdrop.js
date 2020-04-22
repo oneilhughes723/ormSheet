@@ -85,34 +85,49 @@ var dateOutput = day + " " + month + " " + year
 
 
 function ormInfo(){
-  acPrompt();
-  csPrompt();
-  toPrompt();
-  sortiePrompt();
-  planPrompt();
-};
+  var test = 0;
+  test += acPrompt();
+  if (test < 1) {
+    test += csPrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    test += toPrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    test += sortiePrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    test += planPrompt();
+  } else {
+    return;
+  }
+  };
 
 function acPrompt() {
    ac = prompt('Enter the last name of the Aircraft Commander', 'AC Last Name');
    score.ac = ac;
    if (ac == null || ac == "") {
-       exit;
+       return 1;
    };
-   displayAC = "AIRCRAFT COMMANDER:" + "  " + ac;
-   document.getElementById('ac').innerHTML = displayAC;
    document.getElementById('ac').value = ac;
+   return 0;
 };
 
 function csPrompt() {
  cs = prompt('Enter your callsign', 'Rake XX');
  score.cs = cs;
  if (cs == null || cs == "") {
-     exit;
+     return 1;
  }
- displayCS = "CALLSIGN:" + "  " + cs;
- document.getElementById('cs').innerHTML = displayCS;
  document.getElementById('cs').value = cs
  var csval = document.getElementById('cs').value;
+ return 0;
 };
 
 function toPrompt(){
@@ -121,7 +136,7 @@ function toPrompt(){
    to = prompt('Enter your takeoff time in Local time', '0000');
    score.to = to;
    if (to == null || to == "") {
-       exit;
+    return 1;
    };
    if (to.length == 4 && isNaN(to) == false && to != "    ") {
        valid = true;
@@ -135,10 +150,9 @@ function toPrompt(){
  if (toInt < 801) {
      earlyShow = true;
  }
- displayTO = "TAKEOFF TIME/DATE:" + "  " + to;
- document.getElementById('to').innerHTML = displayTO + " " + month + " " + day + " " + year;
  document.getElementById('to').value = to
  var toval = document.getElementById('to').value;
+ return 0;
 };
 
 
@@ -146,12 +160,11 @@ function sortiePrompt(){
  sortie = prompt('Enter Sortie Identifier', 'T5005');
  score.sortie = sortie;
  if (sortie == null || sortie == "") {
-     exit;
+  return 1;
  }
- displaySortie = "SORTIE:" + "  " + sortie;
- document.getElementById('sortie').innerHTML = displaySortie;
  document.getElementById('sortie').value = sortie
  var sortieval = document.getElementById('sortie').value;
+ return 0;
 };
 
 function planPrompt(){
@@ -160,8 +173,6 @@ function planPrompt(){
  if (plan == null || plan == "") {
      plan = "Update sortie itinerary";
  }
- displayPlan = "ITINERARY:" + " " + plan;
- document.getElementById('plan').innerHTML = displayPlan;
  document.getElementById('plan').value = plan
  var planval = document.getElementById('plan').value;
 };
@@ -443,6 +454,8 @@ function nightcpLog(el){
 //////////////////////////////////////////////
 ////////////////////////////////////////////
 
+
+
 //move from ac to cs
 document.getElementById('ac').onkeypress = (function(e) {
   if (e.which == 13) {
@@ -462,6 +475,10 @@ document.getElementById('cs').onkeypress = (function(e) {
 //move from to to sortie
 
 document.getElementById('to').onkeypress = (function(e) {
+  if (isNaN(e.key)) {
+    alert("Takeoff time must be a number");
+  }
+
   if (e.which == 13) {
     document.getElementById('sortie').focus();
     return false; 
