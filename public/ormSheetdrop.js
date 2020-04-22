@@ -103,7 +103,8 @@ function ormInfo(){
     return;
   };
   if (test < 1) {
-    test += planPrompt();
+    planPrompt();
+    clearCells();
   } else {
     return;
   }
@@ -334,6 +335,7 @@ console.log(score);
 //When the user hits the submit button
 function Submit() {
  alert("Your submission has been recorded");
+ 
 }
 
 //execute when the user hits the sign buttons
