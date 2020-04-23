@@ -155,7 +155,6 @@ app.use('/86orm', (req, res) => {
 	}
 	console.log(currentID);
 
-	var todayScores = [];
 	var csList_today = [];
 
 		////////////////////////////
@@ -181,6 +180,8 @@ app.use('/86orm', (req, res) => {
 			//Determine CSFill/////////////
 			////////////////////////
 			for (archiveScore of allScores) {
+				var todayScores = [];
+				
 			 archiveScore.date = Date.parse(archiveScore.date);
 			 if (archiveScore.date >= Date.parse(today)) {
 				 todayScores.push(archiveScore);

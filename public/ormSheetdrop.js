@@ -85,6 +85,7 @@ var dateOutput = day + " " + month + " " + year
 
 
 function ormInfo(){
+  clearCells();
   var test = 0;
   test += acPrompt();
   if (test < 1) {
@@ -104,7 +105,7 @@ function ormInfo(){
   };
   if (test < 1) {
     planPrompt();
-    clearCells();
+
   } else {
     return;
   }
