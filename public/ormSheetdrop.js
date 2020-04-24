@@ -339,56 +339,7 @@ function Submit() {
  
 }
 
-//execute when the user hits the sign buttons
-function signCard(el) {
- var sig = prompt('Enter your first and last name', 'John Doe');
- if (window.confirm("I understand that accepting to sign below with faulty/incorrect information is a violation of UCMJ Article 106: Impersonating an Officer")){
-   id = el.parentElement.id;
-   if (id == 'acsig'){
-     var acsig = sig;
-     document.getElementById(id).innerHTML = acsig;
-     score.acsig = acsig;
-     document.getElementById(id).value = acsig;
-   }
-   else if (id == 'supsig'){
-     var supsig = sig;
-     document.getElementById(id).innerHTML = supsig;
-     score.supsig = supsig;
-     document.getElementById(id).value = supsig;
-   }
-   else if (id == 'sqsig'){
-     var sqsig = sig;
-     document.getElementById(id).innerHTML = sqsig;
-     score.sqsig = sqsig;
-     document.getElementById(id).value = sqsig;
-   }
-   else if(id == 'ogsig'){
-     var ogsig = sig;
-     document.getElementById(id).innerHTML = ogsig;
-     score.ogsig = ogsig;
-     document.getElementById(id).value = score.ogsig;
-   }
-   else if(id == 'supApproval'){
-     var supapp = sig;
-     var pw = prompt('Please enter the Sup Password', '***')
-     if (pw != "1qaz2wsx!QAZ@WSX"){
-       exit;
-     }
-     document.getElementById(id).innerHTML = supapp;
-     score.supapp = supapp;
-     document.getElementById(id).value = score.supapp;
-   }
-   else if(id == 'logged'){
-     var logged = sig;
-     document.getElementById(id).innerHTML = logged;
-     score.logged = logged;
-     document.getElementById(id).value = score.loogged;
-   }
-     document.getElementById(id).style.fontFamily = 'cursive';
-     document.getElementById(id).style.fontFamily = 'Brush Script MT, sans-serif';
-     document.getElementById(id).style.fontSize = '32px';
-   }
-}
+
 
 //function to refill data based on the callsign selected from the dropdown menu. Executed when user hits refill/reload
 
@@ -489,6 +440,23 @@ document.getElementById('plan').onkeypress = (function(e) {
     return false; 
   }
 });
+
+//require password for sup signature
+function supSign(el) {
+    var pw = prompt('Please enter the Sup Password', '****')
+    if (pw == "nacho"){
+      var cell = document.getElementById('supappButton').parentElement;
+      cell.style.background = "#90ee90";
+      console.log(document.getElementById('supappButton').value)
+      document.getElementById('supappButton').value = 'test';
+      alert("Please hit submit at bottom to step crew");
+ 
+
+
+    }
+
+
+}
 
 
 ////////////////////////////////////////////

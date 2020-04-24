@@ -42,6 +42,7 @@ app.use('/create', (req, res) => {
 		sortie: req.body.sortie,
 		plan: req.body.plan,
 		form: req.body.form,
+		supappButton: req.body.supappButton,
 		ll: req.body.ll,
 		check: req.body.check,
 		mission: req.body.mission,
@@ -187,9 +188,14 @@ app.use('/86orm', (req, res) => {
 				 todayScores.push(archiveScore);
 			 };
 			};
-			for (obj of todayScores) {
-			 csList_today.push(obj.cs + obj.to);
+
+			if (todayScores != undefined) {
+				for (obj of todayScores) {
+					csList_today.push(obj.cs + obj.to);
+				   };
+
 			};
+
 			if (csList_today.length == 0){
 			 csfill = "<option>Callsign</option>";
 			}
@@ -232,6 +238,7 @@ app.use('/86orm', (req, res) => {
 				if (err) throw err;
 					selectObject = result;
 					global.selectObject = result;
+				console.log(selectObject);
 
 				if (selectObject == null) {
 					var ac = "";
