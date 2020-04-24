@@ -39,7 +39,7 @@
             <tr>
                 <td ><label>A/C:</label><input class='form-control w-50' value = "<%=acfill%>" name = 'ac' id = 'ac' type = 'text' ></td>
                 <td><label>CALLSIGN: </label><input class='form-control w-50' value = "<%=csIn%>" name = 'cs' id = 'cs' type = 'text' ></td>
-                <td><label>TAKEOFF TIME:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
+                <td style='border-right: 2px solid black'><label>TAKEOFF TIME:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
             <tr height='25px'>
                 <td><label>SORTIE: </label><input class='form-control w-50' type = "text" name = "sortie" id = "sortie" value = "<%=sortie%>"></td>
                 <td id ='commPlan'>
@@ -55,7 +55,7 @@
                     <option value="8">Eight</option>
                   </select>
                 </td>
-                 <td><label>PROFILE: </label><input class='form-control w-50' value = "<%=plan%>" name = 'plan' id='plan'></td>
+                 <td style='border-right:2px solid black'><label>PROFILE: </label><input class='form-control w-50' value = "<%=plan%>" name = 'plan' id='plan'></td>
             </tr>
                 <td><label>SUP APPROVAL</label><input class='form-control w-50' name='supapp' id='supapp' value='<%=supapp%>'></td>
                 <td>
@@ -64,7 +64,7 @@
                      <span class='checkmark'></span>
                    </label>
                 </td>
-                <td></td>
+                <td style='border-right:2px solid black'></td>
 
             </tr>
         </table>
@@ -712,7 +712,7 @@
     </table>
 
     </form>
-
+<button type = 'button' class="btn btn-primary" style = "position: absolute; right: 5%" onclick="window.location.href = '/public/crm.html';">View CRM Info</button>
 
 
     <pre>
