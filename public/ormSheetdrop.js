@@ -448,7 +448,7 @@ function supSign(el) {
       var cell = document.getElementById('supappButton').parentElement;
       cell.style.background = "#90ee90";
       console.log(document.getElementById('supappButton').value)
-      document.getElementById('supappButton').value = 'test';
+      document.getElementById('supappButton').value = 1;
       alert("Please hit submit at bottom to step crew");
  
 
