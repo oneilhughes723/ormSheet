@@ -157,6 +157,8 @@ app.use('/86orm', (req, res) => {
 	console.log(currentID);
 
 	var csList_today = [];
+	var steplist = [];
+	var stepfill;
 
 		////////////////////////////
 
@@ -310,6 +312,8 @@ app.use('/86orm', (req, res) => {
 
 
 app.use('/public', express.static('public'));
+
+app.use(express.static('public'))
 
 app.use('/', (req, res) => { res.redirect('/public/index.html'); } );
 

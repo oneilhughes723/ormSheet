@@ -96,3 +96,8 @@ border-width: 0 3px 3px 0;
 -ms-transform: rotate(45deg);
 transform: rotate(45deg);
 }
+
+img.scaled {
+  height: 10%;
+  width: 10%;
+}
