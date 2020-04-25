@@ -13,9 +13,17 @@
   </head>
 
   <body>
-    <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >ORM Sheet</h1><br>
+    <div>
+      <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >
 
+      
+        
+        ORM Sheet</h1>
+      
+      <br>
 
+    </div>
+    
 
 
       <form method = "POST" action = "/86orm">
@@ -57,11 +65,7 @@
                 </td>
                  <td style='border-right:2px solid black'><label>PROFILE: </label><input class='form-control w-50' value = "<%=plan%>" name = 'plan' id='plan'></td>
             </tr>
-                <td>
-                    <label style = 'float:left; margin-right: .5em'>SUP APPROVAL</label><input class='form-control w-50' style = 'float:left;' name='supapp' id='supapp' value='<%=supapp%>'>
-                    <button class='btn btn-primary' style=' float:left;' type = 'button' onclick = "supSign(this)">Sign</button>
-                    <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
-                </td>
+              <td style = "background-color:black"></td>
                 <td>
                    <label class='container'>Night Brief Complete?
                      <input  name='night' id='night' onclick='nightcpLog("night")' type = "checkbox" value = 1>
@@ -667,7 +671,10 @@
         <td style='font-size: 24px'>TOTAL <button class='btn btn-primary' style='float:right' type = 'button' onclick = "Aggregate(score)">Calculate</button></td>
         <td style='text-align: center; font-size: 24px' id = "total">
         </td>
-        <td style = "background-color:black">
+        <td>
+          <label style = 'float:left; margin-right: .5em'>SUP APPROVAL</label><input class='form-control w-50' style = 'float:left;' name='supapp' id='supapp' value='<%=supapp%>'>
+          <button class='btn btn-primary' style=' float:left;' type = 'button' onclick = "supSign(this)">Sign</button>
+          <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
         </td>
         <td>
           <button type = 'button' class="btn btn-primary" style = "float: left" onclick="window.location.href = '/public/crm.html';">View CRM Info</button>

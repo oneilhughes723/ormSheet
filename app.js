@@ -157,7 +157,6 @@ app.use('/86orm', (req, res) => {
 	console.log(currentID);
 
 	var csList_today = [];
-	var todayScores = [];
 
 		////////////////////////////
 
@@ -175,6 +174,7 @@ app.use('/86orm', (req, res) => {
 
 
 		var csfill = getDrop().then(function(allScores){
+			var todayScores = [];
 
 
 
