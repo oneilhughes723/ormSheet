@@ -179,14 +179,12 @@ app.use('/86orm', (req, res) => {
 			var todayScores = [];
 
 
-
+			console.log(today);
 			///////////////////////////
 			//Determine CSFill/////////////
 			////////////////////////
 			for (archiveScore of allScores) {
-
-			 archiveScore.date = Date.parse(archiveScore.date);
-			 if (archiveScore.date >= Date.parse(today)) {
+			 if (archiveScore.dateTime >= today) {
 				 todayScores.push(archiveScore);
 			 };
 			};

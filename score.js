@@ -11,6 +11,7 @@ var scoreSchema = new Schema( {
   _id: String,
   cs: String,
   date: Date,
+  dateTime: Date,
   ac: String,
   to: Number,
   sortie: String,
