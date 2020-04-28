@@ -84,8 +84,8 @@ var dateOutput = day + " " + month + " " + year
 ///////////////////////////////////////////////////////////////////
 
 
-function ormInfo(){
-  clearCells();
+function ormInfo(newInfo){
+
   var test = 0;
   test += acPrompt();
   if (test < 1) {
@@ -354,7 +354,13 @@ function clearCells(){
        var clearcell = document.getElementById(val).parentElement;
        clearcell.style.background = "";
        clearcell.parentElement.style.background = "";
+       
        document.getElementById(val).checked = false;
+
+       if (selectObject != null) {
+         console.log('test');
+         selectObject[val] = 0;
+       }
    };
 
  };

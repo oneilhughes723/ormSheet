@@ -42,8 +42,11 @@
           <%- csfill%>
         </select>
       </form>
-
-      <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo()">NEW ORM INFO</button>
+      
+      <form method = "POST" action = "/86orm">
+        <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo(this)">NEW ORM INFO</button>
+      </form>
+      
       <form method = "POST" action = "/delete">
         <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>">Delete Entry</button>
       </form>

@@ -137,8 +137,7 @@ app.use('/delete', (req, res) => {
 /////////////////////////////////////////////////////////////////
 
 var archiveScores;
-var today = new Date();
-today.setHours(0,0,0,0);
+
 
 
 
@@ -149,6 +148,8 @@ app.use('/86orm', (req, res) => {
 	//////////////////
 	var csfill;
 	var selectObject;
+	var today = new Date();
+	today.setHours(0,0,0,0);
 
 	var currentID = req.body.csdrop;
 	if (currentID == undefined) {
@@ -185,6 +186,8 @@ app.use('/86orm', (req, res) => {
 			////////////////////////
 			for (archiveScore of allScores) {
 			 if (archiveScore.dateTime >= today) {
+				 console.log(archiveScore.dateTime);
+				 console.log(today);
 				 todayScores.push(archiveScore);
 			 };
 			};
@@ -232,13 +235,12 @@ app.use('/86orm', (req, res) => {
 			  if (err) throw err;
 
 
-
+					console.log(currentID);
 			  var dbo = db.db("ormInputs");
 			  dbo.collection("ormscores").findOne({ _id: currentID }, function(err, result) {
 				if (err) throw err;
 					selectObject = result;
 					global.selectObject = result;
-				console.log(selectObject);
 
 				if (selectObject == null) {
 					var ac = "";
