@@ -9,7 +9,7 @@ td, th {
   padding: 8px;
 }
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: rgba(200,200,200, .7);
 }
 
 th.tableSec {
