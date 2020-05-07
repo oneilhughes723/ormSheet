@@ -17,7 +17,7 @@
       background-repeat: no-repeat;
       background-position: center center;
     }
-    
+
 
   </style>
 
@@ -25,16 +25,16 @@
     <div>
       <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >
         <img src="/images/faipflag.png" width="50" height="50" class = "scaled" style = "position: relative; left: -25%">
-      
+
         86 FTS ORM Sheet
         <img src = "/images/86patch.png" width = "50" height = "50" class = "scaled" style = "position: relative; right: -25%">
       </h1>
-      
+
       <br>
 
     </div>
-    
-    
+
+
 
 
       <form method = "POST" action = "/86orm">
@@ -42,11 +42,11 @@
           <%- csfill%>
         </select>
       </form>
-      
+
       <form method = "POST" action = "/86orm">
         <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo(this)">NEW ORM INFO</button>
       </form>
-      
+
       <form method = "POST" action = "/delete">
         <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " formaction = "/delete" name = 'deleteEntry' value = "<%=currentID%>">Delete Entry</button>
       </form>
@@ -691,9 +691,9 @@
           <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
         </td>
         <td>
-          <button type = 'button' class="btn btn-primary" style = "float: left" onclick="window.location.href = '/public/crm.html';">View CRM Info</button>
+          <button type = 'button' class="btn btn-primary" style = "float: left"  onclick="window.open('/public/crm.html', '_blank')">View CRM Info</button>
           <button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button>
-          
+
         </td>
       </tr>
       <tr>
