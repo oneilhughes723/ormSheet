@@ -339,6 +339,11 @@ function Submit() {
  
 }
 
+//on click of the delete button
+function deleteEntry(val) {
+  alert('something');
+};
+
 
 
 //function to refill data based on the callsign selected from the dropdown menu. Executed when user hits refill/reload
