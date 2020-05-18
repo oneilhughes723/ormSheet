@@ -2,6 +2,7 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 90%;
+  align: center;
 }
 td, th {
   border: 1px solid #dddddd;
@@ -100,4 +101,62 @@ transform: rotate(45deg);
 img.scaled {
   height: 7%;
   width: 7%;
+}
+
+.human-factors-content {
+    left: 10%;
+    width: 100%
+
+}
+
+.human-factors-dropdown {
+    border-color: black;
+    border-width: 2px;
+    width: 90%;
+    align: center;
+}
+button.human-factors-content {
+  font-family: arial, sans-serif;
+  border-style: outset;
+  text-align: center;
+  background: #b0d3e6;
+  font-weight: bold;
+  color: black;
+  border-color: black;
+  border-width: 2px;
+  border-bottom: none;
+}
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 90%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  align: center;
+}
+
+.active, .collapsible:hover {
+  background-color: rgb(245, 247, 131);
+}
+
+.content {
+  display: none;
+  overflow: hidden;
+  background-color: white;
+}
+
+.collapsible:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: white;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
