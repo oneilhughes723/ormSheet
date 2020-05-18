@@ -74,7 +74,15 @@ app.use('/create', (req, res) => {
 		sqsig: req.body.sqsig,
 		ogsig: req.body.ogsig,
 		supapp: req.body.supapp,
-		logged: req.body.logged
+		logged: req.body.logged,
+		personal_health: req.body.personal_health,
+		long_days: req.body.long_days,
+		family_stress: req.body.family_stress,
+		combined_sleep: req.body.combined_sleep,
+		work: req.body.work,
+		awake: req.body.awake,
+		pressure:req.body.pressure,
+		last_sleep: req.body.last_sleep
 
 		});
 
@@ -326,7 +334,7 @@ app.use('/ormhistory', (req, res) => {
 		if (csList.length == 0) {
 			csfill = "<option>Callsign</option>";
 		}
-		else { 
+		else {
 			var csOptions = "";
 			for (score of allScores) {
 				if (score._id == currentID) {
@@ -353,7 +361,7 @@ app.use('/ormhistory', (req, res) => {
 	/////////////////////////////////////////
 	//////this is where the fill in function should be
 	///////////////////////////////////////
-	
+
 	.then(function(csfill) {
 		MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
 		if (err) throw err;
@@ -416,7 +424,7 @@ app.use('/ormhistory', (req, res) => {
 			});
 		});
 	});
-	
+
 ///////////////////////////////////////
 ////////end of supview/////////////////
 ///////////////////////////////////////
