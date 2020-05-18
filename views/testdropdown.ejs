@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel='stylesheet' href="../public/ormCSSsheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <style>
     body {
@@ -639,70 +640,214 @@
         <td id='cat3' style = "background-color:black">
         </td>
       </tr>
-
-      <th colspan = "4" class = "tableSec" >HUMAN FACTORS</th>
-
+  </table>
       <!-- This is copy and pasted -->
-
-      <div>
-        <table style = 'border: 2px solid black' align = 'center'>
-            <tr>
-                <td>Health & Stress Risk Factors</td>
-                <td>LOW (0 Points)</td>
-                <td>MODERATE (1 Point Each)</td>
-                <td style='border-right: 2px solid black'>HIGH (2 Points Ea)</td>
-                <td>Fatigue Risk Factors</td>
-                <td>LOW (0 points)</td>
-                <td>MODERATE (1 Point Ea)</td>
-                <td>HIGH (2 Points Ea)</td>
-            </tr>
-            <tr>
-                <td> Personal Health Factors (Hydration, Nutrition,
-                    Illness/Injury, Etc.)
-                </td>
-                <td>Minor</td>
-                <td>Elevated</td>
-                <td style='border-right: 2px solid black'>Serious</td>
-                <td>12+ hr Work/Duty Days Past Week</td>
-                <td>2</td>
-                <td>3</td>
-                <td>&ge;4</td>
-            </tr>
-            <tr>
-                <td>Personal/Family Stress (Health, Finance, Relationship,
-                    etc.)
-                </td>
-                <td>Minor</td>
-                <td>Elevated</td>
-                <td style='border-right: 2px solid black'>Serious</td>
-                <td>Combined Prior Sleep (Past 72 hrs/3 days)</td>
-                <td>&gt;18hrs</td>
-                <td>15-18hrs</td>
-                <td>&lt;15hrs</td>
-            </tr>
-            <tr>
-                <td>Work/Career Stress</td>
-                <td>Minor</td>
-                <td>Elevated</td>
-                <td style='border-right: 2px solid black'>Serious</td>
-                <td>Combined Prior Wakefulness (Past 36hrs/1.5 days)</td>
-                <td>&gt;23hrs</td>
-                <td>23-28hrs</td>
-                <td>&lt;28hrs</td>
-            </tr>
-            <tr>
-                <td>Perceived Sortie Pressure (External & Internal)</td>
-                <td>Minor</td>
-                <td>Elevated</td>
-                <td style='border-right: 2px solid black'>Serious</td>
-                <td>Sleep in Last 12 hrs</td>
-                <td>&gt;6hrs</td>
-                <td>4-6hrs</td>
-                <td>&lt;4hrs</td>
+      <div class='human-factors-content' align='center'>
+          <button type="button" class="human-factors-content collapsible">HUMAN FACTORS</button>
+              <div class="content">
+                <table style = 'border: 2px solid black' align = 'center'>
+                    <tr>
+                        <td>Health & Stress Risk Factors</td>
+                        <td>LOW (0 Points)</td>
+                        <td>MODERATE (1 Point Each)</td>
+                        <td style='border-right: 2px solid black'>HIGH (2 Points Ea)</td>
+                        <td>Fatigue Risk Factors</td>
+                        <td>LOW (0 points)</td>
+                        <td>MODERATE (1 Point Ea)</td>
+                        <td>HIGH (2 Points Ea)</td>
+                    </tr>
+                    <tr>
+                        <td> Personal Health Factors (Hydration, Nutrition,
+                            Illness/Injury, Etc.)
+                        </td>
+                        <td>
+                            <label class='container'>Minor
+                              <input  name='personal_health' id='personal_health1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Elevated
+                              <input  name='personal_health' id='personal_health2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label></td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Serious
+                              <input  name='personal_health' id='personal_health3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>12+ hr Work/Duty Days Past Week</td>
+                        <td>
+                            <label class='container'>2
+                              <input  name='long_days' id='long_days1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Minor
+                              <input  name='long_days' id='long_days2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>&ge;4
+                              <input  name='long_days' id='long_days3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personal/Family Stress (Health, Finance, Relationship,
+                            etc.)
+                        </td>
+                        <td>
+                            <label class='container'>Minor
+                              <input  name='family_stress' id='family_stress1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Elevated
+                              <input  name='family_stress' id='family_stress2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Serious
+                              <input  name='family_stress' id='family_stress3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>Combined Prior Sleep (Past 72 hrs/3 days)</td>
+                        <td>
+                            <label class='container'>&gt;18hrs
+                              <input  name='combined_sleep' id='combined_sleep1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>15-18hrs
+                              <input  name='combined_sleep' id='combined_sleep2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>&lt;15hrs
+                              <input  name='combined_sleep' id='combined_sleep3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Work/Career Stress</td>
+                        <td>
+                            <label class='container'>Minor
+                              <input  name='work' id='work1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Elevated
+                              <input  name='work' id='work2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Serious
+                              <input  name='work' id='work3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>Combined Prior Wakefulness (Past 36hrs/1.5 days)</td>
+                        <td>
+                            <label class='container'>&lt;23hrs
+                              <input  name='awake' id='awake1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>23-28hrs
+                              <input  name='awake' id='awake2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>&gt;28hrs
+                              <input  name='awake' id='awake3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Perceived Sortie Pressure (External & Internal)</td>
+                        <td>
+                            <label class='container'>Minor
+                              <input  name='pressure' id='pressure1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>Elevated
+                              <input  name='pressure' id='pressure2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Serious
+                              <input  name='pressure' id='pressure3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>Sleep in Last 12 hrs</td>
+                        <td>
+                            <label class='container'>&gt;6hrs
+                              <input  name='last_sleep' id='last_sleep1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>4-6hrs
+                              <input  name='last_sleep' id='last_sleep2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                      </td>
+                        <td>
+                            <label class='container'>&lt;4hrs
+                              <input  name='last_sleep' id='last_sleep3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                </table>
+            </div>
         </div>
 
         <!-- End copy and paste section-->
-
+    <table align='center'>
       <tr id = 'hs'>
         <td>Health and Stress</td>
         <td id='hs1' style = "background-color:black">
@@ -796,10 +941,8 @@
         <td name='ogsig' colspan=2 id='ogsig'><input class='form-control w-50' name='ogsig' type='text' value="<%=ogsig%>" width='200px'>
         </td>
       </tr>
+  </table>
 
-
-
-    </table>
 
     </form>
 
@@ -914,6 +1057,21 @@
     ////////main//////////
      refill();
 
+//javascript to toggle collapsible//
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
 
   </script>
   </body>
