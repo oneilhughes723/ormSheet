@@ -54,7 +54,15 @@ var scoreSchema = new Schema( {
   sqsig: String,
   ogsig: String,
   supapp: String,
-  logged: String
+  logged: String,
+  personal_health: Array,
+  long_days: Array,
+  family_stress: Array,
+  combined_sleep: Array,
+  work: Array,
+  awake: Array,
+  pressure: Array,
+  last_sleep: Array,
 });
 
 module.exports = mongoose.model('ormscore', scoreSchema);
