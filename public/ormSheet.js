@@ -553,5 +553,21 @@ $('delete').bind("keypress", function(e){
   if (e.which === 13) {
      console.log("user pressed Go");
      // submit your form with explicit JS.
-  } 
+  }
 });
+
+//javascript to toggle collapsible health/stress section
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
