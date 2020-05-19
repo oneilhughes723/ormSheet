@@ -23,16 +23,27 @@
 
   <body>
     <div>
-      <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >
+      <h1 class = "jumbotron" style = "text-align:center; background: #FFFACD;" >
         <img src="/images/faipflag.png" width="50" height="50" class = "scaled" style = "position: relative; left: -25%">
       
-        86 FTS ORM Sheet
+        86 FTS ORM Historical Entries
         <img src = "/images/86patch.png" width = "50" height = "50" class = "scaled" style = "position: relative; right: -25%">
       </h1>
       
       <br>
 
     </div>
+
+    <form method = "POST" action = "/ormhistory">
+      <input type="date" id="datePicker" name="sort-start"
+      min="2020-01-01" max="2030-12-31"
+      style = "position: relative; left: 50%; transform:translateX(-50%)"
+      value = '2020-06-01'
+      name = "datePicker"
+      onchange = 'this.form.submit()'
+      >
+    </form>
+
     
     
 
@@ -43,13 +54,7 @@
         </select>
       </form>
       
-      <form method = "POST" action = "/ormhistory">
-        <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo(this)">NEW ORM INFO</button>
-      </form>
-      
-      <form method = "POST" action = "/delete">
-        <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " formaction = "/delete" onclick="deleteEntry()" name = 'deleteEntry' value = "<%=currentID%>">Delete Entry</button>
-      </form>
+
 
     </br></br>
 

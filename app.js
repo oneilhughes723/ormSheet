@@ -306,7 +306,9 @@ app.use('/ormhistory', (req, res) => {
 	var csfill;
 	var selectObject;
 	var currentID = req.body.csdrop;
+	console.log(currentID);
 	var csList = [];
+	var datePicker = req.body.datePicker;
 
 	//if current ID is not selected
 	if (currentID == undefined) {
