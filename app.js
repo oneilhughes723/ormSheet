@@ -83,7 +83,8 @@ app.use('/create', (req, res) => {
 		awake: req.body.awake,
 		pressure:req.body.pressure,
 		last_sleep: req.body.last_sleep,
-		sleepQual: req.body.sleepQual
+		sleepQual: req.body.sleepQual,
+		supappButton: req.body.supappButton,
 
 		});
 
@@ -91,9 +92,7 @@ app.use('/create', (req, res) => {
 			if (err) throw err;
 			var dbo = db.db("ormInputs");
 			if (global.selectObject != null){
-				console.log(global.selectObject.cs + global.selectObject.to, "this is not global-SO");
 				var newID = req.body.cs + req.body.to + day + month + year;
-				console.log(newID);
 				if (global.selectObject.cs + global.selectObject.to + day + month + year == newID){
 				dbo.collection("ormscores").deleteOne({ _id: global.selectObject._id }, function(err, result) {
 				if (err) throw err;
@@ -121,7 +120,6 @@ app.use('/create', (req, res) => {
 app.use('/delete', (req, res) => {
 	console.log('Delete the document associated with this ID')
 	var deleteID = req.body.deleteEntry;
-	console.log(deleteID);
 
 	MongoClient.connect(url, function(err, db) {
 	if (err) throw err;
@@ -157,7 +155,6 @@ app.use('/86orm', (req, res) => {
 	if (currentID == undefined) {
 		currentID = 'Callsign';
 	}
-	console.log(currentID);
 
 	var csList_today = [];
 
@@ -180,7 +177,6 @@ app.use('/86orm', (req, res) => {
 			var todayScores = [];
 
 
-			console.log(today);
 			///////////////////////////
 			//Determine CSFill/////////////
 			////////////////////////
@@ -315,9 +311,7 @@ app.use('/ormhistory', (req, res) => {
 	var csfill;
 	var selectObject;
 	var currentID = req.body.csdrop;
-	console.log(currentID);
 	var csList = [];
-	var datePicker = req.body.datePicker;
 
 	//if current ID is not selected
 	if (currentID == undefined) {
