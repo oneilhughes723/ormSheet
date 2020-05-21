@@ -63,6 +63,7 @@ var scoreSchema = new Schema( {
   awake: Array,
   pressure: Array,
   last_sleep: Array,
+  sleepQual: Array
 });
 
 module.exports = mongoose.model('ormscore', scoreSchema);

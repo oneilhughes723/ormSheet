@@ -82,7 +82,8 @@ app.use('/create', (req, res) => {
 		work: req.body.work,
 		awake: req.body.awake,
 		pressure:req.body.pressure,
-		last_sleep: req.body.last_sleep
+		last_sleep: req.body.last_sleep,
+		sleepQual: req.body.sleepQual
 
 		});
 
