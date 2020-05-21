@@ -24,7 +24,7 @@
 
   <body>
     <div>
-      <h1 class = "jumbotron" style = "text-align:center; background: #b0d3e6;" >
+      <h1 class = "jumbotron" style = "text-align:center; background-image: url(/images/86banner.PNG); background-size: 100% 100%;" >
         <img src="/images/faipflag.png" width="50" height="50" class = "scaled" style = "position: relative; left: -25%">
 
         86 FTS ORM Sheet
@@ -642,18 +642,18 @@
       </tr>
   </table>
       <!-- This is copy and pasted -->
-      <div class='human-factors-content' align='center'>
-          <button type="button" class="human-factors-content collapsible">HUMAN FACTORS</button>
+      <div class='human-factors-content' align='center' width='90%'>
+          <button type="button" class="human-factors-content collapsible" width='90%'>HUMAN FACTORS</button>
               <div class="content" width='90%'>
                 <table style = 'border: 2px solid black' align = 'center' width='90%'>
                     <tr>
                         <td>Health & Stress Risk Factors</td>
                         <td>LOW (0 Points)</td>
-                        <td>MODERATE (1 Point Each)</td>
+                        <td>MOD (1 Point Ea)</td>
                         <td style='border-right: 2px solid black'>HIGH (2 Points Ea)</td>
                         <td>Fatigue Risk Factors</td>
                         <td>LOW (0 points)</td>
-                        <td>MODERATE (1 Point Ea)</td>
+                        <td>MOD (1 Point Ea)</td>
                         <td>HIGH (2 Points Ea)</td>
                     </tr>
                     <tr>
@@ -661,20 +661,20 @@
                             Illness/Injury, Etc.)
                         </td>
                         <td>
-                            <label class='container'>Minor
+                            <label class='container'>Low
                               <input class='personal_factor'  name='personal_health' id='personal_health1' type = "checkbox" value = 1
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label>
                         </td>
                         <td>
-                            <label class='container'>Elevated
+                            <label class='container'>Mod
                               <input class='personal_factor'  name='personal_health' id='personal_health2' type = "checkbox" value = 2
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label></td>
                         <td style='border-right: 2px solid black'>
-                            <label class='container'>Serious
+                            <label class='container'>Hi
                               <input class='peronsal_factor' name='personal_health' id='personal_health3' type = "checkbox" value = 3
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
@@ -708,21 +708,21 @@
                             etc.)
                         </td>
                         <td>
-                            <label class='container'>Minor
+                            <label class='container'>Low
                               <input class='personal_factor'  name='family_stress' id='family_stress1' type = "checkbox" value = 1
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label>
                         </td>
                         <td>
-                            <label class='container'>Elevated
+                            <label class='container'>Mod
                               <input class='personal_factor' name='family_stress' id='family_stress2' type = "checkbox" value = 2
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label>
                         </td>
                         <td style='border-right: 2px solid black'>
-                            <label class='container'>Serious
+                            <label class='container'>Hi
                               <input class='personal_factor' name='family_stress' id='family_stress3' type = "checkbox" value = 3
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
@@ -754,21 +754,21 @@
                     <tr>
                         <td>Work/Career Stress</td>
                         <td>
-                            <label class='container'>Minor
+                            <label class='container'>Low
                               <input class='personal_factor' name='work' id='work1' type = "checkbox" value = 1
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label>
                         </td>
                         <td>
-                            <label class='container'>Elevated
+                            <label class='container'>Mod
                               <input class='personal_factor' name='work' id='work2' type = "checkbox" value = 2
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                             </label>
                         </td>
                         <td style='border-right: 2px solid black'>
-                            <label class='container'>Serious
+                            <label class='container'>Hi
                               <input class='personal_factor' name='work' id='work3' type = "checkbox" value = 3
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
@@ -800,21 +800,21 @@
                     <tr>
                         <td>Perceived Sortie Pressure (External & Internal)</td>
                         <td>
-                            <label class='container'>Minor
+                            <label class='container'>Low
                               <input class='personal_factor' name='pressure' id='pressure1' type = "checkbox" value = 1
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                           </label>
                         </td>
                         <td>
-                            <label class='container'>Elevated
+                            <label class='container'>Mod
                               <input class='personal_factor' name='pressure' id='pressure2' type = "checkbox" value = 2
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
                           </label>
                         </td>
                         <td style='border-right: 2px solid black'>
-                            <label class='container'>Serious
+                            <label class='container'>Hi
                               <input class='personal_factor'  name='pressure' id='pressure3' type = "checkbox" value = 3
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
@@ -844,13 +844,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td colspan=2><button type = 'button' class="btn btn-primary" style = "float: left"  onclick="window.open('/public/crm.html', '_blank')">View CRM Info</button></td>
                         <td></td>
                         <td></td>
                         <td>Sleep Quality</td>
                         <td>
-                            <label class='container'>Excellent
+                            <label class='container'>Good
                               <input class='fatigue_factor'  name='sleepQual' id='sleepQual1' type = "checkbox" value = 1
                                onclick = "highlight(this)">
                               <span class='checkmark'></span>
@@ -918,7 +917,7 @@
       </tr>
       <th colspan = "4" style = "background-color: black" ></th>
       <tr>
-        <td style='font-size: 24px'>TOTAL <button class='btn btn-primary' style='float:right' type = 'button' onclick = "Aggregate(score)">Calculate</button></td>
+        <td style='font-size: 24px'>Total<button class='btn btn-primary' style='float:right' type = 'button' onclick = "Aggregate(score)">Calculate</button></td>
         <td style='text-align: center; font-size: 24px' id = "total">
         </td>
         <td>
@@ -927,7 +926,6 @@
           <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
         </td>
         <td>
-          <button type = 'button' class="btn btn-primary" style = "float: left"  onclick="window.open('/public/crm.html', '_blank')">View CRM Info</button>
           <button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button>
 
         </td>
@@ -1053,7 +1051,7 @@ function addPersonal() {
                 return;
             }
         }
-    if (totalPoints === 0) {
+    if (totalPoints == 0) {
         if (id2.checked == true) {
             id2.checked = false;
             highlight(el2);
@@ -1124,7 +1122,7 @@ function addFatigue() {
                 return;
             }
         }
-    if (totalPoints === 0) {
+    if (totalPoints == 0) {
         if (id1.checked == true) {
             id1.checked = false;
             highlight(el1);
@@ -1134,8 +1132,8 @@ function addFatigue() {
             highlight(el2);
         }
         if (id3.checked == true) {
-            id3.checked == false;
-            highlight(el3)
+            id3.checked = false;
+            highlight(el3);
         }
     }
    else if (totalPoints > 0 && totalPoints < 4) {
