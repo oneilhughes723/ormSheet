@@ -214,8 +214,6 @@ var runningSum = 0;
 
 //highlight function to be used to store scores and hghlight parent element boxes
 function highlight (el) {
-console.log(el);
-console.log(el.id);
  var parID = el.parentElement.parentElement.parentElement.id;
 
 
@@ -294,8 +292,6 @@ function highlightCell (elID) {
 function Aggregate(score) {
 
 var runningSum = 0;
-console.log("begin aggregation");
-console.log(score);
 
 
  for (prop of props_toScore) {
@@ -354,7 +350,6 @@ function deleteEntry(val) {
 
 
 function clearCells(){
-  console.log('clear the page')
    for (prop of props_toScore) {
      var propList = [prop + "1", prop + "2", prop + "3"];
 
@@ -366,7 +361,6 @@ function clearCells(){
        document.getElementById(val).checked = false;
 
        if (selectObject != null) {
-         console.log('test');
          selectObject[val] = 0;
        }
    };
@@ -461,12 +455,13 @@ function supSign(el) {
     if (pw == "nacho"){
       var cell = document.getElementById('supappButton').parentElement;
       cell.style.background = "#90ee90";
-      console.log(document.getElementById('supappButton').value)
       document.getElementById('supappButton').value = 1;
       alert("Please hit submit at bottom to step crew");
-
-
-
+    }
+    else {
+        var cell = document.getElementById('supappButton').parentElement;
+        cell.style.background = "#ffcccb";
+        document.getElementById('supappButton').value = 3;
     }
 
 
@@ -486,7 +481,3 @@ function supSign(el) {
 //fumctions that will on initializing the page
 
 clearCells();
-
-var dateControl = document.querySelector('input[type="date"]');
-dateControl.value = '2017-06-01';
-console.log(dateControl.value); // prints "2017-06-01"
