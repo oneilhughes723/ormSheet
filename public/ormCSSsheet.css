@@ -159,3 +159,9 @@ button.human-factors-content {
 .active:after {
   content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+
+#signature-table {
+    border-width: 0px 2px 2px 2px;
+    border-color: black;
+    border-style: solid;
+}
