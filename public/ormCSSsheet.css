@@ -104,9 +104,8 @@ img.scaled {
 }
 
 .human-factors-content {
-    left: 10%;
-    width: 100%
-
+    width: 100%;
+    align: center;
 }
 
 .human-factors-dropdown {
