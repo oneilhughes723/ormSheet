@@ -165,3 +165,7 @@ button.human-factors-content {
     border-color: black;
     border-style: solid;
 }
+
+.blackout {
+    background-color: rgba(0, 0, 0, 0.65);
+}
