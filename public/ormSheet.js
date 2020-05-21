@@ -23,6 +23,10 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
 'jump'];
 
+//row ids that correspond to human factor properties
+var humanFactors = ['personal_health', 'long_days', 'family_stress',
+'combined_sleep', 'work', 'awake', 'pressure', 'last_sleep', 'sleepQual'];
+
 //object that will record score values for each row
 var score ={
  cs: '',

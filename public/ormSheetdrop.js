@@ -150,7 +150,9 @@ function toPrompt(){
  var toInt = parseInt(to);
  var earlyShow = false;
  if (toInt < 801) {
-     earlyShow = true;
+     document.getElementById('cdd3').checked = true;
+     let early = document.querySelector("#cdd3");
+     highlight(early);
  }
  document.getElementById('to').value = to
  var toval = document.getElementById('to').value;
@@ -212,7 +214,8 @@ var runningSum = 0;
 
 //highlight function to be used to store scores and hghlight parent element boxes
 function highlight (el) {
-
+console.log(el);
+console.log(el.id);
  var parID = el.parentElement.parentElement.parentElement.id;
 
 
@@ -263,7 +266,7 @@ function highlight (el) {
 
 };
 
-//highlight function to be used to store scores and hghlight parent element boxes
+//highlight function to be used to store scores and highlight parent element boxes
 function highlightCell (elID) {
  var cell = document.getElementById(elID).parentElement;
  var parentCell = cell.parentElement;
@@ -336,7 +339,7 @@ console.log(score);
 //When the user hits the submit button
 function Submit() {
  alert("Your submission has been recorded");
- 
+
 }
 
 //on click of the delete button
@@ -359,7 +362,7 @@ function clearCells(){
        var clearcell = document.getElementById(val).parentElement;
        clearcell.style.background = "";
        clearcell.parentElement.style.background = "";
-       
+
        document.getElementById(val).checked = false;
 
        if (selectObject != null) {
@@ -407,7 +410,7 @@ function nightcpLog(el){
 document.getElementById('ac').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('cs').focus();
-    return false; 
+    return false;
   }
 });
 
@@ -415,7 +418,7 @@ document.getElementById('ac').onkeypress = (function(e) {
 document.getElementById('cs').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('to').focus();
-    return false; 
+    return false;
   }
 });
 
@@ -424,7 +427,7 @@ document.getElementById('cs').onkeypress = (function(e) {
 document.getElementById('to').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('sortie').focus();
-    return false; 
+    return false;
   }
 
   if (isNaN(e.key)) {
@@ -439,7 +442,7 @@ document.getElementById('to').onkeypress = (function(e) {
 document.getElementById('sortie').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('plan').focus();
-    return false; 
+    return false;
   }
 });
 
@@ -448,7 +451,7 @@ document.getElementById('sortie').onkeypress = (function(e) {
 document.getElementById('plan').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('supapp').focus();
-    return false; 
+    return false;
   }
 });
 
@@ -461,7 +464,7 @@ function supSign(el) {
       console.log(document.getElementById('supappButton').value)
       document.getElementById('supappButton').value = 1;
       alert("Please hit submit at bottom to step crew");
- 
+
 
 
     }
