@@ -80,7 +80,7 @@
                 </td>
                  <td style='border-right:2px solid black'><label>PROFILE: </label><input class='form-control w-100' value = "<%=plan%>" name = 'plan' id='plan'></td>
             </tr>
-              <td style = "background-color:black"></td>
+              <td></td>
                 <td>
                    <label class='container'>Night Brief Complete?
                      <input  name='night' id='night' onclick='nightcpLog("night")' type = "checkbox" value = 1>
@@ -115,7 +115,7 @@
           </label>
         </td>
         <td>
-          <label class='container'>Airdrop
+          <label class='container'>Airdrop/Dissimilar
             <input  name='form' id='form3'  type = "checkbox" value = 3 onclick = "highlight(this)">
             <span class='checkmark'></span>
           </label>
@@ -134,7 +134,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='ll3' style = "background-color:black">
+        <td id='ll3' class='blackout'>
         </td>
       </tr>
 
@@ -174,7 +174,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='mission3' style = "background-color:black">
+        <td id='mission3' class='blackout'>
         </td>
       </tr>
 
@@ -277,9 +277,9 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='temp2' style="background-color: black">
+        <td id='temp2' class='blackout'>
         </td>
-        <td id='temp3' style="background-color: black">
+        <td id='temp3' class='blackout'>
         </td>
       </tr>
 
@@ -327,7 +327,7 @@
       </tr>
       <tr id ='rd'>
         <td>Runway Distance &lt; 7000'</td>
-        <td  name='rd' id='rd1' style="background-color: black">
+        <td  name='rd' id='rd1' class='blackout'>
         </td>
         <td>
           <label class='container'>Landing
@@ -461,7 +461,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td  name='mountains' id='mountains3' style="background-color: black">
+        <td  name='mountains' id='mountains3' class='blackout'>
         </td>
       </tr>
       <tr id = 'thermal'>
@@ -478,7 +478,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='thermal3' style="background-color: black">
+        <td id='thermal3' class='blackout'>
         </td>
       </tr>
       <tr id = 'airspace'>
@@ -495,7 +495,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='airspace3' style="background-color: black">
+        <td id='airspace3' class='blackout'>
         </td>
       </tr>
       <tr id = 'climb'>
@@ -533,7 +533,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='flight_cond3' style="background-color: black">
+        <td id='flight_cond3' class='blackout'>
         </td>
       </tr>
       <th colspan = "4" class = "tableSec" >CREW</th>
@@ -545,9 +545,9 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='jump2' style = "background-color:black">
+        <td id='jump2' blass='blackout'>
         </td>
-        <td id='jump3' style = "background-color:black">
+        <td id='jump3' class='blackout'>
         </td>
       </tr>
 
@@ -565,7 +565,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='exp3' style = "background-color:black">
+        <td id='exp3' class='blackout'>
         </td>
       </tr>
 
@@ -583,7 +583,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='ip_currency3' style = "background-color:black">
+        <td id='ip_currency3' class='blackout'>
         </td>
       </tr>
 
@@ -601,7 +601,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='currency3' style = "background-color:black">
+        <td id='currency3' class='blackout'>
         </td>
       </tr>
 
@@ -619,7 +619,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='issues3' style = "background-color:black">
+        <td id='issues3' class='blackout'>
         </td>
       </tr>
 
@@ -637,7 +637,7 @@
             <span class='checkmark'></span>
           </label>
         </td>
-        <td id='cat3' style = "background-color:black">
+        <td id='cat3' class='blackout'>
         </td>
       </tr>
   </table>
@@ -878,7 +878,7 @@
     <table align='center' id='signature-table'>
       <tr id = 'hs'>
         <td>Health and Stress</td>
-        <td id='hs1' style = "background-color:black">
+        <td id='hs1' class='blackout'>
         </td>
         <td>
           <label class='container'>MODERATE
