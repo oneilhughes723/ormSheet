@@ -930,11 +930,11 @@
         </td>
         <td style = 'width: 25%'>
           <label style = 'float:left; margin-right: .5em'>SUP APPROVAL </label><input class='form-control w-50' style = 'float:left;' name='supapp' id='supapp' value='<%=supapp%>'>
-          
+          <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
         </td>
         <td style = 'width: 25%'>
           <button class='btn btn-primary' style=' float:left;' type = 'button' onclick = "supSign(this)">Sign</button>
-          <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
+          
           <button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button>
 
         </td>
