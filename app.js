@@ -147,6 +147,7 @@ app.use('/86orm', (req, res) => {
 		//variable declaration
 	//////////////////
 	var csfill;
+	//var stepfill; 
 	var selectObject;
 	var today = new Date();
 	today.setHours(0,0,0,0);
