@@ -21,6 +21,7 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 
 
 //object that will record score values for each row
+
 var score ={
  cs: '',
  ac: '',
@@ -65,7 +66,10 @@ var score ={
  logged: '',
  night: 0,
  cp: 0,
+ personal_health: {}
 };
+
+
 
 var date = new Date();
 var day = date.getDate();
@@ -335,13 +339,10 @@ var runningSum = 0;
 //When the user hits the submit button
 function Submit() {
  alert("Your submission has been recorded");
+ 
 
 }
 
-//on click of the delete button
-function deleteEntry(val) {
-  alert('something');
-};
 
 
 
@@ -360,9 +361,6 @@ function clearCells(){
 
        document.getElementById(val).checked = false;
 
-       if (selectObject != null) {
-         selectObject[val] = 0;
-       }
    };
 
  };
@@ -398,6 +396,14 @@ function nightcpLog(el){
 //////////////////////////////////////////////
 ////////////////////////////////////////////
 
+function stopTags(e) {
+  if (e.which == 60 || e.which == 62) {
+
+    alert("< or > keys prohibited");
+    e.preventDefault();
+  }
+}
+
 
 
 //move from ac to cs
@@ -405,7 +411,10 @@ document.getElementById('ac').onkeypress = (function(e) {
   if (e.which == 13) {
     document.getElementById('cs').focus();
     return false;
-  }
+  };
+
+  stopTags(e);
+
 });
 
 //move from cs to to
@@ -414,6 +423,8 @@ document.getElementById('cs').onkeypress = (function(e) {
     document.getElementById('to').focus();
     return false;
   }
+
+  stopTags(e);
 });
 
 //move from to to sortie
@@ -427,7 +438,10 @@ document.getElementById('to').onkeypress = (function(e) {
   if (isNaN(e.key)) {
 
     alert("Takeoff time must be a number");
+    e.preventDefault();
   }
+
+  stopTags(e);
 
 
 });
@@ -438,6 +452,8 @@ document.getElementById('sortie').onkeypress = (function(e) {
     document.getElementById('plan').focus();
     return false;
   }
+
+  stopTags(e);
 });
 
 //move from plan to sup app
@@ -447,7 +463,28 @@ document.getElementById('plan').onkeypress = (function(e) {
     document.getElementById('supapp').focus();
     return false;
   }
+
+  stopTags(e);
 });
+
+document.getElementById('supapp').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('supapp').focus();
+    return false;
+  }
+
+  stopTags(e);
+});
+
+
+//prevent certain keys on the input boxes below
+
+['supapp', 'acbox', 'supbox', 'sqbox', 'ogbox'].forEach(function(id) {
+  document.getElementById(id).onkeypress = (function(e) {
+    stopTags(e);
+  });
+});
+
 
 //require password for sup signature
 function supSign(el) {
@@ -461,11 +498,28 @@ function supSign(el) {
     else {
         var cell = document.getElementById('supappButton').parentElement;
         cell.style.background = "#ffcccb";
+        document.getElementById('supapp').value = "";
         document.getElementById('supappButton').value = 3;
+
     }
 
 
 }
+
+function deleteAlert(val) {
+
+  if (confirm('Are you sure you want to delete the entry associated with Callsign: '.concat(selectObject.cs).concat(", TO: ").concat(selectObject.to))) {
+    document.getElementById('deleteForm').submit()
+
+    // Delete it
+
+  } else {
+    //'<%=csIn%>'.concat('<%=to%>')
+    val.preventDefault()
+    return false;
+  }
+
+};
 
 
 ////////////////////////////////////////////
