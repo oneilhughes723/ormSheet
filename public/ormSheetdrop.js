@@ -493,7 +493,7 @@ function supSign(el) {
       var cell = document.getElementById('supappButton').parentElement;
       cell.style.background = "#90ee90";
       document.getElementById('supappButton').value = 1;
-      alert("Please hit submit at bottom to step crew");
+      alert(selectObject.cs.concat(" ,TO: ").concat(selectObject.to).concat(" has been stepped"));
     }
     else {
         var cell = document.getElementById('supappButton').parentElement;

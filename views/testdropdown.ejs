@@ -933,7 +933,7 @@
           <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
         </td>
         <td style = 'width: 25%'>
-          <button class='btn btn-primary' style=' float:left;' type = 'button' onclick = "supSign(this)">Sign</button>
+          <button class='btn btn-primary' style=' float:left;' onclick = "supSign(this)">Step</button>
           
           <button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button>
 
@@ -1399,12 +1399,25 @@ if (e.which == 13) {
 }
 });
 
+//instructions
+//global variable
+
+function instructions() {
+  var instructionsSeen = sessionStorage.getItem("instructionsSeen");
+  if (instructionsSeen != "True") {
+    alert("ORM Instructions\n1. Fill out your info at the top. Ensure your callsign and takeoff time are correct. That is how the page differentiates plans. \n2. Fill out the page. \n3. Hit submit at the bottom right of the page \n4. If you need to make edits, select your callsign from the dropdown to reload your submission, then resubmit.\n5. If you make a mistake, please select the Callsign/TO associated for that mistaken ORM sheet from the dropdown and hit Delete Entry")
+  };
+  sessionStorage.setItem("instructionsSeen", "True");
+};
+
 
 
 
 //also aggregate
 ////////main//////////
  refill();
+ instructions();
+
 
 
   </script>
