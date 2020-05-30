@@ -16,6 +16,7 @@ var scoreSchema = new Schema( {
   to: Number,
   sortie: String,
   plan: String,
+  crmtopic: Number,
   supappButton: Number,
   form: Array,
   ll: Array,

@@ -28,6 +28,7 @@ var score ={
  to: '',
  sortie: '',
  plan: '',
+ crmtopic: 0,
  form: {},
  ll: {},
  check: {},
@@ -387,6 +388,7 @@ function nightcpLog(el){
    score.cp = cpval.options[cpval.selectedIndex].value;
    document.getElementById(elid).value = score.cp;
  }
+
 }
 
 

@@ -69,7 +69,7 @@
             <tr height='25px'>
                 <td><label>SORTIE: </label><input class='form-control w-75' type = "text" name = "sortie" id = "sortie" value = "<%=sortie%>"></td>
                 <td id ='commPlan'>
-                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50" id="inlineFormCustomSelect">
+                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50">
                     <option value="0">Comm Plan</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -90,8 +90,15 @@
                 </label>
               </td>
               <td>
-
-
+                <select name = 'crmtopic' id = 'crmtopic' margin = '0px' class = 'custom-select h-50'>
+                  <option value = '0'>CRM Topic</option>
+                  <option value = '1'>Mission Analysis</option>
+                  <option value = '2'>Situational Awareness</option>
+                  <option value = '3'>Crew/Flight Coordination</option>
+                  <option value = '4'>Communication</option>
+                  <option value = '5'>Task Management</option>
+                  <option value = '6'>Risk Management/Decision Making</option>
+                </select>
               </td>
               <td style='border-right:2px solid black'>Date: 
                 <script>document.write(new Date().toDateString());</script>
@@ -1189,124 +1196,6 @@ function addFatigue() {
    }
 };
 
-        function refill(){
-
-         //this segment will clear all background colors
-          ///just for the complan refill
-         if (selectObject == null){
-           var cpfill = 0
-          } else {
-            var cpfill = selectObject.cp;
-            }
-            if(selectObject.night == 1){
-              document.getElementById('night').checked = true;
-            }
-            if(selectObject.supappButton == 1) {
-              var cell = document.getElementById('supappButton').parentElement;
-              cell.style.background = "#90ee90";
-            }
-            document.getElementById('cp').value = cpfill;
-
-
-            /////////////////////////////////////
-            /////refill other values//////////
-            for (var prop of props_toScore){
-
-        var val = Object.values(selectObject[prop]);
-        for (eachVal of val) {
-          if (eachVal > 0){
-            var elid = prop + eachVal;
-            document.getElementById(elid).checked = true;
-            highlightCell(elid);
-          }
-        }
-        }
-
-        for (var factor of humanFactors) {
-            var val = Object.values(selectObject[factor]);
-            for (facVal of val) {
-                if (facVal > 0) {
-                    var elid = factor + facVal;
-                    document.getElementById(elid).checked = true;
-                    highlightCell(elid);
-                }
-            }
-        }
-        if (selectObject[supappButton].value == 1) {
-            highlight('supappButton')
-        }
-    };
-
-
-
-
-
-
-
-
-         for (var prop of props_toScore){
-           //reassign to score
-           if (selectObject != null) {
-
-             innerScore = {};
-             if (selectObject[prop].length > 0) {
-
-              if (selectObject[prop].includes("1")) {
-                innerScore.one = 1;
-              };
-              if (selectObject[prop].includes("2")) {
-                innerScore.two = 2;
-              };
-              if (selectObject[prop].includes("3")) {
-                innerScore.three = 3;
-              }
-
-
-              score[prop] = innerScore;
-
-             } else {
-
-               score[prop] = selectObject[prop];
-             }
-           }
-         };
-            if (selectObject != null) {
-              Aggregate(selectObject);
-            };
-
-
-         $('input').keypress(function(e) {
-        if (e.which == 13) {
-            $(this).next('input').focus();
-            e.preventDefault();
-        }
-        });
-
-        //also aggregate
-        ////////main//////////
-         refill();
-
-for (factor of personal_factors) {
-    for (let i = 1; i < 4; i++) {
-        let elid = factor + i;
-        document.getElementById(elid).addEventListener('click',addPersonal);
-    }
-}
-
-for (factor of fatigue_factors) {
-    for (let i = 1; i < 4; i++) {
-        let elid = factor + i;
-        document.getElementById(elid).addEventListener('click',addFatigue);
-    }
-}
-
-/*for (factor of fatigue_factor) {
-    for (let i = 1; i < 4; i++) {
-        let elid = factor + i;
-        document.getElementById(elid).addEventListener('click', addFatigue;)
-    }
-}
-*/
 
 function refill(){
 
@@ -1314,16 +1203,21 @@ function refill(){
   ///just for the complan refill
  if (selectObject == null){
    var cpfill = 0
-  } else {
+  } 
+  else {
     var cpfill = selectObject.cp;
+
     if(selectObject.night == 1){
       document.getElementById('night').checked = true;
     }
+
     if(selectObject.supappButton == 1) {
       var cell = document.getElementById('supappButton').parentElement;
       cell.style.background = "#90ee90";
     }
+
     document.getElementById('cp').value = cpfill;
+    document.getElementById('crmtopic').value = selectObject.crmtopic;
 
 
     /////////////////////////////////////
@@ -1348,6 +1242,20 @@ for (var factor of humanFactors) {
             document.getElementById(elid).checked = true;
             highlightCell(elid);
         }
+    }
+}
+
+for (factor of personal_factors) {
+    for (let i = 1; i < 4; i++) {
+        let elid = factor + i;
+        document.getElementById(elid).addEventListener('click',addPersonal);
+    }
+}
+
+for (factor of fatigue_factors) {
+    for (let i = 1; i < 4; i++) {
+        let elid = factor + i;
+        document.getElementById(elid).addEventListener('click',addFatigue);
     }
 }
 
@@ -1412,8 +1320,6 @@ function instructions() {
 
 
 
-
-//also aggregate
 ////////main//////////
  refill();
  instructions();

@@ -36,6 +36,7 @@ app.use('/create', (req, res) => {
 		to: req.body.to,
 		sortie: req.body.sortie,
 		plan: req.body.plan,
+		crmtopic: req.body.crmtopic,
 		form: req.body.form,
 		supappButton: req.body.supappButton,
 		ll: req.body.ll,
@@ -87,6 +88,8 @@ app.use('/create', (req, res) => {
 		supappButton: req.body.supappButton,
 
 		});
+
+		console.log(newScore);
 
 		MongoClient.connect(url, function(err, db) {
 			if (err) throw err;
@@ -150,7 +153,7 @@ app.use('/86orm', (req, res) => {
 	//var stepfill; 
 	var selectObject;
 	var today = new Date();
-	today.setHours(0,0,0,0);
+	today.setHours(-6,0,0,0);
 
 	var currentID = req.body.csdrop;
 	if (currentID == undefined) {
@@ -183,8 +186,7 @@ app.use('/86orm', (req, res) => {
 			////////////////////////
 			for (archiveScore of allScores) {
 			 if (archiveScore.dateTime >= today) {
-				 console.log(archiveScore.dateTime);
-				 console.log(today);
+
 				 todayScores.push(archiveScore);
 			 };
 			};
@@ -284,7 +286,7 @@ app.use('/86orm', (req, res) => {
 						sqsig: sqsig,
 						ogsig: ogsig,
 						night: night,
-						plan: plan
+						plan: plan,
 
 
 
