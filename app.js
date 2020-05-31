@@ -22,6 +22,7 @@ var year = date.getFullYear().toString().slice(-2);
 
 
 
+
 var Score = require('./score.js');
 
 app.use('/create', (req, res) => {
@@ -89,8 +90,6 @@ app.use('/create', (req, res) => {
 
 		});
 
-		console.log(newScore);
-
 		MongoClient.connect(url, function(err, db) {
 			if (err) throw err;
 			var dbo = db.db("ormInputs");
@@ -153,7 +152,8 @@ app.use('/86orm', (req, res) => {
 	//var stepfill; 
 	var selectObject;
 	var today = new Date();
-	today.setHours(-6,0,0,0);
+	today.setHours(-4,0,0,0);
+	console.log(today);
 
 	var currentID = req.body.csdrop;
 	if (currentID == undefined) {
