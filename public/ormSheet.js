@@ -1,15 +1,11 @@
   //javascript file that will be imported to html
 
 
-
 /////////////////////////////////////////
  //global variables
 /////////////////////////////////////////
 
-var csList = [];
-var todayScore = [];
-var archiveList = [];
-var csList_today = [];
+//var csList_today = [];
 var cs;
 var ac;
 var to;
@@ -23,17 +19,16 @@ var props_toScore = ['form', 'll', 'check', 'mission', 'cdd', 'cfd',
 'ip_currency', 'currency', 'exp', 'airspace', 'climb', 'flight_cond',
 'jump'];
 
-//row ids that correspond to human factor properties
-var humanFactors = ['personal_health', 'long_days', 'family_stress',
-'combined_sleep', 'work', 'awake', 'pressure', 'last_sleep', 'sleepQual'];
 
 //object that will record score values for each row
+
 var score ={
  cs: '',
  ac: '',
  to: '',
  sortie: '',
  plan: '',
+ crmtopic: 0,
  form: {},
  ll: {},
  check: {},
@@ -72,7 +67,10 @@ var score ={
  logged: '',
  night: 0,
  cp: 0,
+ personal_health: {}
 };
+
+
 
 var date = new Date();
 var day = date.getDate();
@@ -85,40 +83,58 @@ var dateOutput = day + " " + month + " " + year
 
 
 
+
 ///////////////////////////////////////////////////////////////////
 //functions that will be called by events in html file
 ///////////////////////////////////////////////////////////////////
 
 
-function ormInfo(){
-  acPrompt();
-  csPrompt();
-  toPrompt();
-  sortiePrompt();
-  planPrompt();
-};
+function ormInfo(newInfo){
+
+  var test = 0;
+  test += acPrompt();
+  if (test < 1) {
+    test += csPrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    test += toPrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    test += sortiePrompt();
+  } else {
+    return;
+  };
+  if (test < 1) {
+    planPrompt();
+
+  } else {
+    return;
+  }
+  };
 
 function acPrompt() {
    ac = prompt('Enter the last name of the Aircraft Commander', 'AC Last Name');
    score.ac = ac;
    if (ac == null || ac == "") {
-       exit;
+       return 1;
    };
-   displayAC = "AIRCRAFT COMMANDER:" + "  " + ac;
-   document.getElementById('ac').innerHTML = displayAC;
    document.getElementById('ac').value = ac;
+   return 0;
 };
 
 function csPrompt() {
  cs = prompt('Enter your callsign', 'Rake XX');
  score.cs = cs;
  if (cs == null || cs == "") {
-     exit;
+     return 1;
  }
- displayCS = "CALLSIGN:" + "  " + cs;
- document.getElementById('cs').innerHTML = displayCS;
  document.getElementById('cs').value = cs
  var csval = document.getElementById('cs').value;
+ return 0;
 };
 
 function toPrompt(){
@@ -127,7 +143,7 @@ function toPrompt(){
    to = prompt('Enter your takeoff time in Local time', '0000');
    score.to = to;
    if (to == null || to == "") {
-       exit;
+    return 1;
    };
    if (to.length == 4 && isNaN(to) == false && to != "    ") {
        valid = true;
@@ -139,12 +155,13 @@ function toPrompt(){
  var toInt = parseInt(to);
  var earlyShow = false;
  if (toInt < 801) {
-     earlyShow = true;
+     document.getElementById('cdd3').checked = true;
+     let early = document.querySelector("#cdd3");
+     highlight(early);
  }
- displayTO = "TAKEOFF TIME/DATE:" + "  " + to;
- document.getElementById('to').innerHTML = displayTO + " " + month + " " + day + " " + year;
  document.getElementById('to').value = to
  var toval = document.getElementById('to').value;
+ return 0;
 };
 
 
@@ -152,13 +169,11 @@ function sortiePrompt(){
  sortie = prompt('Enter Sortie Identifier', 'T5005');
  score.sortie = sortie;
  if (sortie == null || sortie == "") {
-     exit;
+  return 1;
  }
- displaySortie = "SORTIE:" + "  " + sortie;
- document.getElementById('sortie').innerHTML = displaySortie;
  document.getElementById('sortie').value = sortie
  var sortieval = document.getElementById('sortie').value;
- console.log(sortieval);
+ return 0;
 };
 
 function planPrompt(){
@@ -167,8 +182,6 @@ function planPrompt(){
  if (plan == null || plan == "") {
      plan = "Update sortie itinerary";
  }
- displayPlan = "ITINERARY:" + " " + plan;
- document.getElementById('plan').innerHTML = displayPlan;
  document.getElementById('plan').value = plan
  var planval = document.getElementById('plan').value;
 };
@@ -188,53 +201,8 @@ function planPrompt(){
 var today = new Date();
 today.setHours(0,0,0,0);
 
-//grab ALl keys from local storage
-for (var i = 0; i < localStorage.length; i++) {
-   csList.push(localStorage.key(i));
-};
-
-//grab all objects from local storage
-for (cs of csList) {
- var testNull = localStorage.getItem(cs).includes('form');
-
- if (testNull == false){
-   console.log('there was an unidentified null key, so it was not added to archiveList');
- } else {
-   var scoreObject = JSON.parse(localStorage.getItem(cs));
-   archiveList.push(scoreObject);
- }
-
-};
-
-//sort through those objects to only return those with dates that are current
-//this is pushed to the todayScore variable
-for (archiveScore of archiveList) {
- archiveScore.date = Date.parse(archiveScore.date);
-
- if (archiveScore.date >= Date.parse(today)) {
-   todayScore.push(archiveScore);
- }
-};
 
 
-
-for (obj of todayScore) {
- csList_today.push(obj.cs + obj.to);
-};
-
-if (csList_today.length == 0){
- document.getElementById("csdrop").innerHTML = "<option>Callsign</option>";
-}
-else {
-   var csOptions = "";
-   for (obj of todayScore) {
-     csOptions += "<option>" + obj.cs + ", TO: "+ obj.to + "</option>";
-   };
-   document.getElementById("csdrop").innerHTML = "<option>Callsign</option>" + csOptions;
-};
-
-//inspect todays score
-console.log(todayScore);
 
 var innerScore = {
  one: 0,
@@ -251,7 +219,6 @@ var runningSum = 0;
 
 //highlight function to be used to store scores and hghlight parent element boxes
 function highlight (el) {
-
  var parID = el.parentElement.parentElement.parentElement.id;
 
 
@@ -302,7 +269,7 @@ function highlight (el) {
 
 };
 
-//highlight function to be used to store scores and hghlight parent element boxes
+//highlight function to be used to store scores and highlight parent element boxes
 function highlightCell (elID) {
  var cell = document.getElementById(elID).parentElement;
  var parentCell = cell.parentElement;
@@ -330,8 +297,6 @@ function highlightCell (elID) {
 function Aggregate(score) {
 
 var runningSum = 0;
-console.log("begin aggregation");
-console.log(score);
 
 
  for (prop of props_toScore) {
@@ -374,79 +339,17 @@ console.log(score);
 
 //When the user hits the submit button
 function Submit() {
-
- //only old entries will have a date value, so on resubmission, only an old entry will be deleted.
- if (score.date != null){
-   console.log('did it go here?')
-   var oldDate = new Date(score.date);
-   var oldstrDate = oldDate.toString().substr(0,24);
-   var oldKey = score.cs + oldstrDate;
-   console.log(oldKey);
-   localStorage.removeItem(oldKey);
-   console.log(localStorage.removeItem(oldKey));
- };
-
-//here is where the date value is added! ... my most creative solution if anyone ever reads this.
- score.date = new Date()
- var strDate = score.date.toString().substr(0,24);
- console.log("Following object has been added to the archive");
- console.log(score);
- localStorage.setItem(score.cs + strDate, JSON.stringify(score));
  alert("Your submission has been recorded");
+ 
+
 }
 
-//execute when the user hits the sign buttons
-function signCard(el) {
- var sig = prompt('Enter your first and last name', 'John Doe');
- if (window.confirm("I understand that accepting to sign below with faulty/incorrect information is a violation of UCMJ Article 106: Impersonating an Officer")){
-   id = el.parentElement.id;
-   if (id == 'acsig'){
-     var acsig = sig;
-     document.getElementByIds(id).innerHTML = acsig;
-     score.acsig = acsig;
-     document.getElementById(id).value = acsig;
-   }
-   else if (id == 'supsig'){
-     var supsig = sig;
-     document.getElementById(id).innerHTML = supsig;
-     score.supsig = supsig;
-     document.getElementById(id).value = supsig;
-   }
-   else if (id == 'sqsig'){
-     var sqsig = sig;
-     document.getElementById(id).innerHTML = sqsig;
-     score.sqsig = sqsig;
-     document.getElementById(id).value = sqsig;
-   }
-   else if(id == 'ogsig'){
-     var ogsig = sig;
-     document.getElementById(id).innerHTML = ogsig;
-     score.ogsig = ogsig;
-     document.getElementById(id).value = score.ogsig;
-   }
-   else if(id == 'supapp'){
-     var supapp = sig;
-     var pw = prompt('Please enter the Sup Password', '***')
-     if (pw != "1qaz2wsx!QAZ@WSX"){
-       exit;
-     }
-     document.getElementById(id).innerHTML = supapp;
-     score.supapp = supapp;
-     document.getElementById(id).value = score.supapp;
-   }
-   else if(id == 'logged'){
-     var logged = sig;
-     document.getElementById(id).innerHTML = logged;
-     score.logged = logged;
-     document.getElementById(id).value = score.loogged;
-   }
-     document.getElementById(id).style.fontFamily = 'cursive';
-     document.getElementById(id).style.fontFamily = 'Brush Script MT, sans-serif';
-     document.getElementById(id).style.fontSize = '32px';
-   }
-}
+
+
 
 //function to refill data based on the callsign selected from the dropdown menu. Executed when user hits refill/reload
+
+
 
 function clearCells(){
    for (prop of props_toScore) {
@@ -456,80 +359,16 @@ function clearCells(){
        var clearcell = document.getElementById(val).parentElement;
        clearcell.style.background = "";
        clearcell.parentElement.style.background = "";
+
        document.getElementById(val).checked = false;
+
    };
 
  };
 };
 
-function refill(){
-
- //this segment will clear all background colors
- clearCells();
-
- //
-
- var arrInd;
- var callsign = document.getElementById('csdrop').value;
-
- for (var i = todayScore.length -1; i >= 0; i--){
-
-   if (todayScore[i].cs + ", TO: " + todayScore[i].to === callsign){
-     arrInd = i;
-     console.log(arrInd);
-     }
-   }
- console.log(todayScore[arrInd]);
- for (var prop of props_toScore){
-   var val = Object.values(todayScore[arrInd][prop]);
-   for (eachVal of val) {
-     if (eachVal > 0){
-       var elid = prop + eachVal;
-       document.getElementById(elid).checked = true;
-       highlightCell(elid);
-     }
-   }
-
-   }
-
-//also aggregate
- Aggregate(todayScore[arrInd]);
-
-//reassign values to global variable score
- for (prop in todayScore[arrInd]) {
-   score[prop] = todayScore[arrInd][prop]
- }
 
 
- document.getElementById('ac').innerHTML = "AIRCRAFT COMMANDER:   " + todayScore[arrInd].ac
- document.getElementById('cs').innerHTML = "CALLSIGN:   " + todayScore[arrInd].cs
- document.getElementById('to').innerHTML = "TO TIME/DATE:   " + todayScore[arrInd].to + " " + dateOutput
- document.getElementById('plan').innerHTML = "ITINERARY:    " + todayScore[arrInd].plan
- document.getElementById('sortie').innerHTML = "SORTIE:    " + todayScore[arrInd].sortie
- document.getElementById('acsig').innerHTML = todayScore[arrInd].acsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
- document.getElementById('acsig').style.fontFamily = 'cursive';
- document.getElementById('acsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('acsig').style.fontSize = '32px';
- document.getElementById('supsig').innerHTML = todayScore[arrInd].supsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>"
- document.getElementById('supsig').style.fontFamily = 'cursive';
- document.getElementById('supsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('supsig').style.fontSize = '32px';
- document.getElementById('sqsig').innerHTML = todayScore[arrInd].sqsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
- document.getElementById('sqsig').style.fontFamily = 'cursive';
- document.getElementById('sqsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('sqsig').style.fontSize = '32px';
- document.getElementById('ogsig').innerHTML = todayScore[arrInd].ogsig + "<button class='btn btn-primary' style='float:right; font-family: arial, sans-serif' onclick='signCard(this)'>Change Signature</button>";
- document.getElementById('ogsig').style.fontFamily = 'cursive';
- document.getElementById('ogsig').style.fontFamily = 'Brush Script MT, sans-serif';
- document.getElementById('ogsig').style.fontSize = '32px';
-
- if(todayScore[arrInd].night == 1){
-   document.getElementById('night').checked = true;
- }
- if(todayScore[arrInd].cp != 0){
-   document.getElementById('cp').value = todayScore[arrInd].cp;
- }
-}
 
 
 
@@ -549,29 +388,152 @@ function nightcpLog(el){
    score.cp = cpval.options[cpval.selectedIndex].value;
    document.getElementById(elid).value = score.cp;
  }
+
 }
 
 
-$('delete').bind("keypress", function(e){
-  // 'Go' key code is 13
-  if (e.which === 13) {
-     console.log("user pressed Go");
-     // submit your form with explicit JS.
+//Press Enter in INPUT moves cursor to next INPUT
+//ac, cs, to, sortie, plan, supapp
+////////////////////////////////////////////
+//////////////////////////////////////////////
+////////////////////////////////////////////
+
+function stopTags(e) {
+  if (e.which == 60 || e.which == 62) {
+
+    alert("< or > keys prohibited");
+    e.preventDefault();
   }
+}
+
+
+
+//move from ac to cs
+document.getElementById('ac').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('cs').focus();
+    return false;
+  };
+
+  stopTags(e);
+
 });
 
-//javascript to toggle collapsible health/stress section
-var coll = document.getElementsByClassName("collapsible");
-var i;
+//move from cs to to
+document.getElementById('cs').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('to').focus();
+    return false;
+  }
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
+  stopTags(e);
+});
+
+//move from to to sortie
+
+document.getElementById('to').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('sortie').focus();
+    return false;
+  }
+
+  if (isNaN(e.key)) {
+
+    alert("Takeoff time must be a number");
+    e.preventDefault();
+  }
+
+  stopTags(e);
+
+
+});
+
+//move from sortie to plan
+document.getElementById('sortie').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('plan').focus();
+    return false;
+  }
+
+  stopTags(e);
+});
+
+//move from plan to sup app
+
+document.getElementById('plan').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('supapp').focus();
+    return false;
+  }
+
+  stopTags(e);
+});
+
+document.getElementById('supapp').onkeypress = (function(e) {
+  if (e.which == 13) {
+    document.getElementById('supapp').focus();
+    return false;
+  }
+
+  stopTags(e);
+});
+
+
+//prevent certain keys on the input boxes below
+
+['supapp', 'acbox', 'supbox', 'sqbox', 'ogbox'].forEach(function(id) {
+  document.getElementById(id).onkeypress = (function(e) {
+    stopTags(e);
   });
+});
+
+
+//require password for sup signature
+function supSign(el) {
+    var pw = prompt('Please enter the Sup Password', '****')
+    if (pw == "nacho"){
+      var cell = document.getElementById('supappButton').parentElement;
+      cell.style.background = "#90ee90";
+      document.getElementById('supappButton').value = 1;
+      alert(selectObject.cs.concat(" ,TO: ").concat(selectObject.to).concat(" has been stepped"));
+    }
+    else {
+        var cell = document.getElementById('supappButton').parentElement;
+        cell.style.background = "#ffcccb";
+        document.getElementById('supapp').value = "";
+        document.getElementById('supappButton').value = 3;
+
+    }
+
+
 }
+
+function deleteAlert(val) {
+
+  if (confirm('Are you sure you want to delete the entry associated with Callsign: '.concat(selectObject.cs).concat(", TO: ").concat(selectObject.to))) {
+    document.getElementById('deleteForm').submit()
+
+    // Delete it
+
+  } else {
+    //'<%=csIn%>'.concat('<%=to%>')
+    val.preventDefault()
+    return false;
+  }
+
+};
+
+
+////////////////////////////////////////////
+//////////////////////////////////////////////
+////////////////////////////////////////////
+
+
+
+
+
+////////////////////////////////////////////
+//// run when opening the PAGE/////////////
+//fumctions that will on initializing the page
+
+clearCells();
