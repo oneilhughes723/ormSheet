@@ -306,7 +306,11 @@ app.use('/86orm', (req, res) => {
 			///////////////////////////////////////
 		});
 
-///SUP Historical Access /////////////////
+
+
+/////////////////////////////////////////////
+///SUP Historical Access ////////////////////
+/////////////////////////////////////////////
 
 
 app.use('/ormhistory', (req, res) => {
@@ -403,7 +407,7 @@ app.use('/ormhistory', (req, res) => {
 
 			};
 			db.close();
-				res.render('supview', {
+				res.render('historical', {
 					csfill: csfill,
 					currentID: currentID,
 					selectObject: selectObject,

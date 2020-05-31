@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <base target="_top">
+    <title>86thORM</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href="../public/ormCSSsheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+    body {
+      background-image: url("/images/patchbackground.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+
+  </style>
+
+  <body style = "background-color: #fef9e7">
+    <div>
+      <h1 class = "jumbotron" style = "text-align:center; background-image: url(/images/grandcanyon.jpg); background-size: cover"  >
+        <img src="/images/faipflag.png" width="50" height="50" class = "scaled" style = "position: relative; left: -25%">
+
+        86 FTS ORM Historical Entries
+        <img src = "/images/86patch.png" width = "50" height = "50" class = "scaled" style = "position: relative; right: -25%">
+      </h1>
+
+      <br>
+
+    </div>
+
+    <form method = "POST" action = "/ormhistory">
+        <input type="date" id="datePicker" name="sort-start"
+        min="2020-01-01" max="2030-12-31"
+        style = "position: relative; left: 50%; transform:translateX(-50%)"
+        value = '2020-06-01'
+        name = "datePicker"
+        onchange = 'this.form.submit()'
+        >
+      </form>
+
+
+      <form method = "POST" action = "/ormhistory">
+        <select class='custom-select w-25' style = "position: absolute; left: 50%; transform:translateX(-50%)"  id="csdrop" name = 'csdrop' onchange = 'this.form.submit()'>
+          <%- csfill%>
+        </select>
+      </form>
+
+      <form method = "POST" action = "/86orm">
+        <button type = 'button' class="btn btn-primary" style = "position: absolute; left: 5%" onclick="ormInfo(this)">NEW ORM INFO</button>
+      </form>
+
+      <form method = "POST" action = "/delete" id = 'deleteForm'>
+        <button class="btn btn-primary" id = 'delete' style = "position: absolute; right: 5% " onclick="deleteAlert(event)" 
+          name = 'deleteEntry' value = "<%=currentID%>"
+
+        >Delete Entry</button>
+      </form>
+
+    </br></br>
+
+      <form method = "POST" action = "/create">
+
+
+        <table style = 'border: 2px solid black' align = 'center'>
+            <th colspan='4' class="tableSec">86th FTS RISK MANAGEMENT</th>
+            <tr>
+                <td ><label>A/C:</label><input class='form-control w-75' value = "<%=acfill%>" name = 'ac' id = 'ac' type = 'text' ></td>
+                <td><label>CALLSIGN: </label><input class='form-control w-50' value = "<%=csIn%>" name = 'cs' id = 'cs' type = 'text' ></td>
+                <td style='border-right: 2px solid black'><label>TAKEOFF TIME:</label><input class='form-control w-50' value = "<%=to%>" name = 'to' id = 'to' type = 'text' ></td>
+            <tr height='25px'>
+                <td><label>SORTIE: </label><input class='form-control w-75' type = "text" name = "sortie" id = "sortie" value = "<%=sortie%>"></td>
+                <td id ='commPlan'>
+                  <select name = 'cp' id='cp' onchange='nightcpLog(this)' margin='0px' class="custom-select h-50">
+                    <option value="0">Comm Plan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                    <option value="7">Seven</option>
+                    <option value="8">Eight</option>
+                  </select>
+                </td>
+                 <td style='border-right:2px solid black'><label>PROFILE: </label><input class='form-control w-100' value = "<%=plan%>" name = 'plan' id='plan'></td>
+            </tr>
+              <td>
+                <label class='container'>Night Brief Complete?
+                  <input  name='night' id='night' onclick='nightcpLog("night")' type = "checkbox" value = 1>
+                  <span class='checkmark'></span>
+                </label>
+              </td>
+              <td>
+                <select name = 'crmtopic' id = 'crmtopic' margin = '0px' class = 'custom-select h-50'>
+                  <option value = '0'>CRM Topic</option>
+                  <option value = '1'>Mission Analysis</option>
+                  <option value = '2'>Situational Awareness</option>
+                  <option value = '3'>Crew/Flight Coordination</option>
+                  <option value = '4'>Communication</option>
+                  <option value = '5'>Task Management</option>
+                  <option value = '6'>Risk Management/Decision Making</option>
+                </select>
+              </td>
+              <td style='border-right:2px solid black'>Date: 
+                <script>document.write(new Date().toDateString());</script>
+              </td>
+
+            </tr>
+        </table>
+
+
+
+
+    </div>
+
+
+    <table style = 'border: 2px solid black' align = 'center'>
+      <th colspan = "4" class = "tableSec" >TYPE</th>
+      <tr id = "form">
+        <td>Formation</td>
+        <td>
+          <label class='container'>Basic
+            <input name='form' id='form1' type = "checkbox"  value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Air Refueling
+            <input name='form' id='form2' type = "checkbox"  value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Airdrop/Dissimilar
+            <input  name='form' id='form3'  type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = "ll">
+        <td>Low Level</td>
+        <td><label class='container'>Routine or Known Route
+            <input  name='ll' id='ll1' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td><label class='container'>Non-Routine or Unfamiliar Route
+            <input  name='ll' id='ll2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='ll3' class='blackout'>
+        </td>
+      </tr>
+
+      <tr id = 'check'>
+        <td>Checkride</td>
+        <td>
+          <label class='container'>IP
+            <input  name='check' id='check1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>SP or IP No-Notice
+            <input  name='check' id='check2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+            </label>
+        </td>
+        <td>
+          <label class='container'>PC/EC
+            <input  name='check' id='check3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'mission'>
+        <td>Mission Purpose</td>
+        <td>
+          <label class='container'>IEP/MEP/Orientation/Pax Flt
+            <input  name='mission' id='mission1' type = "checkbox" value = 1 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>FCF/OCF
+            <input  name='mission' id='mission2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='mission3' class='blackout'>
+        </td>
+      </tr>
+
+      <th colspan = "4" class = "tableSec" >TIMELINE</th>
+      <tr id = 'cdd'>
+        <td>Crew Duty Day</td>
+        <td>
+          <label class='container'>Anticipated Mx/Ops Delay
+            <input  name='cdd' id='cdd1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Flying Past 10 Hours
+            <input  name='cdd' id='cdd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Showtime &lt;0530
+            <input  name='cdd' id='cdd3' type = "checkbox" value = 3 onclick = "highlight(this)" id  = "showtime">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'cfd'>
+        <td>Consecutive Flying Days (IP/SP)</td>
+        <td>
+          <label class='container'>4 Days
+            <input  name='cfd' id='cfd1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>5 Days
+            <input  name='cfd' id='cfd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&gt;5 Days
+            <input  name='cfd' id='cfd3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'mp'>
+        <td>Mission Planning</td>
+        <td>
+          <label class='container'>Short Notice Replan/Replan After Brief Time
+            <input  name='mp' id='mp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>X/C Planning
+            <input  name='mp' id='mp2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>3 Event O&amp;B
+            <input name='mp' id='mp3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+
+      <th colspan = "4" class = "tableSec" >ENVIRONMENT</th>
+      <tr id = 'wx'>
+        <td>Weather(Dep/Arr)</td>
+        <td>
+          <label class='container'>&le; 1500/3
+            <input  name='wx' id='wx1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&le; 1000/2
+            <input  name='wx' id='wx2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>&le; 500/1
+            <input  name='wx' id='wx3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'temp'>
+        <td>Temperature - Dew Point Spread</td>
+        <td>
+          <label class='container'>&le; 2
+            <input  name='temp' id='temp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='temp2' class='blackout'>
+        </td>
+        <td id='temp3' class='blackout'>
+        </td>
+      </tr>
+
+      <tr id = 'winds'>
+        <td>Winds</td>
+        <td>
+          <label class='container'>Gusty Winds
+            <input  name='winds' id='winds1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>X-winds &gt; 15 knots
+            <input  name='winds' id='winds2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Tailwind/Windshear
+            <input  name='winds' id='winds3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'rwy'>
+        <td>Runway Condition</td>
+        <td>
+          <label class='container'>Excessive Rubber Buildup
+            <input  name='rwy' id='rwy1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Wet Runway
+            <input  name='rwy' id='rwy2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Icy Runway
+            <input  name='rwy' id='rwy3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id ='rd'>
+        <td>Runway Distance &lt; 7000'</td>
+        <td  name='rd' id='rd1' class='blackout'>
+        </td>
+        <td>
+          <label class='container'>Landing
+            <input  name='rd' id='rd2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Touch & Go
+            <input  name='rd' id='rd3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id= "ts">
+        <td>Thuderstorms (Dep/Arr)</td>
+        <td>
+          <label class='container'>Tempo
+            <input  name='ts' id='ts1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Prevailing
+            <input  name='ts' id='ts2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Observed
+            <input  name='ts' id='ts3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = "ents">
+        <td>Thunderstorms (Enroute)</td>
+        <td>
+          <label class='container'>Isolated
+            <input  name='ents' id='ents1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Few
+            <input  name='ents' id='ents2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Scattered/Numerous
+            <input  name='ents' id='ents3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'ice'>
+        <td>Icing (Forecast/Actual)</td>
+        <td>
+          <label class='container'>Light
+            <input  name='ice' id='ice1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Moderate
+            <input  name='ice' id='ice2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Severe
+            <input  name='ice' id='ice3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'turbs'>
+        <td>Turbulence</td>
+        <td>
+          <label class='container'>Light
+            <input  name='turbs' id='turbs1'type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Moderate
+            <input  name='turbs' id='turbs2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Severe/Extreme
+            <input  name='turbs' id='turbs3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'birds'>
+        <td>Bird Condition</td>
+        <td>
+          <label class='container'>AHAS MOD or BAM MOD/SEV
+            <input  name='birds' id='birds1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Reported MOD or AHAS Severe
+            <input  name='birds' id='birds2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Reported Severe
+            <input  name='birds' id='birds3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'mountains'>
+        <td>Mountinous Terrain &gt; 5000' AGL</td>
+        <td>
+          <label class='container'>Terminal Area Only
+            <input  name='mountains' id='mountains1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>IR/VR/SR or VFR Leg
+            <input  name='mountains' id='mountains2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td  name='mountains' id='mountains3' class='blackout'>
+        </td>
+      </tr>
+      <tr id = 'thermal'>
+        <td>Index of Thermal Stress</td>
+        <td>
+          <label class='container'>Caution/Wind Chill &lt; 32F
+            <input  name='thermal' id='thermal1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Danger
+            <input  name='thermal' id='thermal2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='thermal3' class='blackout'>
+        </td>
+      </tr>
+      <tr id = 'airspace'>
+        <td>Airspace/Airfield</td>
+        <td>
+          <label class='container'>Unfamiliar Airfield
+            <input  name='airspace' id='airspace1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>NTA or Complex Airspace/Airfield
+            <input  name='airspace' id='airspace2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='airspace3' class='blackout'>
+        </td>
+      </tr>
+      <tr id = 'climb'>
+        <td>Climb Gradient</td>
+        <td>
+          <label class='container'>Home Station 48' Option Req
+            <input  name='climb' id='climb1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Outbase 48' Option Req
+            <input  name='climb' id='climb2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Unable IFR Climb Req VFR or VMC Dep
+            <input  name='climb' id='climb3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <tr id = 'flight_cond'>
+        <td>Flight Condition</td>
+        <td>
+          <label class='container'>Overwater & Outside Glide Distance from Land
+            <input  name='flight_cond' id='flight_cond1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'> Any Portion of Flight Conducted at Night
+            <input  name='flight_cond' id='flight_cond2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='flight_cond3' class='blackout'>
+        </td>
+      </tr>
+      <th colspan = "4" class = "tableSec" >CREW</th>
+      <tr id = 'jump'>
+        <td>Jump Seat</td>
+        <td>
+          <label class='container'>Not Occupied
+            <input  name='jump' id='jump1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='jump2' blass='blackout'>
+        </td>
+        <td id='jump3' class='blackout'>
+        </td>
+      </tr>
+
+      <tr id = 'exp'>
+        <td>Experience Level</td>
+        <td>
+          <label class='container'>FP/XP
+            <input  name='exp' id='exp1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>AC is Inexperienced IP (CAT II)
+            <input  name='exp' id='exp2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='exp3' class='blackout'>
+        </td>
+      </tr>
+
+      <tr id = 'ip_currency'>
+        <td>IP Currency</td>
+        <td>
+          <label class='container'>Out of Jet &gt; 7 Days / &lt; 12 hrs in 30 Days
+            <input  name='ip_currency' id='ip_currency1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Out of Jet &gt; 14 Days
+            <input  name='ip_currency' id='ip_currency2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='ip_currency3' class='blackout'>
+        </td>
+      </tr>
+
+      <tr id = 'currency'>
+        <td>SP Currency</td>
+        <td>
+          <label class='container'>Out of Jet &gt; 7 Days / &gt; 5 Fly Events in 5 Days
+            <input  name='currency' id='currency1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Out of Jet &gt; 14 Days
+            <input  name='currency' id ='currency2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='currency3' class='blackout'>
+        </td>
+      </tr>
+
+       <tr id = 'issues'>
+        <td>SP Issues</td>
+        <td>
+          <label class='container'>Non-Flying CAP
+            <input  name='issues' id='issues1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>Flying CAP/UNSAT
+            <input  name='issues' id='issues2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='issues3' class='blackout'>
+        </td>
+      </tr>
+
+       <tr id = 'cat'>
+        <td>SP First Ride in Category</td>
+        <td>
+          <label class='container'>Co-pilot Ride
+            <input  name='cat' id='cat1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>All other including first AR and AD
+            <input  name='cat' id='cat2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td id='cat3' class='blackout'>
+        </td>
+      </tr>
+  </table>
+      <!-- This is copy and pasted -->
+      <div class='human-factors-content' align='center' width='90%'>
+          <button type="button" class="human-factors-content collapsible" width='90%'>HUMAN FACTORS</button>
+              <div class="content" width='90%'>
+                <table style = 'border: 2px solid black' align = 'center' width='90%'>
+                    <tr>
+                        <td>Health & Stress Risk Factors</td>
+                        <td>LOW (0 Points)</td>
+                        <td>MOD (1 Point Ea)</td>
+                        <td style='border-right: 2px solid black'>HIGH (2 Points Ea)</td>
+                        <td>Fatigue Risk Factors</td>
+                        <td>LOW (0 points)</td>
+                        <td>MOD (1 Point Ea)</td>
+                        <td>HIGH (2 Points Ea)</td>
+                    </tr>
+                    <tr>
+                        <td> Personal Health Factors (Hydration, Nutrition,
+                            Illness/Injury, Etc.)
+                        </td>
+                        <td>
+                            <label class='container'>Low
+                              <input class='personal_factor'  name='personal_health' id='personal_health1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Mod
+                              <input class='personal_factor'  name='personal_health' id='personal_health2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label></td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Hi
+                              <input class='peronsal_factor' name='personal_health' id='personal_health3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>12+ hr Work/Duty Days Past Week</td>
+                        <td>
+                            <label class='container'>2
+                              <input class='fatigue_factor' name='long_days' id='long_days1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>3
+                              <input class='fatigue_factor' name='long_days' id='long_days2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>&ge;4
+                              <input class='fatigue_factor' name='long_days' id='long_days3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personal/Family Stress (Health, Finance, Relationship,
+                            etc.)
+                        </td>
+                        <td>
+                            <label class='container'>Low
+                              <input class='personal_factor'  name='family_stress' id='family_stress1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Mod
+                              <input class='personal_factor' name='family_stress' id='family_stress2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Hi
+                              <input class='personal_factor' name='family_stress' id='family_stress3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>Combined Prior Sleep (Past 72 hrs/3 days)</td>
+                        <td>
+                            <label class='container'>&gt;18hrs
+                              <input class='fatigue_factor' name='combined_sleep' id='combined_sleep1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>15-18hrs
+                              <input class='fatigue_factor'  name='combined_sleep' id='combined_sleep2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>&lt;15hrs
+                              <input class='fatigue_factor' name='combined_sleep' id='combined_sleep3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Work/Career Stress</td>
+                        <td>
+                            <label class='container'>Low
+                              <input class='personal_factor' name='work' id='work1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>Mod
+                              <input class='personal_factor' name='work' id='work2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Hi
+                              <input class='personal_factor' name='work' id='work3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>Combined Prior Wakefulness (Past 36hrs/1.5 days)</td>
+                        <td>
+                            <label class='container'>&lt;23hrs
+                              <input class='fatigue_factor' name='awake' id='awake1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class='container'>23-28hrs
+                              <input class='fatigue_factor' name='awake' id='awake2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>&gt;28hrs
+                              <input class='fatigue_factor' name='awake' id='awake3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Perceived Sortie Pressure (External & Internal)</td>
+                        <td>
+                            <label class='container'>Low
+                              <input class='personal_factor' name='pressure' id='pressure1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>Mod
+                              <input class='personal_factor' name='pressure' id='pressure2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td style='border-right: 2px solid black'>
+                            <label class='container'>Hi
+                              <input class='personal_factor'  name='pressure' id='pressure3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>Sleep in Last 12 hrs</td>
+                        <td>
+                            <label class='container'>&gt;6hrs
+                              <input class='fatigue_factor'  name='last_sleep' id='last_sleep1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>4-6hrs
+                              <input class='fatigue_factor' name='last_sleep' id='last_sleep2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                      </td>
+                        <td>
+                            <label class='container'>&lt;4hrs
+                              <input class='fatigue_factor' name='last_sleep' id='last_sleep3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan=2><button type = 'button' class="btn btn-primary" style = "float: left"  onclick="window.open('/public/crm.html', '_blank')">View CRM Info</button></td>
+                        <td></td>
+                        <td></td>
+                        <td>Sleep Quality</td>
+                        <td>
+                            <label class='container'>Good
+                              <input class='fatigue_factor'  name='sleepQual' id='sleepQual1' type = "checkbox" value = 1
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                        <td>
+                            <label class='container'>Fair
+                              <input class='fatigue_factor' name='sleepQual' id='sleepQual2' type = "checkbox" value = 2
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                      </td>
+                        <td>
+                            <label class='container'>Poor
+                              <input class='fatigue_factor' name='sleepQual' id='sleepQual3' type = "checkbox" value = 3
+                               onclick = "highlight(this)">
+                              <span class='checkmark'></span>
+                          </label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- End copy and paste section-->
+    <table align='center' id='signature-table'>
+      <tr id = 'hs'>
+        <td>Health and Stress</td>
+        <td id='hs1' class='blackout'>
+        </td>
+        <td>
+          <label class='container'>MODERATE
+            <input  name='hs' id='hs2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>HIGH
+            <input  name='hs' id='hs3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr id = 'fatigue'>
+        <td>Fatigue</td>
+        <td>
+          <label class='container'>LOW
+            <input  name='fatigue' id='fatigue1' type = "checkbox" value = 1  onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>MODERATE
+            <input  name='fatigue' id='fatigue2' type = "checkbox" value = 2 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+        <td>
+          <label class='container'>HIGH
+            <input  name='fatigue' id='fatigue3' type = "checkbox" value = 3 onclick = "highlight(this)">
+            <span class='checkmark'></span>
+          </label>
+        </td>
+      </tr>
+      <th colspan = "4" style = "background-color: black" ></th>
+      <tr>
+        <td style='font-size: 24px'>Total<button class='btn btn-primary' style='float:right' type = 'button' onclick = "Aggregate(score)">Calculate</button></td>
+        <td style='text-align: center; font-size: 24px' id = "total">
+        </td>
+        <td style = 'width: 25%'>
+          <label style = 'float:left; margin-right: .5em'>SUP APPROVAL </label><input class='form-control w-50' style = 'float:left;' name='supapp' id='supapp' value='<%=supapp%>'>
+          <input hidden value = 0 name = 'supappButton' id = 'supappButton'></input>
+        </td>
+        <td style = 'width: 25%'>
+          <button class='btn btn-primary' style=' float:left;' onclick = "supSign(this)">Step</button>
+          
+          <button name= 'submit' value=false class='btn btn-primary' style='float:right' onclick = "Submit()">SUBMIT</button>
+
+        </td>
+      </tr>
+      <tr>
+        <th class="tableSec" >Approval AUTHORITY</th>
+        <th class="tableSec">RISK LEVEL (Total Score)</th>
+        <th class="tableSec" colspan=2>SIGNATURE</th>
+      </tr>
+      <tr>
+        <td>Aircraft Commander</td>
+        <td name='low' id = 'low'>
+          <label>LOW (0-13)</label>
+        </td>
+        <td  colspan=2 id='acsig'><input id = 'acbox' class='form-control w-50' name='acsig' type='text' value="<%=acsig%>" width='200px'>
+        </td>
+      </tr>
+      <tr>
+        <td>SQ/Supervisor</td>
+        <td name='mod' id = 'mod'>
+          <label>MODERATE (14-23)</label>
+        </td>
+        <td name='supsig'colspan=2 id='supsig'><input id = 'supbox' class='form-control w-50' name='supsig' type='text' value="<%=supsig%>" width='200px'>
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td>SQ/CC or Equivalent</td>
+        <td name='high' id = 'high'>
+          <label>HIGH (24-32)</label>
+        </td>
+        <td name='sqsig' colspan=2 id='sqsig'><input id = 'sqbox' class='form-control w-50' name='sqsig' type='text' value="<%=sqsig%>" width='200px'>
+        </td>
+      </tr>
+      <tr>
+        <td>OG/CC</td>
+        <td name='severe' id = 'severe'>
+          <label>SEVERE (&gt; 32)</label>
+        </td>
+        <td name='ogsig' colspan=2 id='ogsig'><input id = 'ogbox' class='form-control w-50' name='ogsig' type='text' value="<%=ogsig%>" width='200px'>
+        </td>
+      </tr>
+  </table>
+
+
+    </form>
+
+
+
+    <pre>
+
+
+    </pre>
+
+
+
+  <script type= "text/javascript" src = '../public/ormSheet.js'></script>
+  <script>
+  //object that will record score values for each row
+
+
+    var selectObject = <%-JSON.stringify(selectObject)%>;
+
+
+    /////////////array object for human factors///////////////
+    var humanFactors = ['personal_health', 'long_days', 'family_stress',
+    'combined_sleep', 'work', 'awake', 'pressure', 'last_sleep', 'sleepQual'];
+
+    ///////////////////////ghetto script /////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+//javascript to toggle collapsible//
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+//add totals of human factors content and add to the main ORM table
+
+let personal_factors = ['personal_health', 'family_stress', 'work', 'pressure'];
+let fatigue_factors = ['long_days', 'combined_sleep', 'awake', 'last_sleep', 'sleepQual'];
+
+function addPersonal() {
+    let totalPoints = 0;
+    let maxVal;
+    for (factor of personal_factors) {
+        maxVal = 0;
+        for (let i = 1; i < 4; i++) {
+            let elid = factor + i;
+            if (document.getElementById(elid).checked == true) {
+                let elval = document.getElementById(elid).value - 1;
+                if (elval > maxVal) {
+                    maxVal = elval;
+                }
+            }
+        }
+        totalPoints += maxVal;
+    }
+        const el2 = document.querySelector('#hs2');
+        const el3 = document.querySelector('#hs3');
+        const id2 = document.getElementById('hs2');
+        const id3 = document.getElementById('hs3');
+        for (factor of personal_factors) {
+            let factorEnd = factor + 3
+            if (document.getElementById(factorEnd).checked == true) {
+                id3.checked = true;
+                highlight(el3);
+                if (id2.checked == true) {
+                    id2.checked = false;
+                    highlight(el2);
+                }
+                return;
+            }
+        }
+    if (totalPoints == 0) {
+        if (id2.checked == true) {
+            id2.checked = false;
+            highlight(el2);
+        }
+        if (id3.checked == true) {
+            id3.checked = false;
+            highlight(el3);
+        }
+
+    }
+    else if (totalPoints > 0 && totalPoints < 3) {
+        if (id3.checked == true) {
+            id3.checked = false;
+            highlight(el3);
+        }
+        if (id2.checked == false) {
+            id2.checked = true;
+            highlight(el2);
+        }
+    }
+    else if (totalPoints >= 3) {
+        if (id2.checked == true) {
+            id2.checked = false;
+            highlight(el2);
+        }
+        if (id3.checked == false){
+            id3.checked = true;
+            highlight(el3);
+        }
+    }
+};
+
+function addFatigue() {
+    let totalPoints = 0;
+    let maxVal;
+    for (factor of fatigue_factors) {
+        maxVal = 0;
+        for (let i = 1; i < 4; i++) {
+            let elid = factor + i;
+            if (document.getElementById(elid).checked == true) {
+                let elval = document.getElementById(elid).value - 1;
+                if (elval > maxVal) {
+                    maxVal = elval;
+                }
+            }
+        }
+        totalPoints += maxVal;
+    }
+        const el1 = document.querySelector('#fatigue1');
+        const el2 = document.querySelector('#fatigue2');
+        const el3 = document.querySelector('#fatigue3');
+        const id1 = document.getElementById('fatigue1');
+        const id2 = document.getElementById('fatigue2');
+        const id3 = document.getElementById('fatigue3');
+        for (factor of fatigue_factors) {
+            let factorEnd = factor + 3
+            if (document.getElementById(factorEnd).checked == true) {
+                id3.checked = true;
+                highlight(el3);
+                if (id2.checked == true) {
+                    id2.checked = false;
+                    highlight(el2);
+                }
+                if (id1.checked == true) {
+                    id1.checked = false;
+                    highlight(el1);
+                }
+                return;
+            }
+        }
+    if (totalPoints == 0) {
+        if (id1.checked == true) {
+            id1.checked = false;
+            highlight(el1);
+        }
+        if (id2.checked == true) {
+            id2.checked = false;
+            highlight(el2);
+        }
+        if (id3.checked == true) {
+            id3.checked = false;
+            highlight(el3);
+        }
+    }
+   else if (totalPoints > 0 && totalPoints < 4) {
+       if (id3.checked == true) {
+           id3.checked = false;
+           highlight(el3);
+       }
+       if (id2.checked == true) {
+           id2.checked = false;
+           highlight(el2);
+       }
+       if (id1.checked == false) {
+           id1.checked = true;
+           highlight(el1);
+       }
+   }
+   else if (totalPoints > 3 && totalPoints < 7) {
+       if (id1.checked == true) {
+           id1.checked = false;
+           highlight(el1);
+       }
+       if (id3.checked == true) {
+           id3.checked = false;
+           highlight(el3);
+       }
+       if (id2.checked == false) {
+           id2.checked = true;
+           highlight(el2);
+       }
+   }
+   else {
+       if (id1.checked == true) {
+           id1.checked = false;
+           highlight(el1);
+       }
+       if (id2.checked == true) {
+           id2.checked = false;
+           highlight(el2);
+       }
+       if (id3.checked == false) {
+           id3.checked = true;
+           highlight(el3);
+       }
+   }
+};
+
+
+function refill(){
+
+ //this segment will clear all background colors
+  ///just for the complan refill
+ if (selectObject == null){
+   var cpfill = 0
+  } 
+  else {
+    var cpfill = selectObject.cp;
+
+    if(selectObject.night == 1){
+      document.getElementById('night').checked = true;
+    }
+
+    if(selectObject.supappButton == 1) {
+      var cell = document.getElementById('supappButton').parentElement;
+      cell.style.background = "#90ee90";
+    }
+
+    document.getElementById('cp').value = cpfill;
+    document.getElementById('crmtopic').value = selectObject.crmtopic;
+
+
+    /////////////////////////////////////
+    /////refill other values//////////
+    for (var prop of props_toScore){
+
+var val = Object.values(selectObject[prop]);
+for (eachVal of val) {
+  if (eachVal > 0){
+    var elid = prop + eachVal;
+    document.getElementById(elid).checked = true;
+    highlightCell(elid);
+  }
+}
+}
+
+for (var factor of humanFactors) {
+    let val = Object.values(selectObject[factor]);
+    for (facVal of val) {
+        if (facVal > 0) {
+            var elid = factor + facVal;
+            document.getElementById(elid).checked = true;
+            highlightCell(elid);
+        }
+    }
+}
+
+for (factor of personal_factors) {
+    for (let i = 1; i < 4; i++) {
+        let elid = factor + i;
+        document.getElementById(elid).addEventListener('click',addPersonal);
+    }
+}
+
+for (factor of fatigue_factors) {
+    for (let i = 1; i < 4; i++) {
+        let elid = factor + i;
+        document.getElementById(elid).addEventListener('click',addFatigue);
+    }
+}
+
+  };
+
+
+
+
+
+
+
+
+ for (var prop of props_toScore){
+   //reassign to score
+   if (selectObject != null) {
+
+     innerScore = {};
+     if (selectObject[prop].length > 0) {
+
+      if (selectObject[prop].includes("1")) {
+        innerScore.one = 1;
+      };
+      if (selectObject[prop].includes("2")) {
+        innerScore.two = 2;
+      };
+      if (selectObject[prop].includes("3")) {
+        innerScore.three = 3;
+      }
+
+
+      score[prop] = innerScore;
+
+     } else {
+
+       score[prop] = selectObject[prop];
+     }
+   }
+ };
+    if (selectObject != null) {
+      Aggregate(selectObject);
+    };
+
+ };
+
+ $('input').keypress(function(e) {
+if (e.which == 13) {
+    $(this).next('input').focus();
+    e.preventDefault();
+}
+});
+
+//instructions
+//global variable
+
+function instructions() {
+  var instructionsSeen = sessionStorage.getItem("instructionsSeen");
+  if (instructionsSeen != "True") {
+    alert("ORM Instructions\n1. Fill out your info at the top. Ensure your callsign and takeoff time are correct. That is how the page differentiates plans. \n2. Fill out the page. \n3. Hit submit at the bottom right of the page \n4. If you need to make edits, select your callsign from the dropdown to reload your submission, then resubmit.\n5. If you make a mistake, please select the Callsign/TO associated for that mistaken ORM sheet from the dropdown and hit Delete Entry")
+  };
+  sessionStorage.setItem("instructionsSeen", "True");
+};
+
+
+
+////////main//////////
+ refill();
+ instructions();
+
+
+
+  </script>
+  </body>
+</html>
