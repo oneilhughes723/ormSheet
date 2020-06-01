@@ -169,3 +169,9 @@ button.human-factors-content {
 .blackout {
     background-color: rgba(0, 0, 0, 0.65);
 }
+
+.historicalheader {
+  -webkit-text-stroke-width: .5px;
+  -webkit-text-stroke-color:#fef9e7;
+  font-weight: bold;
+}

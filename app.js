@@ -403,7 +403,7 @@ app.use('/ormhistory', (req, res) => {
 				var ogsig = selectObject.ogsig;
 				var night = selectObject.night;
 				var plan = selectObject.plan;
-				var date = selectObject.date;
+				var date = selectObject.date.toDateString();
 
 			};
 			db.close();
